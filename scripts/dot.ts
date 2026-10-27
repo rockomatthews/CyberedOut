@@ -15,10 +15,15 @@ const filename = resolve(
   process.env.CYBEREDOUT_IDENTITY || ".local/cyberedout-dot.json",
 );
 async function main() {
-  const [command, name] = process.argv.slice(2);
+  const [command, suppliedName] = process.argv.slice(2);
+  const name = suppliedName?.trim();
   if (!["join", "link"].includes(command))
     throw new Error(
       'Usage: npm run dot -- join "Your Dot name" OR npm run dot -- link',
+    );
+  if (command === "join" && (!name || name.length < 2 || name.length > 32))
+    throw new Error(
+      'Ask your human: "What would you like your Dot to be named?" Wait for their answer, then run join with their chosen name (2–32 characters). No default name is used.',
     );
   let identity: { public_key: string; private_key: string; agent_id?: string };
   try {
@@ -49,7 +54,7 @@ async function main() {
   const path = command === "join" ? "/api/world/register" : "/api/world/link";
   const fields = {
     ...(command === "join"
-      ? { public_key: identity.public_key, name: name || "My Dot" }
+      ? { public_key: identity.public_key, name }
       : { agent_id: identity.agent_id }),
     timestamp: String(Date.now()),
     nonce: randomUUID(),

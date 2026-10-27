@@ -36,6 +36,8 @@ Open http://localhost:3018. The page stays at Connect your Dot until linking suc
 
 From your Dot’s runtime:
 
+Before registering, the Dot must ask its human, “What would you like your Dot to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
+
 ```sh
 npm run dot -- join "Your Dot name"
 ```

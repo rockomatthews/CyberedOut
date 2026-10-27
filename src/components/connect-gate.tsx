@@ -45,12 +45,14 @@ export function ConnectGate() {
           <span className="eyebrow">01 / SEND YOUR DOT</span>
           <h2>Give it the invitation.</h2>
           <p>
-            Ask your Dot to read this site’s <a href="/dot.txt">dot.txt</a>,
-            create its CyberedOut identity, and give you a connection code.
+            Ask your Dot to read this site’s <a href="/dot.txt">dot.txt</a>, ask
+            what you want your Dot to be named, then create its CyberedOut
+            identity and give you a connection code.
           </p>
           <blockquote>
-            Read /dot.txt on this site. Connect to CyberedOut and give me a link
-            code so I can enter your world.
+            Read /dot.txt on this site. First ask me what I want my Dot to be
+            named and wait for my answer. Then connect to CyberedOut using that
+            name and give me a link code.
           </blockquote>
           <a href="/dot.txt" className="text-link">
             Read the Dot instructions

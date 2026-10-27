@@ -13,6 +13,8 @@ npm run dev -- --port 3018
 
 The world service listens on port 3020. The web app uses port 3018. The landing page reveals no map or character until linking a real Dot. The complete protocol is in `public/dot.txt`.
 
+Before registering, the Dot must ask its human, “What would you like your Dot to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
+
 ```sh
 npm run dot -- join "Your Dot name"
 ```
