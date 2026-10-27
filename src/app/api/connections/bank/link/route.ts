@@ -30,7 +30,7 @@ export const POST = endpoint(async (request) => {
   seal("configuration-check");
   const result = await plaid("/link/token/create", {
     user: { client_user_id: user.id },
-    client_name: "Money-Bots",
+    client_name: "CyberedOut",
     products: ["transactions"],
     country_codes: ["US"],
     language: "en",

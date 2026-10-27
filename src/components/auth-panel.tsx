@@ -70,7 +70,7 @@ export function AuthPanel({ onSession }: { onSession?: () => void }) {
         required
       />
       <Button type="submit" variant="outlined" disabled={busy}>
-        Email a sign-in link ↗
+        Email a sign-in link
       </Button>
       {status ? <Alert severity="info">{status}</Alert> : null}
     </form>

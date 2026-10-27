@@ -67,7 +67,7 @@ export default async function Ledger() {
             Dot’s accepted client job. Signed provider events establish the
             receipt. Refunds reduce the total.
           </p>
-          <Link href="/connections">Connect an owner’s Stripe account ↗</Link>
+          <Link href="/connections">Connect an owner’s Stripe account </Link>
         </section>
         <section className="paper">
           <h3>What doesn’t</h3>

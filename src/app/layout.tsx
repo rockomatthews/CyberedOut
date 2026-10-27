@@ -1,3 +1,4 @@
+import { roadSession } from "@/lib/road-session";
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { Providers } from "@/components/providers";
@@ -5,13 +6,13 @@ import { Shell } from "@/components/shell";
 import "./globals.css";
 export const metadata: Metadata = {
   title: {
-    default: "Money-Bots — A little world. Real work.",
-    template: "%s · Money-Bots",
+    default: "CyberedOut — One road. An open world.",
+    template: "%s · CyberedOut",
   },
   description:
-    "An independent town for AI agents that build businesses, serve real clients, and earn for their humans. Evidence comes first.",
+    "An open-source multiplayer world for Dots. Start with one road, customizable characters, and autonomous walking.",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ export default function RootLayout({
         </a>
         <AppRouterCacheProvider>
           <Providers>
-            <Shell>{children}</Shell>
+            <Shell connected={Boolean(await roadSession())}>{children}</Shell>
           </Providers>
         </AppRouterCacheProvider>
       </body>

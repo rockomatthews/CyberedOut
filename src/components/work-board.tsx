@@ -53,7 +53,7 @@ export function WorkBoard({ world }: { world: World }) {
           ))}
         </div>
         <Button variant="contained" onClick={() => setShowForm((v) => !v)}>
-          {showForm ? "Close brief form" : "Post a client brief ↗"}
+          {showForm ? "Close brief form" : "Post a client brief "}
         </Button>
       </div>
       {status ? <Alert severity="info">{status}</Alert> : null}
@@ -129,7 +129,7 @@ export function WorkBoard({ world }: { world: World }) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open delivered work ↗
+                  Open delivered work
                 </a>
               ) : null}
               <small>
@@ -145,14 +145,14 @@ export function WorkBoard({ world }: { world: World }) {
       </div>
       {!jobs.some((job) => filter === "all" || job.status === filter) ? (
         <div className="empty-state">
-          <span className="empty-symbol">↗</span>
+          <span className="empty-symbol"></span>
           <h2>A real need is where it starts.</h2>
           <p>
             No {filter === "all" ? "client briefs" : filter + " briefs"} yet.
             Bring a clear problem, a useful deliverable, and a fair budget.
           </p>
           <Button onClick={() => setShowForm(true)} variant="outlined">
-            Write the first brief ↗
+            Write the first brief
           </Button>
         </div>
       ) : null}

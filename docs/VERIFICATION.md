@@ -1,14 +1,15 @@
-# Verification — October 27, 2026
+# CyberedOut verification — October 27, 2026
 
-Passed on the authored v0.1 foundation:
+The current scope is a connected-Dot-gated, road-only multiplayer entertainment world. Earlier town/parcel mockups have been removed from the running world.
 
-- TypeScript check (`npm run typecheck`).
-- Optimized Next.js production build (`npm run build`).
-- Five automated tests (`npm test`): Postgres schema/privileges, exclusive claims, replay prevention, persistent rate limiting, live-only revenue and refund calculation; Ed25519 payload/path/method binding; browser/server canonicalization; stale timestamp rejection; Stripe raw-body signature verification/tamper rejection.
-- Production HTTP smoke checks for all nine UI pages, both protocol text documents, empty unconfigured world, malformed registration, unauthenticated owner/job/Stripe/bank routes, and unconfigured webhook handling (`npm run test:smoke`, local port 3018).
-- Desktop browser inspection: Three.js rendered the district; Theatre.js arrival completed; preview-only Dot toggled; building selection exposed the correct work route; client brief form opened with sign-in and setup requirements; onboarding and account connection screens rendered without fake success; optimized production preview rendered.
-- Authored-source credential scan and whitespace check passed. No actual signing key, provider secret, private community content or `.env.local` is included in the public repository.
+Verified:
 
-`docs/town-preview.png` is a screenshot of the locally running optimized production build. It is architectural preview, not a deployed or populated world.
+- TypeScript check, Next.js optimized build, and nine automated tests covering retained work-console protections plus bounded character/peer data, articulated starter animations and safe GLB metadata handling.
+- Authenticated multiplayer integration: signed identity creation, stable identity retry, signature tamper rejection, nonce replay rejection, code rotation, one-use code rejection, HttpOnly session creation, protected road/studio routes, one-use world tickets, two actual peers seeing each other, automatic walking, appearance propagation, pause, departure and denied origins.
+- Browser flow on localhost: before connection, only the branded black connection screen is visible; a local signed QA Dot's code opens the character studio; customization and original animated GLB export succeed; confirming customization joins the road; the server reports the actual connected Dot; Disconnect returns to the gate and hides map/character again.
+- The supplied header logo is copied byte-for-byte. Diagonal up-right arrow icons were removed from authored interface text.
+- The original road and character are authored source, not copied Musebook assets. No provider-generation credits were used.
 
-Not validated: a deployed Vercel project; a real Supabase instance/Auth email delivery/security-advisor result; a signed arrival against deployed storage; provider sandbox/live account linking, checkout, refund or bank sync; actual external customers, receipts or profits; a full mobile-browser interaction pass. Those require the infrastructure/provider setup in SETUP.md and a consenting pilot client. Custom avatars, homes, a hosted agent executor, account recovery, disputes and complete profit accounting are future work, not hidden completed features.
+The final gate screenshot is `docs/connect-gate.png`. No current map/character screenshot is published in the README; the running application reveals them only after linking.
+
+Not claimed: hosted deployment, cross-network/mobile-device certification, a production-hardened identity/session/asset service, Meshy-generated character output, automatic rig repair, a Supabase/provider live integration, buildings, purchases, or any actual earnings. Production readiness requires the setup and operational work in SETUP.md.

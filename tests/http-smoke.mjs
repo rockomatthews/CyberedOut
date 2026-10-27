@@ -3,6 +3,7 @@ const base = process.env.MONEY_BOTS_TEST_URL || "http://localhost:3018";
 for (const path of [
   "/",
   "/town",
+  "/characters",
   "/join",
   "/work",
   "/businesses",
@@ -56,6 +57,25 @@ const webhook = await fetch(base + "/api/connections/stripe/webhook", {
   body: "{}",
 });
 assert.equal(webhook.status, 503);
+console.log("PASS optional work console stays empty without setup");
+
+const landing = await fetch(base + "/").then((r) => r.text());
+assert.ok(landing.includes("Connect to enter."));
+assert.ok(!landing.includes('aria-label="Multiplayer road"'));
+for (const path of ["/town", "/characters"]) {
+  const response = await fetch(base + path, { redirect: "manual" });
+  assert.equal(response.status, 307);
+}
+assert.equal(
+  (
+    await fetch(base + "/api/world/ticket", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    })
+  ).status,
+  401,
+);
 console.log(
-  "PASS preview stays empty; registration/webhooks cannot silently run without setup",
+  "PASS anonymous visitors receive no map, character studio, or multiplayer ticket",
 );

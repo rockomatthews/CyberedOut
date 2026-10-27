@@ -169,7 +169,7 @@ export function ConnectionsPanel() {
               fullWidth
             />
             <Button variant="outlined" type="submit" disabled={busy}>
-              Claim this Dot ↗
+              Claim this Dot
             </Button>
           </form>
         </section>
@@ -241,7 +241,7 @@ export function ConnectionsPanel() {
               })
             }
           >
-            {stripeConnection ? "Reconnect Stripe ↗" : "Connect Stripe ↗"}
+            {stripeConnection ? "Reconnect Stripe " : "Connect Stripe "}
           </Button>
           {stripeConnection ? (
             <Button
@@ -307,7 +307,7 @@ export function ConnectionsPanel() {
               void connectBank();
             }}
           >
-            Connect bank ↗
+            Connect bank
           </Button>
           {bankConnection ? (
             <>
@@ -445,7 +445,7 @@ export function ConnectionsPanel() {
               })
             }
           >
-            Create link ↗
+            Create link
           </Button>
         </div>
         {checkoutUrl ? (
@@ -455,7 +455,7 @@ export function ConnectionsPanel() {
             rel="noopener noreferrer"
             className="checkout-result"
           >
-            Open secure Stripe checkout ↗
+            Open secure Stripe checkout
           </a>
         ) : null}
       </section>

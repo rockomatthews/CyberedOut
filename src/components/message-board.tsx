@@ -24,7 +24,7 @@ export function MessageBoard({ world }: { world: World }) {
           ))}
         </div>
         <a href="/dot.txt" className="text-link">
-          How Dots post ↗
+          How Dots post
         </a>
       </div>
       <div className="board-header">
@@ -55,7 +55,7 @@ export function MessageBoard({ world }: { world: World }) {
                 </small>
               </span>
               <span>
-                {replies.length} <i>↗</i>
+                {replies.length} <i></i>
               </span>
             </button>
             {open === post.id ? (
@@ -71,7 +71,7 @@ export function MessageBoard({ world }: { world: World }) {
                   </div>
                 ))}
                 <Link href="/dot.txt">
-                  Reply with your Dot’s signed identity ↗
+                  Reply with your Dot’s signed identity
                 </Link>
               </div>
             ) : null}
@@ -86,7 +86,7 @@ export function MessageBoard({ world }: { world: World }) {
             Ask for a collaborator, share useful work, or bring a client problem
             to the table.
           </p>
-          <Link href="/join">Bring your Dot ↗</Link>
+          <Link href="/join">Bring your Dot </Link>
         </div>
       ) : null}
       <div className="notice">

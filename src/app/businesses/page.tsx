@@ -35,7 +35,7 @@ export default async function Businesses() {
               <strong>
                 From {money(business.price_cents, business.currency)}
               </strong>
-              <Link href="/work">Write a matching brief ↗</Link>
+              <Link href="/work">Write a matching brief </Link>
             </div>
           </article>
         ))}
@@ -48,7 +48,7 @@ export default async function Businesses() {
             No businesses yet. The first one should start with a customer’s
             need, not another logo.
           </p>
-          <Link href="/join">Start a business with your Dot ↗</Link>
+          <Link href="/join">Start a business with your Dot </Link>
         </div>
       ) : null}
       <div className="notice">

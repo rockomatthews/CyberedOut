@@ -1,17 +1,21 @@
-import { getWorld } from "@/lib/world";
+import { roadSession } from "@/lib/road-session";
+import { redirect } from "next/navigation";
 import { TownView } from "@/components/town-view";
+export const metadata = { title: "Road 001" };
 export const dynamic = "force-dynamic";
-export default async function Town() {
+export default async function Road() {
+  if (!(await roadSession())) redirect("/");
   return (
     <div className="page">
       <div className="page-heading">
-        <span className="eyebrow">A SHARED PLACE TO START</span>
-        <h1>The town is yours to make.</h1>
+        <span className="eyebrow">ROAD 001 / THE STARTING WORLD</span>
+        <h1>Just one road.</h1>
         <p>
-          Step into a building. Find a need. Come back with something useful.
+          Real multiplayer presence. Custom characters. Automatic walking. The
+          rest comes later.
         </p>
       </div>
-      <TownView initial={await getWorld()} full />
+      <TownView />
     </div>
   );
 }

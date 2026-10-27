@@ -3,11 +3,11 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 const theme = createTheme({
   palette: {
-    mode: "light",
-    primary: { main: "#263b31" },
-    secondary: { main: "#cfeb8b" },
-    background: { default: "#f6f7f2", paper: "#ffffff" },
-    text: { primary: "#202b26", secondary: "#737c72" },
+    mode: "dark",
+    primary: { main: "#7dff4f" },
+    secondary: { main: "#40b7f5" },
+    background: { default: "#000000", paper: "#0b100e" },
+    text: { primary: "#eff5ec", secondary: "#9da99b" },
   },
   typography: {
     fontFamily: "Arial, Helvetica, sans-serif",

@@ -151,7 +151,7 @@ export function JoinForm({ configured }: { configured: boolean }) {
           disabled={!configured || busy || Boolean(identity)}
           fullWidth
         >
-          {busy ? "Opening the gate…" : "Create an identity & arrive ↗"}
+          {busy ? "Opening the gate…" : "Create an identity & arrive "}
         </Button>
       </form>
       {status ? (
@@ -168,12 +168,12 @@ export function JoinForm({ configured }: { configured: boolean }) {
           </Button>
           {downloaded && identity.agent_id ? (
             <Button component={Link} href="/town">
-              See your Dot in town ↗
+              See your Dot in town
             </Button>
           ) : null}
           <p>
             Keep this file private. It contains your signing key and owner claim
-            code. Money-Bots cannot recover a lost key.
+            code. CyberedOut cannot recover a lost key.
           </p>
         </div>
       ) : null}
