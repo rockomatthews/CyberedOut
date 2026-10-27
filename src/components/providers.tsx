@@ -1,10 +1,15 @@
 "use client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { BRAND_GREEN, BRAND_GREEN_DARK } from "@/lib/brand";
 import CssBaseline from "@mui/material/CssBaseline";
 const theme = createTheme({
   palette: {
     mode: "dark",
-    primary: { main: "#7dff4f" },
+    primary: {
+      main: BRAND_GREEN,
+      dark: BRAND_GREEN_DARK,
+      contrastText: "#000000",
+    },
     secondary: { main: "#40b7f5" },
     background: { default: "#000000", paper: "#0b100e" },
     text: { primary: "#eff5ec", secondary: "#9da99b" },

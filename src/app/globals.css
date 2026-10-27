@@ -31,7 +31,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid #688b49;
+  outline: 3px solid #00b104;
   outline-offset: 4px;
 }
 button {
@@ -84,7 +84,7 @@ button:disabled {
 .brand-mark i {
   height: 7px;
   width: 5px;
-  background: #cfeb8b;
+  background: #00b104;
   border-radius: 2px;
 }
 .brand-dash {
@@ -151,7 +151,7 @@ button:disabled {
     monospace;
   letter-spacing: 1px;
   padding: 31px 0 0;
-  color: #6e7d70;
+  color: #a2aaa3;
 }
 .page-topline > span {
   display: flex;
@@ -174,7 +174,7 @@ button:disabled {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #6a8a4f;
+  background: #00b104;
 }
 .hero {
   display: flex;
@@ -190,7 +190,7 @@ button:disabled {
   margin: 0 0 22px;
 }
 .hero h1 > span {
-  color: #76866a;
+  color: #a2aaa3;
 }
 .hero p {
   font-size: 14px;
@@ -207,7 +207,7 @@ button:disabled {
   display: block;
   font-size: 43px;
   line-height: 1;
-  color: #7d9168;
+  color: #00b104;
   margin-bottom: 14px;
 }
 .hero-note p {
@@ -248,11 +248,11 @@ button:disabled {
     9px "Courier New",
     monospace;
   letter-spacing: 0.7px;
-  color: #697362;
+  color: #a2aaa3;
 }
 .stat i {
   font-style: normal;
-  color: #8b957c;
+  color: #a2aaa3;
   font-size: 14px;
 }
 .stat > strong {
@@ -264,7 +264,7 @@ button:disabled {
 }
 .stat > small {
   font-size: 10px;
-  color: #818777;
+  color: #a2aaa3;
 }
 .town-panel {
   border: 1px solid #d8dfd3;
@@ -294,14 +294,14 @@ button:disabled {
   margin: 0 5px;
 }
 .toolbar-muted {
-  color: #919888;
+  color: #a2aaa3;
   letter-spacing: 0;
 }
 .town-toolbar > div:last-child {
   font:
     10px Arial,
     sans-serif;
-  color: #77836c;
+  color: #a2aaa3;
   gap: 9px;
 }
 .weather-icon {
@@ -351,7 +351,7 @@ button:disabled {
   font:
     9px "Courier New",
     monospace;
-  color: #718478;
+  color: #a2aaa3;
 }
 .scene-instructions {
   position: absolute;
@@ -375,7 +375,7 @@ button:disabled {
     10px "Courier New",
     monospace;
   text-align: center;
-  color: #617567;
+  color: #a2aaa3;
   line-height: 1.8;
 }
 .scene-compass span {
@@ -412,20 +412,20 @@ button:disabled {
   font:
     8px "Courier New",
     monospace;
-  color: #9ca48e;
+  color: #a2aaa3;
 }
 .building-strip button > span:nth-child(2) {
   flex: 1;
 }
 .building-strip button > span:last-child {
-  color: #81936b;
+  color: #a2aaa3;
 }
 .town-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 13px 21px;
-  color: #8a9283;
+  color: #a2aaa3;
   font:
     9px Arial,
     sans-serif;
@@ -461,7 +461,7 @@ button:disabled {
   background: none;
   border: 0;
   font-size: 20px;
-  color: #7a8670;
+  color: #a2aaa3;
 }
 .place-popover h3 {
   font-size: 22px;
@@ -488,7 +488,7 @@ button:disabled {
     9px "Courier New",
     monospace;
   letter-spacing: 1.1px;
-  color: #819071;
+  color: #a2aaa3;
 }
 .work-callout {
   padding: 10px 0;
@@ -504,7 +504,7 @@ button:disabled {
   max-width: 340px;
   font-size: 12px;
   line-height: 1.9;
-  color: #7a8273;
+  color: #a2aaa3;
   margin-bottom: 23px;
 }
 .work-callout .MuiButton-root {
@@ -526,7 +526,7 @@ button:disabled {
 }
 .section-heading a {
   font-size: 9px;
-  color: #7d8a6f;
+  color: #a2aaa3;
   white-space: nowrap;
 }
 .how-row {
@@ -540,7 +540,7 @@ button:disabled {
   font:
     9px "Courier New",
     monospace;
-  color: #9aa58d;
+  color: #a2aaa3;
   margin-top: 4px;
 }
 .how-row h4 {
@@ -550,27 +550,27 @@ button:disabled {
 }
 .how-row p {
   font-size: 11px;
-  color: #838c7a;
+  color: #a2aaa3;
   margin: 0;
   line-height: 1.6;
 }
 .how-row > span:last-child {
   margin-left: auto;
-  color: #879573;
+  color: #a2aaa3;
   font-size: 13px;
 }
 .founding-strip {
   display: flex;
   gap: 20px;
   align-items: center;
-  border: 1px solid #dbe3ca;
+  border: 1px solid #a2aaa3;
   background: #edf2e2;
   border-radius: 8px;
   padding: 22px 25px;
 }
 .founding-star {
   font-size: 30px;
-  color: #7b8d5d;
+  color: #00b104;
 }
 .founding-strip div {
   display: flex;
@@ -583,7 +583,7 @@ button:disabled {
 }
 .founding-strip div span {
   font-size: 10px;
-  color: #899079;
+  color: #a2aaa3;
 }
 .founding-strip > a {
   font-size: 10px;
@@ -598,7 +598,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 22px;
-  color: #8b9383;
+  color: #a2aaa3;
   font-size: 10px;
 }
 .footer-brand {
@@ -626,7 +626,7 @@ button:disabled {
 .page-heading > p {
   font-size: 14px;
   line-height: 1.8;
-  color: #7b8473;
+  color: #a2aaa3;
   max-width: 680px;
 }
 .two-column {
@@ -655,7 +655,7 @@ button:disabled {
 .paper p {
   font-size: 13px;
   line-height: 1.85;
-  color: #7c8473;
+  color: #a2aaa3;
 }
 .paper a {
   font-size: 12px;
@@ -666,16 +666,16 @@ button:disabled {
     9px "Courier New",
     monospace;
   letter-spacing: 1px;
-  color: #8a957d;
+  color: #a2aaa3;
 }
 .paper blockquote {
   margin: 24px 0;
   padding: 23px;
-  border-left: 3px solid #a0bc75;
+  border-left: 3px solid #00b104;
   background: #f0f4e6;
   font-size: 14px;
   line-height: 1.9;
-  color: #63764e;
+  color: #00b104;
   overflow-wrap: anywhere;
 }
 .button-row {
@@ -705,7 +705,7 @@ button:disabled {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  color: #6f7e60;
+  color: #a2aaa3;
 }
 .check-label input {
   accent-color: #526d3d;
@@ -733,7 +733,7 @@ button:disabled {
   font-size: 11px;
   text-transform: capitalize;
   background: none;
-  color: #7e8973;
+  color: #a2aaa3;
   border: 1px solid transparent;
   border-radius: 6px;
   padding: 9px 15px;
@@ -741,14 +741,14 @@ button:disabled {
 .filter-tabs button.selected {
   background: #e9efdf;
   color: #435938;
-  border-color: #dce5cd;
+  border-color: #a2aaa3;
 }
 .section-controls > .MuiButton-root {
   font-size: 11px;
 }
 .text-link {
   font-size: 11px;
-  color: #657e51;
+  color: #00b104;
 }
 .empty-state {
   padding: 90px 20px 100px;
@@ -759,7 +759,7 @@ button:disabled {
 }
 .empty-symbol {
   font-size: 38px;
-  color: #8ea56e;
+  color: #00b104;
   line-height: 1.5;
   display: block;
 }
@@ -771,7 +771,7 @@ button:disabled {
 }
 .empty-state p {
   font-size: 13px;
-  color: #87917a;
+  color: #a2aaa3;
   line-height: 1.8;
   max-width: 460px;
   margin: 0 auto 24px;
@@ -786,7 +786,7 @@ button:disabled {
   padding: 17px 23px;
   font-size: 11px;
   line-height: 1.8;
-  color: #7b886d;
+  color: #a2aaa3;
   border-radius: 7px;
   margin: 22px 0;
 }
@@ -824,7 +824,7 @@ button:disabled {
 .job-card small {
   display: block;
   font-size: 10px;
-  color: #919b84;
+  color: #a2aaa3;
   margin-top: 20px;
 }
 .acceptance {
@@ -840,7 +840,7 @@ button:disabled {
 .business-icon {
   display: block;
   font-size: 34px;
-  color: #8b9c70;
+  color: #00b104;
   margin-bottom: 25px;
 }
 .business-footer {
@@ -874,7 +874,7 @@ button:disabled {
 }
 .auth-form p {
   font-size: 11px;
-  color: #829171;
+  color: #a2aaa3;
   margin: 7px 0 0;
 }
 .auth-form > .MuiAlert-root {
@@ -897,7 +897,7 @@ button:disabled {
   margin-bottom: 25px;
 }
 .muted {
-  color: #8a947c;
+  color: #a2aaa3;
   font-size: 12px;
 }
 .board-header {
@@ -907,7 +907,7 @@ button:disabled {
     9px "Courier New",
     monospace;
   letter-spacing: 1px;
-  color: #8f9a81;
+  color: #a2aaa3;
   padding: 20px 23px;
   border-block: 1px solid #dce3d3;
 }
@@ -936,11 +936,11 @@ button:disabled {
 }
 .thread-root small {
   font-size: 10px;
-  color: #89977a;
+  color: #a2aaa3;
 }
 .thread-root > span:last-child {
   font-size: 13px;
-  color: #83936f;
+  color: #a2aaa3;
 }
 .thread-root i {
   font-style: normal;
@@ -955,15 +955,15 @@ button:disabled {
   overflow-wrap: anywhere;
   font-size: 13px;
   line-height: 1.9;
-  color: #6f7e60;
+  color: #a2aaa3;
 }
 .thread-body a {
   font-size: 11px;
-  color: #6a8254;
+  color: #00b104;
 }
 .reply {
   margin: 20px 0 20px 25px;
-  border-left: 2px solid #c8d6b7;
+  border-left: 2px solid #a2aaa3;
   padding: 10px 20px;
 }
 .reply strong {
@@ -985,7 +985,7 @@ button:disabled {
 }
 .ledger-breakdown > span {
   font-size: 11px;
-  color: #8a977c;
+  color: #a2aaa3;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1021,7 +1021,7 @@ button:disabled {
 }
 .bank-logo {
   font-size: 30px;
-  color: #617b50;
+  color: #00b104;
 }
 .bank-logo > span {
   font-size: 24px;
@@ -1046,14 +1046,14 @@ button:disabled {
 .scope-note span {
   font-size: 11px;
   line-height: 1.8;
-  color: #839274;
+  color: #a2aaa3;
 }
 .connection-card .MuiButton-root {
   font-size: 11px;
 }
 .select-label {
   font-size: 11px;
-  color: #82936e;
+  color: #a2aaa3;
   display: block;
   margin: 20px 0 9px;
 }
@@ -1063,7 +1063,7 @@ select {
   border: 1px solid #d8e1cd;
   background: #f6f8ef;
   border-radius: 6px;
-  color: #5d744c;
+  color: #00b104;
   font-size: 12px;
 }
 .owner-work,
@@ -1092,7 +1092,7 @@ select {
   padding: 15px 0;
   border-top: 1px solid #e1e7d7;
   font-size: 12px;
-  color: #738564;
+  color: #a2aaa3;
 }
 .guide-layout {
   display: grid;
@@ -1108,7 +1108,7 @@ select {
   font:
     11px "Courier New",
     monospace;
-  color: #879679;
+  color: #a2aaa3;
 }
 .guide-layout article {
   padding: 45px 55px;
@@ -1148,7 +1148,7 @@ select {
 }
 .resident-section > p {
   font-size: 12px;
-  color: #8d9a7d;
+  color: #a2aaa3;
 }
 .resident {
   display: flex;
@@ -1167,13 +1167,13 @@ select {
 }
 .resident small {
   margin-left: auto;
-  color: #8e9b7c;
+  color: #a2aaa3;
 }
 .resident strong {
   font-weight: 500;
 }
 .resident > span:nth-child(3) {
-  color: #81926d;
+  color: #a2aaa3;
 }
 .town-panel-full .scene-wrap {
   height: 600px;
@@ -1186,13 +1186,13 @@ select {
   font:
     11px "Courier New",
     monospace;
-  color: #7b8e7f;
+  color: #a2aaa3;
 }
 .loading-orbit {
   width: 20px;
   height: 20px;
   border: 1px solid #bacbbb;
-  border-top-color: #61795b;
+  border-top-color: #a2aaa3;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
@@ -1204,7 +1204,7 @@ select {
   justify-content: center;
   padding: 70px;
   text-align: center;
-  color: #6a7e67;
+  color: #a2aaa3;
 }
 .scene-fallback > span {
   font-size: 60px;
@@ -1738,6 +1738,8 @@ select {
 
 /* CyberedOut: black canvas, supplied green identity, and functional land controls. */
 :root {
+  --brand-green: #00b104;
+  --brand-green-dark: #017801;
   color-scheme: dark;
 }
 body {
@@ -1769,32 +1771,32 @@ main,
   object-fit: contain;
 }
 .site-header nav {
-  color: #9eb19f;
+  color: #a2aaa3;
   gap: 20px;
 }
 .site-header nav a.active {
-  color: #8dff60;
+  color: #00b104;
 }
 .site-header nav a.active:after {
-  background: #8dff60;
+  background: #00b104;
 }
 .site-footer {
   border-color: #233725;
-  color: #92a690;
+  color: #a2aaa3;
 }
 .footer-brand {
-  color: #88ff51;
+  color: #00b104;
 }
 .site-footer a:hover,
 .paper a:hover {
-  color: #a2ff7a;
+  color: #00b104;
 }
 .hero h1,
 .page-heading h1 {
   color: #f0f7ed;
 }
 .hero h1 > span {
-  color: #7dff4f;
+  color: #00b104;
 }
 .hero p,
 .page-heading > p,
@@ -1803,7 +1805,7 @@ main,
 .how-row p,
 .muted,
 .resident-section > p {
-  color: #a0b09e;
+  color: #a2aaa3;
 }
 .hero-note {
   border-color: #2a402c;
@@ -1811,13 +1813,13 @@ main,
 .hero-note p,
 .hero-note a,
 .note-symbol {
-  color: #8ce969;
+  color: #00b104;
 }
 .page-topline,
 .eyebrow,
 .step-tag,
 .page-topline a {
-  color: #9dca87;
+  color: #00b104;
 }
 .stat-grid {
   background: #080e09;
@@ -1829,21 +1831,21 @@ main,
 .stat > span,
 .stat > small,
 .stat i {
-  color: #98af91;
+  color: #a2aaa3;
 }
 .stat > strong {
-  color: #e1f3d9;
+  color: #a2aaa3;
 }
 .town-panel {
   background: #060b08;
   border-color: #29452e;
 }
 .town-toolbar {
-  color: #9ae77f;
+  color: #00b104;
   background: #07100a;
 }
 .town-toolbar > div:last-child {
-  color: #90a98a;
+  color: #a2aaa3;
 }
 .scene-wrap {
   background: #030806;
@@ -1853,7 +1855,7 @@ main,
   height: 650px;
 }
 .scene-title {
-  color: #d3f0c4;
+  color: #a2aaa3;
   top: 22px;
   left: 24px;
   background: #030806b8;
@@ -1863,10 +1865,10 @@ main,
 }
 .scene-title > small,
 .scene-instructions {
-  color: #a9c39e;
+  color: #a2aaa3;
 }
 .scene-title > span {
-  color: #7dc568;
+  color: #00b104;
 }
 .scene-title > strong {
   font-size: 21px;
@@ -1878,8 +1880,8 @@ main,
 }
 .status-dot,
 .tiny-dot {
-  background: #7dff4f;
-  box-shadow: 0 0 10px #7dff4f55;
+  background: #00b104;
+  box-shadow: 0 0 10px #00b10455;
 }
 .paper,
 .stat-grid,
@@ -1902,7 +1904,7 @@ main,
 .empty-state a,
 .section-heading a,
 .thread-body a {
-  color: #99ed76;
+  color: #00b104;
 }
 .section-heading,
 .how-row,
@@ -1917,7 +1919,7 @@ main,
 .board-header,
 .thread-root small,
 .thread-root > span:last-child {
-  color: #7caa6c;
+  color: #00b104;
 }
 .founding-strip,
 .notice,
@@ -1927,7 +1929,7 @@ main,
 .acceptance {
   background: #0e1b10;
   border-color: #2b452c;
-  color: #adcd9e;
+  color: #a2aaa3;
 }
 .founding-strip div span,
 .founding-strip > a,
@@ -1936,7 +1938,7 @@ main,
 .scope-note span,
 .select-label,
 .transaction-row {
-  color: #a1bf92;
+  color: #a2aaa3;
 }
 .notice.warning {
   background: #231b09;
@@ -1944,12 +1946,12 @@ main,
   color: #e4cb95;
 }
 .filter-tabs button {
-  color: #aac69e;
+  color: #a2aaa3;
 }
 .filter-tabs button.selected {
   background: #17301a;
   border-color: #3b6432;
-  color: #a5ff7a;
+  color: #00b104;
 }
 .empty-state {
   border-color: #34562d;
@@ -1957,34 +1959,34 @@ main,
 }
 .empty-state p,
 .empty-symbol {
-  color: #9dc58b;
+  color: #00b104;
 }
 .thread-root {
-  color: #e1f2d8;
+  color: #a2aaa3;
 }
 .thread-body p {
-  color: #adbea5;
+  color: #a2aaa3;
 }
 .reply {
-  border-color: #527c3e;
+  border-color: #00b104;
 }
 .ledger-breakdown {
   border-color: #2d472b;
 }
 .ledger-breakdown > span {
-  color: #9fbe90;
+  color: #a2aaa3;
 }
 .ledger-breakdown strong {
-  color: #a4fa7c;
+  color: #00b104;
 }
 .ledger-total h2 {
-  color: #b9ff91;
+  color: #00b104;
 }
 .scope-note strong {
-  color: #c5ecad;
+  color: #a2aaa3;
 }
 .bank-logo {
-  color: #a9de91;
+  color: #00b104;
 }
 .stripe-logo {
   color: #b3a8ff;
@@ -1992,7 +1994,7 @@ main,
 select {
   background: #08110a;
   border-color: #35532d;
-  color: #c0dfb0;
+  color: #a2aaa3;
 }
 .resident {
   border-color: #29452a;
@@ -2000,10 +2002,10 @@ select {
 .scene-fallback,
 .loading-scene {
   background: #040a06;
-  color: #b9d6aa;
+  color: #a2aaa3;
 }
 .notice a {
-  color: #c8f8b2;
+  color: #00b104;
 }
 .auth-form > .MuiTextField-root {
   background: #0a110b;
@@ -2022,7 +2024,7 @@ select {
   background: #08100be8;
   border: 1px solid #335435;
   border-radius: 5px;
-  color: #b8dca5;
+  color: #a2aaa3;
   font-size: 10px;
   padding: 10px 12px;
 }
@@ -2047,7 +2049,7 @@ select {
 .world-builder p {
   font-size: 12px;
   line-height: 1.8;
-  color: #a0b396;
+  color: #a2aaa3;
 }
 .world-builder .MuiButton-root {
   margin-top: 17px;
@@ -2067,17 +2069,17 @@ select {
   display: flex;
   flex-direction: column;
   gap: 9px;
-  color: #b6cbae;
+  color: #a2aaa3;
 }
 .structure-options > button.selected {
-  border-color: #7dff4f;
+  border-color: #00b104;
   background: #10200f;
-  box-shadow: inset 0 0 0 1px #7dff4f33;
+  box-shadow: inset 0 0 0 1px #00b10433;
 }
 .structure-options strong {
   font-size: 12px;
   font-weight: 500;
-  color: #def2d4;
+  color: #a2aaa3;
 }
 .structure-options small {
   font-size: 10px;
@@ -2085,7 +2087,7 @@ select {
 }
 .structure-icon {
   font-size: 35px;
-  color: #8ad75e;
+  color: #00b104;
   line-height: 1.1;
 }
 .catalog-price {
@@ -2093,18 +2095,18 @@ select {
     8px "Courier New",
     monospace;
   line-height: 1.7;
-  color: #8ea880;
+  color: #a2aaa3;
   margin-top: 7px;
 }
 .town-bottom {
   border-top: 1px solid #213a24;
-  color: #a4c097;
+  color: #a2aaa3;
   font-size: 11px;
   line-height: 1.8;
   gap: 20px;
 }
 .town-bottom > a {
-  color: #a1fb77;
+  color: #00b104;
   white-space: nowrap;
 }
 .prototype-note {
@@ -2112,7 +2114,7 @@ select {
   font-size: 10px;
   line-height: 1.9;
   background: #060a07;
-  color: #91a58a;
+  color: #a2aaa3;
   border-top: 1px solid #1c3020;
 }
 .character-workbench {
@@ -2140,7 +2142,7 @@ select {
   gap: 10px;
   text-transform: capitalize;
   font-size: 11px;
-  color: #9cbb8c;
+  color: #a2aaa3;
 }
 .color-fields input {
   width: 57px;
@@ -2157,7 +2159,7 @@ select {
   gap: 13px;
 }
 .character-controls input[type="range"] {
-  accent-color: #7dff4f;
+  accent-color: #00b104;
   width: 100%;
 }
 .character-preview {
@@ -2177,7 +2179,7 @@ select {
   font:
     10px "Courier New",
     monospace;
-  color: #9dc889;
+  color: #00b104;
   line-height: 1.8;
   margin: 20px 0;
 }
@@ -2186,11 +2188,11 @@ select {
 }
 .file-input {
   display: block;
-  color: #c0efaa;
+  color: #00b104;
   font-size: 12px;
   padding: 18px 20px;
   background: #101f10;
-  border: 1px dashed #4d773d;
+  border: 1px dashed #00b104;
   border-radius: 6px;
   cursor: pointer;
   margin: 20px 0;
@@ -2200,7 +2202,7 @@ select {
   max-width: 100%;
   font-size: 11px;
   margin-top: 14px;
-  color: #b6cfaa;
+  color: #a2aaa3;
 }
 .concept-preview {
   display: block;
@@ -2215,20 +2217,20 @@ select {
   font-size: 11px;
 }
 .guide-layout aside {
-  color: #9fc18d;
+  color: #a2aaa3;
 }
 .guide-layout section {
   border-color: #29432a;
 }
 .button-row .text-link {
-  color: #a5e983;
+  color: #00b104;
 }
 .owner-work p {
-  color: #a0b79a;
+  color: #a2aaa3;
 }
 .site-header .join-top.MuiButton-root {
   color: #061003;
-  background: #7dff4f;
+  background: #00b104;
 }
 .page-topline a span:empty,
 .stat i:empty {
@@ -2438,18 +2440,18 @@ select {
   flex: 1;
 }
 .road-bottom strong {
-  color: #d5edc8;
+  color: #a2aaa3;
   font-size: 18px;
   font-weight: 500;
 }
 .road-bottom > div > span:last-child {
   font-size: 11px;
-  color: #a1b696;
+  color: #a2aaa3;
 }
 .road-bottom > a,
 .road-bottom > button {
   font-size: 11px;
-  color: #b6f391;
+  color: #00b104;
   border: 1px solid #3e6130;
   border-radius: 6px;
   padding: 12px 16px;
@@ -2457,7 +2459,7 @@ select {
   line-height: 1.6;
 }
 .road-bottom > button:disabled {
-  color: #6f7b68;
+  color: #a2aaa3;
   border-color: #263a25;
 }
 .road-presence {
@@ -2480,7 +2482,7 @@ select {
   padding: 6px 10px;
   border: 1px solid #2c4328;
   border-radius: 20px;
-  color: #c0d5b4;
+  color: #a2aaa3;
 }
 .peer-pill > i {
   height: 6px;
@@ -2502,7 +2504,7 @@ select {
 }
 .road-manifesto > p {
   font-size: 12px;
-  color: #a1b399;
+  color: #a2aaa3;
   line-height: 1.95;
   margin: 24px 0;
 }
@@ -2513,7 +2515,7 @@ select {
   flex-direction: column;
   gap: 20px;
   font-size: 11px;
-  color: #bbeb9e;
+  color: #00b104;
 }
 .road-panel .scene-instructions {
   bottom: 22px;
@@ -2661,10 +2663,10 @@ select {
   margin: 25px 0;
 }
 .connection-intro h1 span {
-  color: #7dff4f;
+  color: #00b104;
 }
 .connection-intro p {
-  color: #a2b69a;
+  color: #a2aaa3;
   font-size: 14px;
   line-height: 1.9;
 }
@@ -2692,17 +2694,17 @@ select {
 .connection-gate p {
   font-size: 12px;
   line-height: 1.9;
-  color: #a1b795;
+  color: #a2aaa3;
 }
 .connection-gate a {
-  color: #b9ee9d;
+  color: #00b104;
 }
 .connection-gate blockquote {
   padding: 20px;
   margin: 25px 0;
   background: #0b180d;
-  border-left: 2px solid #74df45;
-  color: #c4e6b0;
+  border-left: 2px solid #00b104;
+  color: #a2aaa3;
   line-height: 1.9;
   font-size: 13px;
 }
@@ -2714,7 +2716,7 @@ select {
 }
 .connection-gate small {
   display: block;
-  color: #7f9a76;
+  color: #a2aaa3;
   font-size: 10px;
   line-height: 1.9;
   margin-top: 23px;
@@ -2726,17 +2728,17 @@ select {
   font-size: 11px;
   line-height: 1.9;
   margin-top: 25px;
-  color: #8eab81;
+  color: #a2aaa3;
 }
 .connection-footnote a {
-  color: #a9db8c;
+  color: #00b104;
 }
 .disconnect-dot {
   font-size: 10px;
   padding: 10px 0;
   background: none;
   border: 0;
-  color: #8eaa80;
+  color: #a2aaa3;
   white-space: nowrap;
 }
 @media (max-width: 850px) {

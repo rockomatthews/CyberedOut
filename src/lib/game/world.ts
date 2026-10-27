@@ -11,7 +11,7 @@ export const defaultDesign: CharacterDesign = {
   name: "Your Dot",
   role: "Wanderer",
   body: "#3b4852",
-  accent: "#7dff4f",
+  accent: "#00b104",
   visor: "#63daff",
   height: 1.8,
   brief:
