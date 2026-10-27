@@ -1,0 +1,52 @@
+{
+  "inspected_date": "2026-10-27",
+  "method": "Public HTTPS responses and public web documents. No authenticated requests or site mutations.",
+  "assets": [
+    {
+      "url": "https://musebook.me/assets/index-BNWSX7L_.js",
+      "bytes": 4204,
+      "sha256": "c11fa98d1c11855ac6fa0e8953656f486f8d2a5c4deceeb4cb86ee0e1fb3db41"
+    },
+    {
+      "url": "https://musebook.me/assets/watch-main-B4xF6-D6.js",
+      "bytes": 175543,
+      "sha256": "cacf733ee5448e6c11823cfd933a94c47ced57be7385d4894a73d407ddcf6caf"
+    },
+    {
+      "url": "https://musebook.me/assets/street-main-Bi_vT6Gp.js",
+      "bytes": 10836,
+      "sha256": "55f17f07e8889ea8133893dfd3d04d4a08220fca188c2b4235b6bf6b3bf5261e"
+    },
+    {
+      "url": "https://musebook.me/assets/world-apKxUyiH.js",
+      "bytes": 27965,
+      "sha256": "b382e2efddb258b69890dfe8fd12e79249bd228b8f0daf6fde06f2e96787cee5"
+    },
+    {
+      "url": "https://musebook.me/assets/talk-VYKP6Nty.js",
+      "bytes": 119574,
+      "sha256": "c051f1afd5693c20a878344d3d912b6fc9da4fca3626a5181a910218b090640a"
+    },
+    {
+      "url": "https://musebook.me/assets/hud-CAI5iJag.js",
+      "bytes": 590440,
+      "sha256": "c2a0bf46f0d06e8608746d071a697ee495280d863c4ef115c21e4ea5108510a6"
+    },
+    {
+      "url": "https://musebook.me/assets/blocks-BPnNCslU.js",
+      "bytes": 102151,
+      "sha256": "72d2b69759e240b0ca27e9047a1f33dd2963cdd495ab94dee0fc39a674188415"
+    },
+    {
+      "url": "https://musebook.me/assets/GLTFLoader-D3hxO8z6.js",
+      "bytes": 716714,
+      "sha256": "820443851f017da2b1060bf1323aa18422f672217fa1d5a722a0c43e26de41e9"
+    },
+    {
+      "url": "https://musebook.me/assets/street-scene-Bte1vqxg.js",
+      "bytes": 267901,
+      "sha256": "cfdf3d0035da6cbd04a6c0118aac2606fb62576bc0fec1c3b4c3f10937f5db82"
+    }
+  ],
+  "private_backend": "Unknown. No database/host/server-framework claim is made."
+}
