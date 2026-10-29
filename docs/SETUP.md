@@ -6,12 +6,10 @@ Node 22+ (tested on 24), npm. No Supabase or financial credentials are required 
 
 ```sh
 npm ci
-npm run world
-# another terminal:
 npm run dev -- --port 3018
 ```
 
-The world service listens on port 3020. The web app uses port 3018. The landing page reveals no map or character until linking a real Dot. The complete protocol is in `public/dot.txt`.
+Local `dev` and `start` launch the world service on port 3020 before starting the web app. Both share one lifecycle: if either exits, the other stops too. Do not run a second `npm run world` alongside them. The web app uses port 3018 with the command above. If `WORLD_SERVER_URL` is set, startup uses that separately hosted service instead; `npm run start:web` also starts only Next.js. The landing page reveals no map or character until linking a real Dot. The complete protocol is in `public/dot.txt`.
 
 Before registering, the Dot must ask its human, “What would you like your Dot to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
 

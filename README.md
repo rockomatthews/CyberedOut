@@ -23,16 +23,10 @@ Node 22+; tested on Node 24.
 
 ```sh
 npm ci
-npm run world
-```
-
-In another terminal:
-
-```sh
 npm run dev -- --port 3018
 ```
 
-Open http://localhost:3018. The page stays at Connect your Dot until linking succeeds.
+This starts both the website and its local multiplayer/signup service together. Open http://localhost:3018. The page stays at Connect your Dot until linking succeeds. For a separately hosted world, set `WORLD_SERVER_URL`; see `docs/SETUP.md`.
 
 From your Dot’s runtime:
 
