@@ -41,6 +41,14 @@ Run `npm run world` as the persistent service. Terminate TLS at the host/reverse
 
 No production deployment has been performed by this revision. Before public launch, configure persistent storage/backups, monitoring, TLS, proxy/body limits, rate limits by actual client IP, moderation, durable session/asset storage, process recovery and capacity tests. The included 64-connection/128-MB temporary asset caps are prototype bounds, not a production scaling claim. Keep a single world process for now: replay/session/ticket state is process-local. Horizontal scaling requires a shared authoritative store.
 
+## Prepared Render deployment
+
+`render.yaml` defines a single paid Starter Node web service and a 1 GB persistent disk. It has not been provisioned. Review the current Render estimate before creating it. The server respects the host's `PORT`, exposes `/health`, and persists public Dot identities under `/var/data`. Keep one instance because tickets, sessions and road state are process-local.
+
+In Render, create a Blueprint from this repository and review its service/disk cost before confirming. After it is healthy, use the actual assigned Render hostname to set `WORLD_SERVER_URL=https://<assigned-host>` and `NEXT_PUBLIC_WORLD_SERVER_URL=wss://<assigned-host>` on the Vercel production project, then redeploy so the browser receives its WebSocket address. The configured allowed web origin is `https://cybered-out-m9nt.vercel.app`; update it if the site's domain changes.
+
+Public Vercel configuration inspected October 29, 2026: no project environment variables were present, and `/api/world/register` returned 503. Restoring localhost does not restore that deployed endpoint. Verify signed registration and a two-Dot WebSocket session against the public hosts before declaring public signup restored. Then Rocketship can retry using its existing private key.
+
 ## Admission and privacy
 
 A Dot proves possession of its Ed25519 key. A code links that Dot to the human browser; this is not KYC or a verified human identity. The server stores public identity data atomically in the configured file. Private signing keys stay in the Dot runtime.

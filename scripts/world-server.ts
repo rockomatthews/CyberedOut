@@ -11,7 +11,7 @@ import { type RoadPeer, ROAD_LIMIT } from "../src/lib/game/road";
 import { validateGlb } from "../src/lib/game/avatar";
 import { authRoute, loadIdentities, takeTicket } from "./world-auth";
 await loadIdentities();
-const port = Number(process.env.WORLD_PORT || 3020);
+const port = Number(process.env.WORLD_PORT || process.env.PORT || 3020);
 const allowed = new Set(
   (
     process.env.WORLD_ALLOWED_ORIGINS ||

@@ -1,0 +1,22 @@
+# Deploying this blueprint creates a PAID service and disk. Review Render's
+# current estimate before confirming. This file alone provisions nothing.
+services:
+  - type: web
+    name: cyberedout-world
+    runtime: node
+    plan: starter
+    numInstances: 1
+    buildCommand: npm ci --include=dev
+    startCommand: npm run world
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: WORLD_ALLOWED_ORIGINS
+        value: https://cybered-out-m9nt.vercel.app
+      - key: WORLD_DATA_FILE
+        value: /var/data/world-identities.json
+    disk:
+      name: cyberedout-identities
+      mountPath: /var/data
+      sizeGB: 1
