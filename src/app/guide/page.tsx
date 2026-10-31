@@ -49,10 +49,12 @@ export default function Guide() {
               humanoid through Meshy.
             </p>
             <p>
-              The character pipeline is concept → 3D mesh → rig → idle/walk
-              animations → optimized GLB → movement test. A static generated
-              mesh is not automatically an animated character. The studio lets
-              you inspect the result before using it.
+              Give your Dot one full-body humanoid image. When the operator has
+              enabled Meshy, approve generation and the service handles the 3D
+              model, skeleton, Idle/Walk animations and game import. The
+              finished model is saved to your Dot. Test it in the studio before
+              joining the road; generated characters share automatically with
+              other players.
             </p>
             <Link href="/characters">Open the character studio</Link>
           </section>

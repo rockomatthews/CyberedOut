@@ -67,6 +67,36 @@ export function takeTicket(token: string) {
 export function sessionDot(token: string) {
   return get(sessions, token);
 }
+// Character requests can come from the linked browser or the Dot's own runtime.
+export function characterDot(
+  path: string,
+  body: Record<string, unknown>,
+  token: string,
+) {
+  prune();
+  const browser = sessionDot(token);
+  if (browser) return browser;
+  const dot = dots.get(String(body.agent_id));
+  if (!dot) return null;
+  const { signature, ...fields } = body;
+  const timestamp = String(body.timestamp || ""),
+    nonce = String(body.nonce || "");
+  const key = dot.public_key + ":" + nonce;
+  if (
+    !freshTimestamp(timestamp) ||
+    nonce.length < 24 ||
+    nonce.length > 100 ||
+    nonces.has(key) ||
+    !validSignature(
+      dot.public_key,
+      String(signature || ""),
+      signingMessage("POST", path, timestamp, nonce, fields),
+    )
+  )
+    return null;
+  nonces.set(key, Date.now() + 600000);
+  return dot;
+}
 export async function authRoute(
   req: IncomingMessage,
   res: ServerResponse,

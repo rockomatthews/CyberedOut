@@ -3,6 +3,7 @@ import {
   createPrivateKey,
   randomUUID,
   sign,
+  createHash,
 } from "node:crypto";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
@@ -17,9 +18,9 @@ const filename = resolve(
 async function main() {
   const [command, suppliedName] = process.argv.slice(2);
   const name = suppliedName?.trim();
-  if (!["join", "link"].includes(command))
+  if (!["join", "link", "character", "character-status"].includes(command))
     throw new Error(
-      'Usage: npm run dot -- join "Your Dot name" OR npm run dot -- link',
+      'Usage: npm run dot -- join "Your Dot name" | link | character "image.png" --approve-meshy | character-status',
     );
   if (command === "join" && (!name || name.length < 2 || name.length > 32))
     throw new Error(
@@ -30,7 +31,7 @@ async function main() {
     identity = JSON.parse(await readFile(filename, "utf8"));
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    if (command === "link") throw new Error("No saved identity. Join first.");
+    if (command !== "join") throw new Error("No saved identity. Join first.");
     const pair = generateKeyPairSync("ed25519");
     identity = {
       public_key: pair.publicKey.export({ format: "jwk" }).x!,
@@ -51,6 +52,63 @@ async function main() {
       d: identity.private_key,
     },
   });
+  if (command === "character" || command === "character-status") {
+    if (!identity.agent_id)
+      throw new Error(
+        "Finish registering this Dot first using its existing key.",
+      );
+    let payload: Record<string, unknown> = { agent_id: identity.agent_id };
+    if (command === "character") {
+      if (!suppliedName || !process.argv.includes("--approve-meshy"))
+        throw new Error(
+          "Get your human's approval to send their image to Meshy and spend generation credits, then run character with its image path and --approve-meshy.",
+        );
+      const bytes = await readFile(resolve(suppliedName));
+      if (bytes.length > 2 * 1024 * 1024)
+        throw new Error("Use an image up to 2 MB.");
+      const mime = /\.png$/i.test(suppliedName)
+        ? "png"
+        : /\.jpe?g$/i.test(suppliedName)
+          ? "jpeg"
+          : /\.webp$/i.test(suppliedName)
+            ? "webp"
+            : "";
+      if (!mime) throw new Error("Use PNG, JPEG or WebP.");
+      payload = {
+        ...payload,
+        image_data_uri: `data:image/${mime};base64,${bytes.toString("base64")}`,
+        approved: true,
+        idempotency_key: createHash("sha256")
+          .update(identity.public_key)
+          .update(bytes)
+          .digest("hex"),
+      };
+    }
+    const action = command === "character" ? "create" : "status";
+    const path = "/api/world/character/" + action;
+    const fields = {
+      ...payload,
+      timestamp: String(Date.now()),
+      nonce: randomUUID(),
+    };
+    const signature = sign(
+      null,
+      Buffer.from(
+        signingMessage("POST", path, fields.timestamp, fields.nonce, fields),
+      ),
+      key,
+    ).toString("base64url");
+    const response = await fetch(origin + path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...fields, signature }),
+    });
+    const result = await response.json();
+    if (!response.ok)
+      throw new Error(result.error || "Character request failed.");
+    console.log(JSON.stringify(result, null, 2));
+    return;
+  }
   const path = command === "join" ? "/api/world/register" : "/api/world/link";
   const fields = {
     ...(command === "join"

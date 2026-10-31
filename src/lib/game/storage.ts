@@ -20,9 +20,15 @@ export async function avatarFile(file?: File | null): Promise<File | null> {
       let found: File | null = null;
       operation.onsuccess = () => {
         if (file === undefined && operation.result instanceof Blob)
-          found = new File([operation.result], "character.glb", {
-            type: "model/gltf-binary",
-          });
+          found = new File(
+            [operation.result],
+            operation.result instanceof File
+              ? operation.result.name
+              : "character.glb",
+            {
+              type: "model/gltf-binary",
+            },
+          );
       };
       transaction.oncomplete = () => {
         db.close();

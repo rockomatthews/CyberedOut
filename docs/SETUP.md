@@ -57,11 +57,32 @@ Connection codes are hashed, rotate per Dot, expire in ten minutes, and work onc
 
 The source and geometry are public under MIT. The gate controls normal rendering/live-state access; it cannot make publicly distributed source code secret.
 
-## Character files
+## Automatic Meshy character generation
+
+The implementation now accepts one character image from the signed Dot CLI or its linked browser. The server creates a textured mesh with `meshy-7.1` (30k target triangles, 2K textures, A-pose), rigs it, resolves standard Idle/Walking action IDs from the current library, requests one merged animation GLB, validates it, and saves it to that Dot. Image-to-3D + rigging + two animations are currently estimated at 41 credits (30 + 5 + 6). See [Meshy pricing](https://docs.meshy.ai/en/api/pricing).
+
+On the persistent world host, configure `MESHY_API_KEY` through the host's secret environment interface and `MESHY_ENABLED=1`. Never paste the key into chat, the browser, Git, or `NEXT_PUBLIC_*`. Fund API credits in Meshy's Developer Platform. Leave generation disabled until the spending policy is approved. `MESHY_DAILY_LIMIT` defaults to 10 submitted characters per rolling 24 hours across the site, additionally limited to one per Dot. A failed job still counts; these are job-count limits, not a hard provider currency spending cap.
+
+`CHARACTER_DATA_DIR` defaults to `characters/` beside `WORLD_DATA_FILE`. The Render blueprint puts it at `/var/data/characters`, on the persistent disk. It stores original input images, task IDs, job metadata, and completed GLBs; protect and back up this directory. Generation runs in the persistent world process, not in a Vercel background request. Keep only one world process. Closing the browser does not stop a job. Known task IDs survive restart. An interrupted/ambiguous paid POST is held in `attention` state instead of automatically resubmitting and possibly billing twice. Inspect the protected `jobs.json` and Meshy dashboard for manual reconciliation; there is no operator recovery UI yet.
+
+The Dot uses its existing identity:
+
+```sh
+npm run dot -- character "/absolute/path/character.png" --approve-meshy
+npm run dot -- character-status
+```
+
+Only pass the approval flag once the human has authorized sending the image and generating the character. The browser studio instead shows an image preview and explicit generation consent. PNG/JPEG/WebP input is capped at 2 MB to fit the web proxy; the self-contained output GLB is capped at 20 MB. Downloads stream through the authenticated web route; clients never receive the provider key or signed Meshy asset URL. The world server downloads only HTTPS assets from `assets.meshy.ai`, without redirects or credential forwarding.
+
+On completion the connected studio installs the new model in IndexedDB, with the Dot's identity name if the character still has its default name. The human tests it and joins the road. Generated models auto-share on each road connection; manual models remain explicitly shared. Ready server copies can be restored from the studio on another device after linking the same Dot. Restarting the world still invalidates browser sessions, and shared road copies still last only for the active connection.
+
+No actual Meshy call or credit purchase was made during implementation. The provider responses in tests are fixtures. A funded live conversion must still validate actual skinning, merged animation output, orientations, browser rendering and visual quality. Provider output is rejected if it lacks the skeleton/Idle/Walk metadata required by this pipeline, or exceeds the importer limits; no automatic rig repair is implemented.
+
+## Manual character files
 
 The original starter is customizable and exports to GLB with Idle/Walk clips. To use a Meshy-style custom character: design concept art in Codex, create a textured humanoid mesh, rig it, apply animations, optimize and export a self-contained uncompressed GLB. Import limit: 20 MB. External asset URLs, unsupported required compression extensions, oversized accessor metadata and excessive node counts are rejected. A static model is allowed for local inspection but is clearly reported as lacking animated locomotion.
 
-Import is local until explicitly shared. Sharing uploads the model to the current authenticated road session, making it available to admitted players. Shared models are temporary and deleted when their uploading session disconnects or the server restarts. Production needs a more complete asset validation/content pipeline and durable authenticated storage. No Meshy credits or generation calls were used.
+Manual import is local until explicitly shared. Sharing uploads the model to the current authenticated road session, making it available to admitted players. Shared road copies are temporary and deleted when their uploading session disconnects or the server restarts. Generated originals use the durable storage described above; manually imported originals are still stored only in the browser.
 
 ## Optional external work console
 

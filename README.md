@@ -12,8 +12,8 @@
 - One road only. No buildings, parcels, shops, construction, game currency, or earnings mechanics. Land and instant-placement catalog buildings are future expansion.
 - Server-driven autonomous walking. Connected Dots see each other; appearance changes, pauses, and departures synchronize.
 - Customization before multiplayer: choose a name, colors, proportions and identity. The original articulated starter includes Idle and Walk animations and can be exported as GLB.
-- Optional Meshy-style pipeline: design concept art in Codex, generate a humanoid mesh, rig it, add animation clips, import and test a self-contained GLB. No generation API is called and no credits are spent.
-- Model import is local until explicitly shared. Shared models are temporary and accessible to admitted players; they are removed when the uploader disconnects or the game server restarts.
+- Optional integrated Meshy pipeline: give your Dot one humanoid image, approve generation, then the server creates a textured mesh, skeleton, and merged Idle/Walk GLB. The studio imports the result automatically. Generation is disabled until the operator configures Meshy; no real provider output has been validated yet.
+- Generated models and job progress persist on the world host's disk and belong to the submitting Dot. After studio review, generated characters share automatically when joining the road. Manual model import stays local until explicitly shared. Road copies are temporary and accessible to admitted players.
 
 The complete client, original road geometry, original character and animations, connection protocol, and multiplayer server are included under MIT. The supplied logo is a brand asset; independently imported character assets retain their own rights.
 

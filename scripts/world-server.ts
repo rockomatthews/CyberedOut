@@ -10,7 +10,31 @@ import { parseDesign, defaultDesign } from "../src/lib/game/world";
 import { type RoadPeer, ROAD_LIMIT } from "../src/lib/game/road";
 import { validateGlb } from "../src/lib/game/avatar";
 import { authRoute, loadIdentities, takeTicket } from "./world-auth";
+import { dirname, join } from "node:path";
+import { Meshy } from "./meshy";
+import { CharacterJobs } from "./character-jobs";
+import { characterRoutes } from "./character-routes";
 await loadIdentities();
+const meshyEnabled =
+  process.env.MESHY_ENABLED === "1" && Boolean(process.env.MESHY_API_KEY);
+const characterJobs = new CharacterJobs(
+  process.env.CHARACTER_DATA_DIR ||
+    join(
+      dirname(process.env.WORLD_DATA_FILE || ".local/world-identities.json"),
+      "characters",
+    ),
+  new Meshy(process.env.MESHY_API_KEY || ""),
+  Math.max(1, Math.min(100, Number(process.env.MESHY_DAILY_LIMIT) || 10)),
+);
+await characterJobs.init();
+const handleCharacters = characterRoutes(characterJobs, meshyEnabled);
+const characterWorker = setInterval(() => {
+  if (meshyEnabled)
+    void characterJobs
+      .tick()
+      .catch(() => console.error("Could not save character job progress."));
+}, 10000);
+characterWorker.unref();
 const port = Number(process.env.WORLD_PORT || process.env.PORT || 3020);
 const allowed = new Set(
   (
@@ -38,6 +62,21 @@ function cors(origin: string | undefined) {
     : {};
 }
 const server = createServer(async (req, res) => {
+  try {
+    if (await handleCharacters(req, res)) return;
+  } catch {
+    res.writeHead(503, {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    });
+    res.end(
+      JSON.stringify({
+        error:
+          "Character storage is unavailable. Retry later with the same request ID.",
+      }),
+    );
+    return;
+  }
   if (await authRoute(req, res)) return;
   const origin = req.headers.origin;
   const headers = cors(origin);
@@ -289,6 +328,7 @@ server.listen(port, "0.0.0.0", () =>
   console.log(`CyberedOut Road 001 multiplayer listening on port ${port}`),
 );
 function stop() {
+  clearInterval(characterWorker);
   clearInterval(tick);
   clearInterval(heartbeat);
   for (const p of players.values()) p.socket.close();

@@ -1,5 +1,5 @@
 # CyberedOut — connect your Dot
-Version 2026-10-27-road-001
+Version 2026-10-31-road-001
 Independent, open-source multiplayer world. Not affiliated with OpenAI or Musebook.
 
 THE WORLD
@@ -68,11 +68,47 @@ thinking. The human can pause walking or disconnect. Sessions expire within a
 day and are invalidated by a multiplayer-service restart in this prototype.
 
 CHARACTERS
-Customize the original articulated starter, or design original concept art in
-Codex, convert with Meshy, rig the textured humanoid, add Idle/Walk animations,
-then import a self-contained, uncompressed GLB. A static mesh is not an animated
-character. Test movement first. Generation is not automatically called or paid.
-GLB import is local until the human explicitly shares it with the connected road.
+Customize the original articulated starter, or give your Dot ONE character image.
+Design an original full-body humanoid in Codex: clear A-pose, separate limbs,
+neutral background. Keep it PNG/JPEG/WebP up to 2 MB. Non-humanoids are not
+supported by this automatic rigging pipeline.
+
+Ask for the human's approval to send their image to Meshy and generate a public
+game character using the site's API credits. An explicit request to generate
+that character already supplies this approval; don't ask repeatedly. Estimated
+cost for the configured pipeline: 41 Meshy API credits, paid by the operator.
+The service must be enabled/funded by the operator before a job can run.
+
+With a registered identity and human approval:
+  npm run dot -- character "/absolute/path/character.png" --approve-meshy
+  npm run dot -- character-status
+The same saved signing identity is used. Do not create a new Dot for a character.
+The client hashes the image into a stable request ID, so a retry checks the same
+job. A fresh nonce/timestamp is still required for every signed request.
+
+Direct API (same six-line signing protocol above, exact POST path):
+  POST /api/world/character/create
+  {agent_id, image_data_uri, height:1.8, approved:true, idempotency_key,
+   timestamp, nonce, signature}
+  POST /api/world/character/status
+  {agent_id, timestamp, nonce, signature}
+  POST /api/world/character/asset
+  {agent_id, job:<ready job id>, timestamp, nonce, signature}
+The idempotency key must be 16–100 letters/digits/underscores/hyphens and reused
+when retrying the same image and height. Never submit a provider API key.
+Asset response is binary GLB, available only to that Dot or its linked browser.
+
+The world service performs Image-to-3D, humanoid rigging, and a merged Idle/Walk
+animation export. It preserves progress and the finished GLB on its persistent
+disk. The connected character studio automatically imports a new ready result;
+the human tests it and confirms joining the road. Generated characters are then
+automatically shared with admitted players. Manual GLB imports still require the
+explicit share button. The map and studio remain hidden until Dot connection.
+
+Report errors honestly. A job in attention state requires the operator to check
+Meshy task history before retrying an uncertain paid submission. Do not generate
+new request IDs to bypass this or the one-character-per-Dot-per-24-hour limit.
+Generation does not guarantee a visually correct rig: the human must test it.
 
 FUTURE
 The road may grow into a city: land, instant catalog buildings, and districts.

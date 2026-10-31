@@ -88,7 +88,12 @@ async function identity(name, checkRetries = false) {
   );
   const ticket = await post("/api/world/ticket", {}, cookie);
   assert.equal(ticket.response.status, 200);
-  return { id, cookie, ticket: ticket.data.ticket };
+  return {
+    id,
+    cookie,
+    ticket: ticket.data.ticket,
+    privateKey: pair.privateKey,
+  };
 }
 function client(ticket) {
   const socket = new WebSocket(url, { origin });
@@ -117,6 +122,55 @@ console.log(
 );
 const first = await identity("Road QA A", true),
   second = await identity("Road QA B");
+assert.equal((await fetch(app + "/api/character/jobs")).status, 401);
+assert.equal(
+  (await fetch(app + "/api/character/asset?job=unknown")).status,
+  401,
+);
+const characterStatus = await fetch(app + "/api/character/jobs", {
+  headers: { Cookie: first.cookie },
+});
+assert.equal(characterStatus.status, 200);
+const characterState = await characterStatus.json();
+assert.equal(characterState.job, null);
+if (!characterState.enabled) {
+  const disabledCreate = await post("/api/character/jobs", {}, first.cookie);
+  assert.equal(disabledCreate.response.status, 503);
+  assert.match(disabledCreate.data.error, /not configured/);
+}
+const crossOrigin = await fetch(app + "/api/character/jobs", {
+  method: "POST",
+  headers: {
+    Cookie: first.cookie,
+    Origin: "https://untrusted.example",
+    "Content-Type": "application/json",
+  },
+  body: "{}",
+});
+assert.equal(crossOrigin.status, 403);
+const path = "/api/world/character/status";
+const proof = signed(first.privateKey, path, { agent_id: first.id });
+assert.equal(
+  (await post(path, { ...proof, agent_id: second.id })).response.status,
+  401,
+);
+assert.equal((await post(path, proof)).response.status, 200);
+assert.equal((await post(path, proof)).response.status, 401);
+assert.equal(
+  (
+    await post(
+      "/api/world/character/asset",
+      signed(second.privateKey, "/api/world/character/asset", {
+        agent_id: second.id,
+        job: "unknown",
+      }),
+    )
+  ).response.status,
+  404,
+);
+console.log(
+  "PASS character status and assets require the owning browser or a fresh signed Dot request",
+);
 const studio = await fetch(app + "/characters", {
   headers: { Cookie: first.cookie },
 });

@@ -12,6 +12,7 @@ import {
 import { type RoadPeer } from "@/lib/game/road";
 import { connectRoad } from "@/lib/game/multiplayer";
 import { avatarFile } from "@/lib/game/storage";
+import { GENERATED_CHARACTER_KEY } from "@/lib/game/characters";
 const Scene = dynamic(() => import("./town-scene"), {
   ssr: false,
   loading: () => (
@@ -83,6 +84,36 @@ export function TownView() {
       setStatus(e instanceof Error ? e.message : "Model could not be shared.");
     }
   }
+  useEffect(() => {
+    if (!connected || !file || !myId || !assetToken) return;
+    let saved;
+    try {
+      saved = JSON.parse(
+        localStorage.getItem(GENERATED_CHARACTER_KEY) || "null",
+      );
+    } catch {}
+    if (saved?.dot_id !== myId || file.name !== saved.id + ".glb") return;
+    let stopped = false;
+    void transport.current
+      ?.upload(file)
+      .then(() => {
+        if (!stopped)
+          setStatus(
+            "Your generated character is shared with everyone on the road.",
+          );
+      })
+      .catch((error) => {
+        if (!stopped)
+          setStatus(
+            error instanceof Error
+              ? error.message
+              : "Could not share generated character.",
+          );
+      });
+    return () => {
+      stopped = true;
+    };
+  }, [connected, file, myId, assetToken]);
   return (
     <section className="town-panel road-panel" aria-label="Multiplayer road">
       <div className="town-toolbar">

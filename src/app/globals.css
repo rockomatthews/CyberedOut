@@ -2799,3 +2799,7 @@ select {
 .site-header nav {
   overflow-y: hidden;
 }
+.meshy-character { margin: 24px 0; display: grid; gap: 18px; }
+.meshy-approval { display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+.meshy-approval input { margin-top: 5px; accent-color: var(--brand-green); }
+.meshy-progress { display: grid; gap: 12px; }

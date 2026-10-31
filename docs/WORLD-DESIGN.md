@@ -27,6 +27,8 @@ For the current brief, a prefab/GLB scene with a small authoritative server fits
 
 ## Character pipeline
 
+October 31 implementation: the world service now orchestrates steps 3–5 through Meshy's API after one approved image submission from the Dot or connected browser. Job metadata and completed models persist with the Dot; the studio imports new ready results and the road auto-shares generated models. Enable/configure Meshy on the persistent host before use. See SETUP.md for configuration, quotas, signed submission and recovery. Real provider output has not yet been validated; the steps below describe the required asset contract.
+
 1. In Codex, design an original full-body humanoid: name, silhouette, outfit, materials, palette, and role/personality. Use a clear A-pose and separated limbs.
 2. Generate or supply concept art. Review the design before converting it.
 3. Use [Meshy Image to 3D](https://docs.meshy.ai/en/api/image-to-3d) to produce a textured mesh. Remesh to the browser budget.

@@ -8,6 +8,8 @@ import Alert from "@mui/material/Alert";
 import { GLTFExporter } from "three/examples/jsm/exporters/GLTFExporter.js";
 import { makeAvatar, disposeObject, validateGlb } from "@/lib/game/avatar";
 import { avatarFile } from "@/lib/game/storage";
+import { MeshyCharacter } from "./meshy-character";
+import { GENERATED_CHARACTER_KEY } from "@/lib/game/characters";
 import {
   defaultDesign,
   parseDesign,
@@ -34,7 +36,6 @@ export function CharacterStudio() {
   const [design, setDesign] = useState<CharacterDesign>(defaultDesign);
   const [model, setModel] = useState<File | null>(null);
   const [status, setStatus] = useState("");
-  const [concept, setConcept] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   useEffect(() => {
     try {
@@ -91,8 +92,8 @@ export function CharacterStudio() {
           <span className="eyebrow">01 / DESIGN YOUR IDENTITY</span>
           <h2>Give your Dot a body.</h2>
           <p>
-            Start with the playable builder, or design concept art in Codex and
-            bring back a rigged GLB from Meshy.
+            Customize the playable starter, or give your Dot one character image
+            and generate a rigged, animated body below.
           </p>
           <TextField
             label="Character name"
@@ -218,47 +219,23 @@ export function CharacterStudio() {
           {status}
         </Alert>
       ) : null}
-      <div className="two-column character-imports">
+      <MeshyCharacter
+        height={design.height}
+        onReady={(file, name) => {
+          setModel(file);
+          setDesign((current) => ({
+            ...current,
+            name: current.name === defaultDesign.name ? name : current.name,
+          }));
+        }}
+      />
+      <div className="character-imports">
         <section className="paper">
-          <span className="eyebrow">02 / CONCEPT ART IN CODEX</span>
-          <h2>Design before generating.</h2>
+          <span className="eyebrow">ALREADY HAVE A MODEL?</span>
+          <h2>Import your own GLB.</h2>
           <p>
-            Use your brief to create an original full-body character in Codex.
-            Ask for a clean A-pose, separated limbs, and a neutral background.
-            Preview the concept here; it stays on this device.
-          </p>
-          <label className="file-input">
-            Choose concept image
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (!file) return;
-                if (file.size > 10 * 1024 * 1024) {
-                  setStatus("Use a concept image smaller than 10 MB.");
-                  return;
-                }
-                if (concept) URL.revokeObjectURL(concept);
-                setConcept(URL.createObjectURL(file));
-              }}
-            />
-          </label>
-          {concept ? (
-            <img
-              className="concept-preview"
-              src={concept}
-              alt="Your local character concept"
-            />
-          ) : null}
-        </section>
-        <section className="paper">
-          <span className="eyebrow">03 / MESHY TO PLAYABLE</span>
-          <h2>Image. Mesh. Rig. Walk.</h2>
-          <p>
-            Convert your approved concept with Meshy Image to 3D, rig the
-            humanoid, then add Idle and Walk animations. Export a self-contained
-            GLB and test it here.
+            Bring an existing self-contained character with a skeleton and
+            Idle/Walk animations, then test it above.
           </p>
           <label className="file-input">
             Import character GLB
@@ -271,6 +248,7 @@ export function CharacterStudio() {
                 try {
                   validateGlb(await file.arrayBuffer());
                   await avatarFile(file);
+                  localStorage.removeItem(GENERATED_CHARACTER_KEY);
                   setModel(file);
                   setStatus(
                     "Model saved locally. Check the live movement test before using it.",
@@ -289,6 +267,7 @@ export function CharacterStudio() {
             <Button
               onClick={async () => {
                 await avatarFile(null);
+                localStorage.removeItem(GENERATED_CHARACTER_KEY);
                 setModel(null);
                 setStatus("Returned to your original starter character.");
               }}
@@ -297,9 +276,8 @@ export function CharacterStudio() {
             </Button>
           ) : null}
           <div className="notice">
-            Meshy generation is not connected or running here. No credits are
-            spent. Import supports embedded, uncompressed GLB up to 20 MB;
-            provider output must be optimized and tested.
+            Manual import supports embedded, uncompressed GLB up to 20 MB. Check
+            the movement test before using it on the road.
           </div>
           <a
             href="https://docs.meshy.ai/en/api/rigging"

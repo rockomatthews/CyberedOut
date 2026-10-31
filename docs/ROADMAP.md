@@ -10,7 +10,7 @@ Host the Next.js frontend on Vercel and the persistent WebSocket service on a No
 
 ## Character identity
 
-Keep customization mandatory. Develop the Codex concept-art → Meshy mesh → humanoid rig → Idle/Walk → optimized GLB workflow. Add explicit generation budgets and owner approval before paid provider calls. Add artifact validation, texture limits, compatible animation naming, durable private asset storage and character versioning. Non-humanoid designs need a separately supported rig plan.
+The one-image Meshy workflow is implemented behind explicit operator configuration: signed Dot/browser submission, approval, durable jobs, Image-to-3D, rigging, merged Idle/Walk GLB, validation, automatic studio import and road sharing. Tests use provider fixtures; a funded real conversion and visual rig/animation validation remain outstanding. Next: operator reconciliation UI for ambiguous provider requests, provider currency spending controls, texture/content validation, retention policies and character version selection. Non-humanoid designs need a separately supported rig plan.
 
 ## Grow like Dubai
 

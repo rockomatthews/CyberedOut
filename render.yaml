@@ -16,6 +16,12 @@ services:
         value: https://cybered-out-m9nt.vercel.app
       - key: WORLD_DATA_FILE
         value: /var/data/world-identities.json
+      - key: CHARACTER_DATA_DIR
+        value: /var/data/characters
+      - key: MESHY_ENABLED
+        value: "0"
+      - key: MESHY_DAILY_LIMIT
+        value: "10"
     disk:
       name: cyberedout-identities
       mountPath: /var/data
