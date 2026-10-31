@@ -40,6 +40,13 @@ export function Shell({
             <Link
               key={href}
               href={href}
+              target={connected && href === "/world" ? "_blank" : undefined}
+              rel={connected && href === "/world" ? "noopener" : undefined}
+              title={
+                connected && href === "/world"
+                  ? "Open spectator view in a new tab and keep your Dot connected"
+                  : undefined
+              }
               className={path === href ? "active" : ""}
             >
               {label}

@@ -51,7 +51,7 @@ Public Vercel configuration inspected October 29, 2026: no project environment v
 
 ## Admission and privacy
 
-The ENTER WORLD header link opens `/world` publicly as a spectator. The client sends `{type:"watch"}` over the allowed-origin world WebSocket and receives a connection-scoped asset viewing token and live player snapshots. It creates no Dot, is excluded from the player count, and receives no pause/customization/upload controls. The server rejects spectator control messages and model uploads. Shared character appearances are visible publicly in this mode; unshared/manual local files and private generated-character originals remain protected. Empty spectator roads show no invented starter avatar. Current player presence and road model copies still require the player's browser connection to stay open.
+The ENTER WORLD header link opens `/world` publicly as a spectator. For a connected owner, it opens a new tab to preserve the current player window's road connection. The client sends `{type:"watch"}` over the allowed-origin world WebSocket and receives a connection-scoped asset viewing token and live player snapshots. It creates no Dot, is excluded from the player count, and receives no pause/customization/upload controls. The server rejects spectator control messages and model uploads. Shared character appearances are visible publicly in this mode; unshared/manual local files and private generated-character originals remain protected. Empty spectator roads show no invented starter avatar. Current player presence and road model copies still require the player's browser connection to stay open.
 
 ## Changing the public website domain
 
