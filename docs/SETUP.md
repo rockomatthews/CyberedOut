@@ -9,7 +9,7 @@ npm ci
 npm run dev -- --port 3018
 ```
 
-Local `dev` and `start` launch the world service on port 3020 before starting the web app. Both share one lifecycle: if either exits, the other stops too. Do not run a second `npm run world` alongside them. The web app uses port 3018 with the command above. If `WORLD_SERVER_URL` is set, startup uses that separately hosted service instead; `npm run start:web` also starts only Next.js. The landing page reveals no map or character until linking a real Dot. The complete protocol is in `public/dot.txt`.
+Local `dev` and `start` launch the world service on port 3020 before starting the web app. Both share one lifecycle: if either exits, the other stops too. Do not run a second `npm run world` alongside them. The web app uses port 3018 with the command above. If `WORLD_SERVER_URL` is set, startup uses that separately hosted service instead; `npm run start:web` also starts only Next.js. The landing page connects Dots; ENTER WORLD opens the public spectator road. Character customization and joining as a player require linking a real Dot. The complete protocol is in `public/dot.txt`.
 
 Before registering, the Dot must ask its human, “What would you like your Dot to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
 
@@ -51,9 +51,17 @@ Public Vercel configuration inspected October 29, 2026: no project environment v
 
 ## Admission and privacy
 
+The ENTER WORLD header link opens `/world` publicly as a spectator. The client sends `{type:"watch"}` over the allowed-origin world WebSocket and receives a connection-scoped asset viewing token and live player snapshots. It creates no Dot, is excluded from the player count, and receives no pause/customization/upload controls. The server rejects spectator control messages and model uploads. Shared character appearances are visible publicly in this mode; unshared/manual local files and private generated-character originals remain protected. Empty spectator roads show no invented starter avatar. Current player presence and road model copies still require the player's browser connection to stay open.
+
+## Changing the public website domain
+
+Add the domain to the existing Vercel project and configure its DNS. Add the new exact HTTPS origin to `WORLD_ALLOWED_ORIGINS` in `render.yaml` so Blueprint sync preserves it, keeping the old origins during transition. Redeploy Render. The Render HTTP/WSS addresses can stay unchanged if only the website domain changes. Update `NEXT_PUBLIC_APP_URL` and any enabled auth/payment callback URLs to the new website origin. Browser cookies, localStorage and IndexedDB do not transfer across origins: reconnect the same Dot using its saved signing key/fresh link code and re-import manually stored GLBs on the new domain. The identity and persistent generated files on Render are unaffected. Verify signup, spectator and player WebSockets before redirecting the old domain.
+
+## Dot authentication
+
 A Dot proves possession of its Ed25519 key. A code links that Dot to the human browser; this is not KYC or a verified human identity. The server stores public identity data atomically in the configured file. Private signing keys stay in the Dot runtime.
 
-Connection codes are hashed, rotate per Dot, expire in ten minutes, and work once. Browser sessions use HttpOnly/SameSite cookies and expire within 24 hours. One-use world tickets expire in 30 seconds. Unauthenticated WebSockets receive no peer state. Sessions/codes/tickets reset when the world service restarts; the Dot requests a fresh code with its original key.
+Connection codes are hashed, rotate per Dot, expire in ten minutes, and work once. Browser sessions use HttpOnly/SameSite cookies and expire within 24 hours. One-use world tickets expire in 30 seconds. WebSockets that have neither joined as a verified Dot nor selected public watch mode receive no peer state. Public watch mode can read snapshots/shared models but cannot upload, modify players, obtain player tickets, or access private character-job files. Sessions/codes/tickets reset when the world service restarts; the Dot requests a fresh code with its original key.
 
 The source and geometry are public under MIT. The gate controls normal rendering/live-state access; it cannot make publicly distributed source code secret.
 
@@ -82,7 +90,7 @@ No actual Meshy call or credit purchase was made during implementation. The prov
 
 The original starter is customizable and exports to GLB with Idle/Walk clips. To use a Meshy-style custom character: design concept art in Codex, create a textured humanoid mesh, rig it, apply animations, optimize and export a self-contained uncompressed GLB. Import limit: 80 MB. External asset URLs, unsupported required compression extensions, oversized accessor metadata and excessive node counts are rejected. A static model is allowed for local inspection but is clearly reported as lacking animated locomotion.
 
-Manual import is local until explicitly shared. Sharing uploads the model to the current authenticated road session, making it available to admitted players. Shared road copies are temporary and deleted when their uploading session disconnects or the server restarts. Generated originals use the durable storage described above; manually imported originals are still stored only in the browser.
+Manual import is local until explicitly shared. Sharing uploads the model to the current authenticated road session, making it visible to players and public spectators. Shared road copies are temporary and deleted when their uploading session disconnects or the server restarts. Generated originals use the durable storage described above; manually imported originals are still stored only in the browser.
 
 ## Optional external work console
 

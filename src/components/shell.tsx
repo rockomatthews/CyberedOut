@@ -3,7 +3,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "@mui/material/Button";
 const links = [
-  ["/", "Road 001"],
+  ["/world", "ENTER WORLD"],
+  ["/town", "My Dot"],
   ["/characters", "Characters"],
   ["/guide", "About the world"],
 ];
@@ -31,6 +32,7 @@ export function Shell({
           {(connected
             ? links
             : [
+                ["/world", "ENTER WORLD"],
                 ["/", "Connect your Dot"],
                 ["/guide", "About the world"],
               ]

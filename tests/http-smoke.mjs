@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 const base = process.env.MONEY_BOTS_TEST_URL || "http://localhost:3018";
 for (const path of [
   "/",
+  "/world",
   "/town",
   "/characters",
   "/join",
@@ -77,5 +78,5 @@ assert.equal(
   401,
 );
 console.log(
-  "PASS anonymous visitors receive no map, character studio, or multiplayer ticket",
+  "PASS anonymous home stays at connection gate; character studio and player tickets remain protected",
 );

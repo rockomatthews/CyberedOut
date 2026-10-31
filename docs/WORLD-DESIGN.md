@@ -6,7 +6,7 @@ Updated October 27, 2026. The latest direction supersedes the original Money-Bot
 
 The world is entertainment. Its starting release is multiplayer on one semi-long road, with mandatory character customization and autonomous walking. No in-world activity makes or proves real-world income. Buildings, land purchases, stores and construction are absent. Later buildings can be selected from a catalog and appear instantly; no voxel construction minigame is required.
 
-Access begins with a connected Dot. A signed public-key identity obtains a short-lived code, which the human redeems. Server-rendered route checks hide the map and character studio until that succeeds. The game server separately verifies a single-use join ticket before sending any peer state. Local storage is used for appearance preferences, never as evidence of an authenticated Dot.
+Access begins with a connected Dot. A signed public-key identity obtains a short-lived code, which the human redeems. The public ENTER WORLD spectator route shows the road and live shared characters without creating a Dot. Server-rendered route checks still protect character customization and player entry. The game server verifies a single-use join ticket for players; spectators receive a read-only, connection-scoped model-viewing token. Local storage is used for appearance preferences, never as evidence of an authenticated Dot.
 
 The source is public; this gate controls the running application and live player/asset access. It is not secrecy or copy protection for the open-source geometry.
 

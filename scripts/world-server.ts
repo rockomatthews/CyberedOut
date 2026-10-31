@@ -55,6 +55,7 @@ type Player = {
   alive: boolean;
 };
 const players = new Map<string, Player>();
+const spectators = new Map<WebSocket, { token: string; alive: boolean }>();
 const assets = new Map<string, { data: Buffer; owner: string }>();
 let assetBytes = 0;
 function cors(origin: string | undefined) {
@@ -98,6 +99,7 @@ const server = createServer(async (req, res) => {
         players: players.size,
         world: "CyberedOut / Road 001",
         max_model_bytes: MAX_GLB_BYTES,
+        spectator_mode: true,
       }),
     );
     return;
@@ -107,7 +109,10 @@ const server = createServer(async (req, res) => {
     const viewerToken = req.headers.authorization?.replace(/^Bearer /, "");
     if (
       !viewerToken ||
-      ![...players.values()].some((p) => p.uploadToken === viewerToken)
+      (![...players.values()].some((p) => p.uploadToken === viewerToken) &&
+        ![...spectators.values()].some(
+          (viewer) => viewer.token === viewerToken,
+        ))
     ) {
       res.writeHead(401, headers);
       res.end();
@@ -222,6 +227,25 @@ wss.on("connection", (socket) => {
     let dot;
     try {
       const message = JSON.parse(bytes.toString());
+      if (message.type === "watch") {
+        clearTimeout(timeout);
+        const viewer = {
+          token: randomBytes(32).toString("base64url"),
+          alive: true,
+        };
+        spectators.set(socket, viewer);
+        socket.send(
+          JSON.stringify({ type: "watching", viewer_token: viewer.token }),
+        );
+        socket.on("pong", () => {
+          viewer.alive = true;
+        });
+        socket.on("message", () =>
+          socket.close(1008, "Spectators cannot control players"),
+        );
+        socket.on("close", () => spectators.delete(socket));
+        return;
+      }
       if (message.type !== "join" || typeof message.ticket !== "string")
         throw new Error();
       dot = takeTicket(message.ticket);
@@ -320,6 +344,8 @@ const tick = setInterval(() => {
   });
   for (const p of players.values())
     if (p.socket.readyState === WebSocket.OPEN) p.socket.send(message);
+  for (const socket of spectators.keys())
+    if (socket.readyState === WebSocket.OPEN) socket.send(message);
 }, 100);
 const heartbeat = setInterval(() => {
   for (const p of players.values()) {
@@ -330,6 +356,14 @@ const heartbeat = setInterval(() => {
     p.alive = false;
     p.socket.ping();
   }
+  for (const [socket, viewer] of spectators) {
+    if (!viewer.alive) {
+      socket.terminate();
+      continue;
+    }
+    viewer.alive = false;
+    socket.ping();
+  }
 }, 15000);
 server.listen(port, "0.0.0.0", () =>
   console.log(`CyberedOut Road 001 multiplayer listening on port ${port}`),
@@ -339,6 +373,7 @@ function stop() {
   clearInterval(tick);
   clearInterval(heartbeat);
   for (const p of players.values()) p.socket.close();
+  for (const socket of spectators.keys()) socket.close();
   wss.close();
   server.close();
 }

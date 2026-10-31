@@ -1,5 +1,11 @@
 # CyberedOut verification
 
+## October 31, 2026 — public spectator entry
+
+- ENTER WORLD is visible in the header with or without a connected Dot and opens the public `/world` page. Character customization and joining as a player remain session protected. This intentionally supersedes the earlier requirement to hide the entire map from anonymous visitors.
+- Build, sixteen automated tests and HTTP/multiplayer smoke checks pass. Integration verifies public spectators receive live snapshots/shared models, do not increase the player count, cannot upload or control players, and lose model-reading access when disconnected.
+- Browser verification: an anonymous visitor entered through the header, saw an empty road with no invented avatar, then saw a separate local QA player and its real Meshy character. There were no browser runtime errors during this check. QA activity and screenshots are local verification, not production traffic.
+
 ## October 31, 2026 — manual Meshy GLB import
 
 - Raised the shared browser, multiplayer-upload and provider-download GLB cap to 80 MB. Sixteen automated tests pass, including the exact size boundary; a 24 MB fixture uploads through the authenticated road server and is downloadable by another admitted player.

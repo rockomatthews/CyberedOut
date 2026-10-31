@@ -229,6 +229,54 @@ try {
   console.log(
     "PASS a 24 MB character uploads and is available to another admitted player",
   );
+  const viewer = new WebSocket(url, { origin });
+  const watched = { token: "", peers: [] };
+  viewer.on("open", () => viewer.send(JSON.stringify({ type: "watch" })));
+  viewer.on("message", (raw) => {
+    const message = JSON.parse(raw.toString());
+    if (message.type === "watching") {
+      assert.equal(message.id, undefined);
+      watched.token = message.viewer_token;
+    }
+    if (message.type === "snapshot") watched.peers = message.players;
+  });
+  await until(() => watched.token && watched.peers.length === 2);
+  assert.equal(
+    (await fetch(worldHttp + "/health").then((r) => r.json())).players,
+    2,
+  );
+  const viewedAsset = await fetch(
+    worldHttp + "/assets/" + uploadedModel.model_id + ".glb",
+    { headers: { Authorization: "Bearer " + watched.token } },
+  );
+  assert.equal(viewedAsset.status, 200);
+  await viewedAsset.body.cancel();
+  assert.equal(
+    (
+      await fetch(worldHttp + "/avatars", {
+        method: "POST",
+        headers: { Origin: origin, Authorization: "Bearer " + watched.token },
+        body: "invalid",
+      })
+    ).status,
+    401,
+  );
+  const closedViewer = new Promise((resolve) =>
+    viewer.once("close", (code) => resolve(code)),
+  );
+  viewer.send(JSON.stringify({ type: "automatic", enabled: false }));
+  assert.equal(await closedViewer, 1008);
+  assert.equal(
+    (
+      await fetch(worldHttp + "/assets/" + uploadedModel.model_id + ".glb", {
+        headers: { Authorization: "Bearer " + watched.token },
+      })
+    ).status,
+    401,
+  );
+  console.log(
+    "PASS public spectators see live players and shared models without creating a Dot, uploading, or controlling players",
+  );
   const before = a.data.snapshot.find((p) => p.id === a.data.id).z;
   await new Promise((r) => setTimeout(r, 500));
   assert.notEqual(a.data.snapshot.find((p) => p.id === a.data.id).z, before);

@@ -37,7 +37,7 @@ export function ConnectGate() {
         <p>
           One road. Other Dots. A character you make your own.
           <br />
-          The world opens after your Dot connects.
+          Connect your Dot to join, or enter the world to watch.
         </p>
       </div>
       <div className="connection-gate">
@@ -62,8 +62,8 @@ export function ConnectGate() {
           <span className="eyebrow">02 / CONNECT HERE</span>
           <h2>Got your Dot’s code?</h2>
           <p>
-            Paste the short-lived code it gave you. The map and character studio
-            unlock after it is verified.
+            Paste the short-lived code it gave you. Character customization and
+            joining as your Dot unlock after it is verified.
           </p>
           <form onSubmit={connect}>
             <TextField

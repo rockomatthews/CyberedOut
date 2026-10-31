@@ -13,6 +13,7 @@ type Props = {
   design: CharacterDesign;
   modelFile?: File | null;
   studio?: boolean;
+  spectator?: boolean;
   onStatus: (text: string) => void;
   onModelState?: (
     state: "loading" | "ready" | "error",
@@ -28,6 +29,7 @@ export default function TownScene({
   design,
   modelFile,
   studio = false,
+  spectator = false,
   onStatus,
   onModelState,
   follow = true,
@@ -258,19 +260,20 @@ export default function TownScene({
       const state = current.current;
       if (state.modelFile && !modelIds.has(state.modelFile))
         modelIds.set(state.modelFile, ++modelCounter);
-      const visible = state.peers.length
-        ? state.peers
-        : [
-            {
-              id: "local-preview",
-              design: state.design,
-              x: 0,
-              z: 0,
-              yaw: 0,
-              walking: studio,
-              automatic: studio,
-            },
-          ];
+      const visible =
+        state.peers.length || spectator
+          ? state.peers
+          : [
+              {
+                id: "local-preview",
+                design: state.design,
+                x: 0,
+                z: 0,
+                yaw: 0,
+                walking: studio,
+                automatic: studio,
+              },
+            ];
       const ids = new Set(visible.map((p) => p.id));
       for (const [id, actor] of actors) {
         if (!ids.has(id)) {
@@ -431,7 +434,7 @@ export default function TownScene({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [studio]);
+  }, [studio, spectator]);
   useEffect(() => {
     api.current?.sync();
   }, [peers, myId, design, modelFile]);

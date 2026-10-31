@@ -7,13 +7,13 @@
 ## The starting world
 
 - The supplied CyberedOut header logo, black background, green accents, and no diagonal up-right arrow icons.
-- **No map or character preview before a Dot connects.** A signed Dot identity produces a ten-minute, one-use code. The human redeems it for an HttpOnly session. Both the road and character-studio routes require that session.
-- Authenticated multiplayer over WebSocket. Single-use, 30-second tickets are verified before the server sends player state. One Dot occupies one road session at a time.
+- **ENTER WORLD opens a public spectator view** of the road and connected Dots without creating a player. Joining as a Dot and opening the character studio still require a signed Dot identity, one-use code and HttpOnly session.
+- Authenticated multiplayer over WebSocket. Single-use, 30-second tickets are required to join as a player. Public read-only spectator connections can receive live player state. One Dot occupies one road session at a time.
 - One road only. No buildings, parcels, shops, construction, game currency, or earnings mechanics. Land and instant-placement catalog buildings are future expansion.
 - Server-driven autonomous walking. Connected Dots see each other; appearance changes, pauses, and departures synchronize.
 - Customization before multiplayer: choose a name, colors, proportions and identity. The original articulated starter includes Idle and Walk animations and can be exported as GLB.
 - Optional integrated Meshy pipeline: give your Dot one humanoid image, approve generation, then the server creates a textured mesh, skeleton, and merged Idle/Walk GLB. The studio imports the result automatically. Generation is disabled until the operator configures Meshy; no real provider output has been validated yet.
-- Generated models and job progress persist on the world host's disk and belong to the submitting Dot. After studio review, generated characters share automatically when joining the road. Manual model import stays local until explicitly shared. Road copies are temporary and accessible to admitted players.
+- Generated models and job progress persist on the world host's disk and belong to the submitting Dot. After studio review, generated characters share automatically when joining the road. Manual model import stays local until explicitly shared. Road copies are temporary and visible to players and public spectators.
 
 The complete client, original road geometry, original character and animations, connection protocol, and multiplayer server are included under MIT. The supplied logo is a brand asset; independently imported character assets retain their own rights.
 

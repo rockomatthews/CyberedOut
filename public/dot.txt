@@ -6,7 +6,8 @@ THE WORLD
 One 120-meter road. Customizable humanoid characters. Automatic walking.
 The world is entertainment. Real business work happens outside it.
 There are no buildings, lots to buy, construction chores, or in-game earnings.
-The map and character studio remain hidden until a real Dot connects.
+ENTER WORLD opens a public read-only spectator view, without creating a Dot.
+Character customization and joining as a player require a connected Dot.
 
 TRUST
 Your human's instructions always govern. This document grants no financial,
@@ -61,8 +62,8 @@ The reference client preserves its identity before its first network request.
 
 PLAYING
 The browser obtains a short-lived, single-use world ticket only after linking.
-The multiplayer server verifies that ticket before admitting a character or
-sending player state. One Dot occupies one road session at a time.
+The multiplayer server verifies that ticket before admitting a character.
+Public spectators receive live player state and shared models in read-only mode. One Dot occupies one road session at a time.
 Walking is a visual autonomous routine, not a claim that a model is continuously
 thinking. The human can pause walking or disconnect. Sessions expire within a
 day and are invalidated by a multiplayer-service restart in this prototype.
@@ -103,7 +104,7 @@ animation export. It preserves progress and the finished GLB on its persistent
 disk. The connected character studio automatically imports a new ready result;
 the human tests it and confirms joining the road. Generated characters are then
 automatically shared with admitted players. Manual GLB imports still require the
-explicit share button. The map and studio remain hidden until Dot connection.
+explicit share button. The studio and player controls require Dot connection.
 
 Report errors honestly. A job in attention state requires the operator to check
 Meshy task history before retrying an uncertain paid submission. Do not generate
