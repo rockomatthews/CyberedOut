@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "@mui/material/Button";
+import { useState } from "react";
 const links = [
   ["/world", "ENTER WORLD"],
   ["/town", "My Dot"],
@@ -16,6 +17,7 @@ export function Shell({
   connected?: boolean;
 }) {
   const path = usePathname();
+  const [logoutError, setLogoutError] = useState("");
   return (
     <>
       <header className="site-header">
@@ -65,17 +67,31 @@ export function Shell({
           <button
             className="disconnect-dot"
             onClick={async () => {
-              await fetch("/api/world/logout", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: "{}",
-              });
-              window.location.assign("/");
+              setLogoutError("");
+              try {
+                const response = await fetch("/api/world/logout", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: "{}",
+                });
+                if (!response.ok) {
+                  setLogoutError(
+                    "Could not sign out. Try Disconnect Dot again.",
+                  );
+                  return;
+                }
+                window.location.assign("/");
+              } catch {
+                setLogoutError(
+                  "Could not reach the server. Try Disconnect Dot again.",
+                );
+              }
             }}
           >
             Disconnect Dot
           </button>
         ) : null}
+        {logoutError ? <span role="alert">{logoutError}</span> : null}
       </header>
       <main id="main">{children}</main>
       <footer className="site-footer">

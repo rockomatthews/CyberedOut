@@ -81,6 +81,7 @@ async function identity(name, checkRetries = false) {
   assert.equal(connected.data.session, undefined);
   const header = connected.response.headers.get("set-cookie");
   assert.match(header, /HttpOnly/i);
+  assert.match(header, /Max-Age=2592000/i);
   const cookie = header.split(";")[0];
   assert.equal(
     (await post("/api/world/connect", { code })).response.status,

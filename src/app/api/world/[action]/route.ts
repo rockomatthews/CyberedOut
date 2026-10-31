@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ROAD_COOKIE, roadRequest } from "@/lib/road-session";
+import { ROAD_SESSION_SECONDS } from "@/lib/game/session";
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ action: string }> },
@@ -36,9 +37,10 @@ export async function POST(
         secure: request.nextUrl.protocol === "https:",
         sameSite: "lax",
         path: "/",
-        maxAge: 86400,
+        maxAge: ROAD_SESSION_SECONDS,
       });
-    if (action === "logout") response.cookies.delete(ROAD_COOKIE);
+    if (action === "logout" && result.status === 200)
+      response.cookies.delete(ROAD_COOKIE);
     return response;
   } catch {
     return NextResponse.json(

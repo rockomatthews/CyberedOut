@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile, rename } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { SessionStore } from "./session-store";
 import {
   digest,
   freshTimestamp,
@@ -12,13 +13,13 @@ type Dot = { id: string; name: string; public_key: string };
 type Expiring<T> = { value: T; expires: number };
 const dots = new Map<string, Dot>();
 const codes = new Map<string, Expiring<Dot>>();
-const sessions = new Map<string, Expiring<Dot>>();
 const tickets = new Map<string, Expiring<Dot>>();
 const nonces = new Map<string, number>();
 const limits = new Map<string, { count: number; until: number }>();
 const filename = resolve(
   process.env.WORLD_DATA_FILE || ".local/world-identities.json",
 );
+const sessions = new SessionStore(filename + ".sessions.json");
 let saveChain = Promise.resolve();
 export async function loadIdentities() {
   try {
@@ -33,6 +34,7 @@ export async function loadIdentities() {
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
   }
+  await sessions.load();
 }
 function save() {
   saveChain = saveChain
@@ -49,7 +51,7 @@ function save() {
 }
 function prune() {
   const now = Date.now();
-  for (const map of [codes, sessions, tickets])
+  for (const map of [codes, tickets])
     for (const [key, value] of map) if (value.expires < now) map.delete(key);
   for (const [key, time] of nonces) if (time < now) nonces.delete(key);
   for (const [key, value] of limits) if (value.until < now) limits.delete(key);
@@ -65,7 +67,8 @@ export function takeTicket(token: string) {
   return value;
 }
 export function sessionDot(token: string) {
-  return get(sessions, token);
+  const id = sessions.get(token);
+  return id ? dots.get(id) || null : null;
 }
 // Character requests can come from the linked browser or the Dot's own runtime.
 export function characterDot(
@@ -160,11 +163,16 @@ export async function authRoute(
       return true;
     }
     codes.delete(digest(code));
-    const session = randomBytes(32).toString("base64url");
-    sessions.set(digest(session), {
-      value: dot,
-      expires: Date.now() + 86400000,
-    });
+    let session: string;
+    try {
+      session = await sessions.create(dot.id);
+    } catch {
+      codes.set(digest(code), { value: dot, expires: Date.now() + 600000 });
+      answer(503, {
+        error: "Could not remember this browser. Retry your connection code.",
+      });
+      return true;
+    }
     answer(200, { session, dot: { id: dot.id, name: dot.name } });
     return true;
   }
@@ -180,7 +188,14 @@ export async function authRoute(
     return true;
   }
   if (req.url === "/api/world/logout") {
-    sessions.delete(digest(token));
+    try {
+      await sessions.revoke(token);
+    } catch {
+      answer(503, {
+        error: "Could not sign out. Please try Disconnect Dot again.",
+      });
+      return true;
+    }
     answer(200, { disconnected: true });
     return true;
   }

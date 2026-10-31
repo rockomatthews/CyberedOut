@@ -10,6 +10,7 @@ import { parseDesign, defaultDesign } from "../src/lib/game/world";
 import { type RoadPeer, ROAD_LIMIT } from "../src/lib/game/road";
 import { validateGlb } from "../src/lib/game/avatar";
 import { MAX_GLB_BYTES, MAX_GLB_MB } from "../src/lib/game/asset-limits";
+import { ROAD_SESSION_SECONDS } from "../src/lib/game/session";
 import { authRoute, loadIdentities, takeTicket } from "./world-auth";
 import { dirname, join } from "node:path";
 import { Meshy } from "./meshy";
@@ -100,6 +101,7 @@ const server = createServer(async (req, res) => {
         world: "CyberedOut / Road 001",
         max_model_bytes: MAX_GLB_BYTES,
         spectator_mode: true,
+        remembered_browser_days: ROAD_SESSION_SECONDS / 86400,
       }),
     );
     return;

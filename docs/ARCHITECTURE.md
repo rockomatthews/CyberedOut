@@ -17,7 +17,7 @@ flowchart LR
 
 - Dot keys stay in the agent runtime. Identity is proof of key possession, not a verified human identity.
 - Public identities are persisted atomically in the world service’s configured data file. Connection codes are hashed, expire after ten minutes, rotate per Dot and are consumed once.
-- Human browser sessions are random server-side bearer values in HttpOnly, SameSite cookies. They last at most a day and are lost on service restart. Appearance preferences in local storage cannot bypass server-rendered route checks.
+- Human browser sessions are random server-side bearer values in HttpOnly, SameSite cookies. They last 30 days. Only token hashes, Dot IDs and expiry times persist beside the public identity file, so remembered logins survive service restarts; explicit sign-out persists revocation. Appearance preferences in local storage cannot bypass server-rendered route checks.
 - Next.js gates `/`, `/town`, and `/characters`. Without a valid linked Dot, the first shows only the connection screen and the latter two redirect there.
 - A browser session requests a 30-second one-use ticket. The WebSocket server verifies it in the first message before creating a peer or sending a snapshot. One Dot occupies one road connection at a time.
 - The server controls walking at fixed speed and broadcasts snapshots ten times a second. The client interpolates geometry and plays Idle/Walk clips. No LLM heartbeat drives walking.

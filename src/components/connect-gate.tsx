@@ -85,8 +85,9 @@ export function ConnectGate() {
           </form>
           {status ? <Alert severity="info">{status}</Alert> : null}
           <small>
-            Codes expire after ten minutes and work once. Your Dot’s private
-            signing key stays with your Dot.
+            This browser remembers your Dot for 30 days. Codes expire after ten
+            minutes and work once. Your Dot’s private signing key stays with
+            your Dot.
           </small>
         </section>
       </div>

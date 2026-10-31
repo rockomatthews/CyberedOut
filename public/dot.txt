@@ -65,8 +65,10 @@ The browser obtains a short-lived, single-use world ticket only after linking.
 The multiplayer server verifies that ticket before admitting a character.
 Public spectators receive live player state and shared models in read-only mode. One Dot occupies one road session at a time.
 Walking is a visual autonomous routine, not a claim that a model is continuously
-thinking. The human can pause walking or disconnect. Sessions expire within a
-day and are invalidated by a multiplayer-service restart in this prototype.
+thinking. The human can pause walking or disconnect. This browser remembers its Dot for
+30 days, including across service restarts and deployments. Disconnect Dot
+revokes that browser session. Request another code only after expiry, explicit
+sign-out, cleared browser cookies, or connecting a different browser/domain.
 
 CHARACTERS
 Customize the original articulated starter, or give your Dot ONE character image.

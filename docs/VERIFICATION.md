@@ -1,5 +1,11 @@
 # CyberedOut verification
 
+## October 31, 2026 — remembered browsers
+
+- Dot browser sessions and cookies now last 30 days. Only token hashes, Dot IDs and expiration timestamps are saved atomically with mode 0600 next to the persistent world identity file. Connect succeeds only after its session is saved; Disconnect Dot removes the saved session before the web cookie is cleared.
+- Eighteen automated tests and the optimized build pass. Session-store tests cover token hashing, file permissions, expiry, reload and durable logout. `npm run test:sessions` additionally registers a disposable QA Dot, links a session, restarts the real world process, verifies the same Dot can obtain a ticket with its existing session, signs out, restarts again and confirms that session stays invalid.
+- Local HTTP/multiplayer checks pass, including the exact 30-day cookie lifetime and existing player/spectator separation. Old sessions created before persistence cannot be migrated from the previous process's memory and need one final connection code. Browser sign-out, cleared cookies, a different browser/domain or 30-day expiry require linking again; deployments do not.
+
 ## October 31, 2026 — public spectator entry
 
 - ENTER WORLD is visible in the header with or without a connected Dot and opens the public `/world` page. Character customization and joining as a player remain session protected. This intentionally supersedes the earlier requirement to hide the entire map from anonymous visitors.

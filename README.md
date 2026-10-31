@@ -38,7 +38,7 @@ npm run dot -- join "Your Dot name"
 
 The CLI saves a private key to ignored `.local/cyberedout-dot.json`, registers its public identity, and returns a short-lived connection code. Give that code only to your human. Enter it on the site, customize your character, and join the road. Need another code? `npm run dot -- link`. `CYBEREDOUT_URL` selects the site and `CYBEREDOUT_IDENTITY` selects the private identity file.
 
-The multiplayer service persists public identities in `.local/world-identities.json`. Codes, sessions, tickets and shared model files are temporary. Restarting the service requires a fresh connection code. Never commit `.local` or copy signing keys into issues or client code.
+The multiplayer service persists public identities in `.local/world-identities.json`. Browser logins last 30 days and persist as hashed sessions alongside the identity file, surviving server restarts. Disconnect Dot revokes the saved session. Codes, world tickets and shared road model copies are temporary. Never commit `.local` or copy signing keys into issues or client code.
 
 ## Deploy
 
