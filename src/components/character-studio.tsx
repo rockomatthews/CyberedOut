@@ -1,15 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
+import LinearProgress from "@mui/material/LinearProgress";
 import { GLTFExporter } from "three/examples/jsm/exporters/GLTFExporter.js";
 import { makeAvatar, disposeObject, validateGlb } from "@/lib/game/avatar";
 import { avatarFile } from "@/lib/game/storage";
 import { MeshyCharacter } from "./meshy-character";
 import { GENERATED_CHARACTER_KEY } from "@/lib/game/characters";
+import { MAX_GLB_BYTES } from "@/lib/game/asset-limits";
 import {
   defaultDesign,
   parseDesign,
@@ -36,6 +38,22 @@ export function CharacterStudio() {
   const [design, setDesign] = useState<CharacterDesign>(defaultDesign);
   const [model, setModel] = useState<File | null>(null);
   const [status, setStatus] = useState("");
+  const [importState, setImportState] = useState<
+    "idle" | "reading" | "loading" | "ready" | "error"
+  >("idle");
+  const [importMessage, setImportMessage] = useState("");
+  const preview = useRef<HTMLElement>(null);
+  const scrollOnReady = useRef(false);
+  const importing = importState === "reading" || importState === "loading";
+  function showPreview() {
+    preview.current?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+      block: "start",
+    });
+    preview.current?.focus({ preventScroll: true });
+  }
   const [ready, setReady] = useState(false);
   useEffect(() => {
     try {
@@ -171,7 +189,12 @@ export function CharacterStudio() {
             Export playable starter GLB
           </Button>
         </section>
-        <section className="paper character-preview">
+        <section
+          className="paper character-preview"
+          ref={preview}
+          tabIndex={-1}
+          aria-label="Character movement preview"
+        >
           <span className="eyebrow">LIVE MOVEMENT TEST</span>
           <h2>{design.name}</h2>
           <div className="character-stage">
@@ -180,10 +203,31 @@ export function CharacterStudio() {
               myId=""
               design={design}
               onStatus={setStatus}
+              onModelState={(state, message) => {
+                setImportState(state);
+                setImportMessage(message);
+                if (state === "ready" && scrollOnReady.current) {
+                  scrollOnReady.current = false;
+                  showPreview();
+                }
+              }}
               modelFile={model}
               studio
             />
           </div>
+          {importMessage ? (
+            <Alert
+              severity={
+                importState === "error"
+                  ? "error"
+                  : importState === "ready"
+                    ? "success"
+                    : "info"
+              }
+            >
+              {importMessage}
+            </Alert>
+          ) : null}
           <div className="character-current">
             {model
               ? "Imported: " + model.name
@@ -195,6 +239,7 @@ export function CharacterStudio() {
           </p>
           <Button
             variant="outlined"
+            disabled={importing || (Boolean(model) && importState === "error")}
             onClick={() => {
               if (
                 design.name.trim().length < 2 ||
@@ -242,33 +287,71 @@ export function CharacterStudio() {
             <input
               type="file"
               accept=".glb,model/gltf-binary"
+              disabled={importing}
               onChange={async (e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;
+                e.currentTarget.value = "";
+                setImportState("reading");
+                setImportMessage(
+                  `Importing ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)…`,
+                );
                 try {
+                  if (file.size > MAX_GLB_BYTES)
+                    throw new Error("Use a GLB up to 80 MB.");
                   validateGlb(await file.arrayBuffer());
+                  setImportMessage(`Saving ${file.name} on this device…`);
                   await avatarFile(file);
                   localStorage.removeItem(GENERATED_CHARACTER_KEY);
-                  setModel(file);
-                  setStatus(
-                    "Model saved locally. Check the live movement test before using it.",
+                  scrollOnReady.current = true;
+                  setImportState("loading");
+                  setImportMessage(
+                    `Opening ${file.name} in the movement preview…`,
                   );
+                  setModel(file);
                 } catch (error) {
-                  setStatus(
+                  const message =
                     error instanceof Error
                       ? error.message
-                      : "Could not import model.",
-                  );
+                      : "Could not import model.";
+                  setImportState("error");
+                  setImportMessage(message);
+                  setStatus(message);
                 }
               }}
             />
           </label>
+          {importing ? (
+            <LinearProgress aria-label="Importing character GLB" />
+          ) : null}
+          {importMessage ? (
+            <Alert
+              role="status"
+              severity={
+                importState === "error"
+                  ? "error"
+                  : importState === "ready"
+                    ? "success"
+                    : "info"
+              }
+            >
+              {importMessage}
+            </Alert>
+          ) : null}
+          {importState === "ready" ? (
+            <Button variant="contained" onClick={showPreview}>
+              View imported character
+            </Button>
+          ) : null}
           {model ? (
             <Button
               onClick={async () => {
                 await avatarFile(null);
                 localStorage.removeItem(GENERATED_CHARACTER_KEY);
                 setModel(null);
+                setImportState("idle");
+                setImportMessage("");
+                scrollOnReady.current = false;
                 setStatus("Returned to your original starter character.");
               }}
             >

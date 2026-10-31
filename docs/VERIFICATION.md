@@ -1,12 +1,18 @@
 # CyberedOut verification
 
+## October 31, 2026 — manual Meshy GLB import
+
+- Raised the shared browser, multiplayer-upload and provider-download GLB cap to 80 MB. Sixteen automated tests pass, including the exact size boundary; a 24 MB fixture uploads through the authenticated road server and is downloadable by another admitted player.
+- Manually loaded the user's existing 57,276,640-byte Meshy GLB in an authenticated local browser: embedded textures, one skeleton and six animation clips load; the character is visibly textured and walking. This test did not call Meshy or spend credits, and the private model is not included in Git.
+- Import now shows reading/saving/loading progress, success and errors beside the picker and preview. A completed manual import scrolls and focuses the preview. Re-selecting the same file triggers a fresh load. Invalid input shows an inline error, and choosing the valid Meshy file again recovers successfully. The optimized build passes; browser runtime errors were empty during these checks.
+
 ## October 31, 2026 — one-image character pipeline
 
 - The server integration implements Meshy Image-to-3D, rigging and merged animation export; completed owner-only models and jobs are stored on persistent disk. The studio has a one-image upload and explicit consent; the Dot CLI supports signed image submission/status; generated models automatically install in the studio and share on road connection.
 - Fifteen automated tests pass, including six new provider-fixture tests for pipeline sequencing, stable idempotency, owner-only artifacts, interrupted paid requests/restart recovery, input validation, missing rigs and unsafe/oversized provider downloads. These fixtures are not real generated characters.
 - Optimized Next.js build and the local HTTP/multiplayer checks pass, including browser/signed-Dot character authentication, signature tampering/replay rejection, anonymous asset blocking, protected studio, and existing two-player walking.
 - Local browser inspection confirms the new one-image screen is behind the connected-Dot gate and generation is disabled without operator configuration.
-- No Meshy API key, paid conversion or actual Meshy character was used. Live output, skinning/animation quality and a deployed public world host still require verification. This revision does not assert public signup has been restored.
+- No Meshy API key or paid conversion was used. The automatic provider roundtrip still requires a funded live test; later manual Meshy-file verification is recorded above. This section describes the original integration checks, not the later hosting rollout.
 
 ## October 27, 2026 — gated road
 

@@ -14,6 +14,10 @@ type Props = {
   modelFile?: File | null;
   studio?: boolean;
   onStatus: (text: string) => void;
+  onModelState?: (
+    state: "loading" | "ready" | "error",
+    message: string,
+  ) => void;
   follow?: boolean;
   resetCamera?: number;
 };
@@ -25,6 +29,7 @@ export default function TownScene({
   modelFile,
   studio = false,
   onStatus,
+  onModelState,
   follow = true,
   resetCamera = 0,
 }: Props) {
@@ -35,6 +40,7 @@ export default function TownScene({
     design,
     modelFile,
     onStatus,
+    onModelState,
     follow,
     assetToken,
   });
@@ -44,6 +50,7 @@ export default function TownScene({
     design,
     modelFile,
     onStatus,
+    onModelState,
     follow,
     assetToken,
   };
@@ -60,6 +67,10 @@ export default function TownScene({
       });
     } catch {
       setFailed(true);
+      current.current.onModelState?.(
+        "error",
+        "WebGL is unavailable. Enable hardware acceleration to preview your character.",
+      );
       return;
     }
     const scene = new THREE.Scene();
@@ -146,6 +157,8 @@ export default function TownScene({
       rotation: number;
     };
     const actors = new Map<string, Actor>();
+    const modelIds = new WeakMap<File, number>();
+    let modelCounter = 0;
     let alive = true;
     let lastFollow = new THREE.Vector3();
     let focused = false;
@@ -155,8 +168,15 @@ export default function TownScene({
       const generation = ++actor.generation;
       let root: THREE.Object3D;
       let clips: THREE.AnimationClip[];
+      const localFile = local ? current.current.modelFile : null;
+      let modelError = "";
+      let modelMessage = "";
+      if (localFile)
+        current.current.onModelState?.(
+          "loading",
+          `Loading ${localFile.name}: decoding textures and animations…`,
+        );
       try {
-        const localFile = local ? current.current.modelFile : null;
         const remote = peer.modelId
           ? worldServerUrl().replace(/^ws/, "http") +
             "/assets/" +
@@ -188,24 +208,17 @@ export default function TownScene({
           const bounds = new THREE.Box3().setFromObject(root),
             mid = bounds.getCenter(new THREE.Vector3());
           root.position.add(new THREE.Vector3(-mid.x, -bounds.min.y, -mid.z));
-          if (local)
-            current.current.onStatus(
-              clips.length
-                ? `Imported character: ${clips.length} animation clips.`
-                : "Model has no animation clips; add a rig and walk cycle before publishing.",
-            );
+          modelMessage = clips.length
+            ? `Loaded ${localFile?.name || "character"}: ${clips.length} animation clips. Your character is visible in the preview.`
+            : "Character loaded without animation clips. Add a rig and walk cycle for animated movement.";
         } else {
           const made = makeAvatar(peer.design);
           root = made.root;
           clips = made.animations;
         }
       } catch (error) {
-        if (local)
-          current.current.onStatus(
-            error instanceof Error
-              ? error.message
-              : "Could not load character.",
-          );
+        modelError =
+          error instanceof Error ? error.message : "Could not load character.";
         const made = makeAvatar(peer.design);
         root = made.root;
         clips = made.animations;
@@ -225,17 +238,26 @@ export default function TownScene({
         if (o instanceof THREE.Mesh) o.castShadow = true;
       });
       actor.mixer = new THREE.AnimationMixer(root);
-      const walk = clips.find((c) => /walk|run|locomotion/i.test(c.name));
-      const idle =
-        clips.find((c) => /idle|stand|breath/i.test(c.name)) ||
-        clips.find((c) => c !== walk);
+      const walk =
+        clips.find((c) => /walk/i.test(c.name)) ||
+        clips.find((c) => /run|locomotion/i.test(c.name));
+      const idle = clips.find((c) => /idle|stand|breath/i.test(c.name));
       actor.walk = walk ? actor.mixer.clipAction(walk) : null;
       actor.idle = idle ? actor.mixer.clipAction(idle) : null;
       actor.idle?.play();
       actor.moving = false;
+      if (local && (modelMessage || modelError))
+        current.current.onStatus(modelError || modelMessage);
+      if (localFile)
+        current.current.onModelState?.(
+          modelError ? "error" : "ready",
+          modelError || modelMessage,
+        );
     }
     function sync() {
       const state = current.current;
+      if (state.modelFile && !modelIds.has(state.modelFile))
+        modelIds.set(state.modelFile, ++modelCounter);
       const visible = state.peers.length
         ? state.peers
         : [
@@ -286,7 +308,9 @@ export default function TownScene({
           JSON.stringify(local ? state.design : peer.design) +
           "/" +
           (local
-            ? state.modelFile?.name + ":" + state.modelFile?.lastModified
+            ? state.modelFile
+              ? modelIds.get(state.modelFile)
+              : "starter"
             : "") +
           "/" +
           peer.modelId;
