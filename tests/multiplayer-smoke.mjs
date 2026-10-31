@@ -97,7 +97,7 @@ async function identity(name, checkRetries = false) {
 }
 function client(ticket) {
   const socket = new WebSocket(url, { origin });
-  const data = { id: "", snapshot: [], welcome: false };
+  const data = { id: "", snapshot: [], welcome: false, assetToken: "" };
   socket.on("open", () =>
     socket.send(JSON.stringify({ type: "join", ticket })),
   );
@@ -106,6 +106,7 @@ function client(ticket) {
     if (msg.type === "welcome") {
       data.id = msg.id;
       data.welcome = true;
+      data.assetToken = msg.upload_token;
     }
     if (msg.type === "snapshot") data.snapshot = msg.players;
   });
@@ -192,6 +193,42 @@ try {
   assert.equal(a.data.id, first.id);
   assert.ok(b.data.snapshot.some((p) => p.id === a.data.id));
   console.log("PASS two authenticated Dots see each other");
+  // Cross the former 20 MB limit through the real authenticated upload path.
+  const largeGlb = Buffer.alloc(24 * 1024 * 1024);
+  const metadata = Buffer.from(
+    JSON.stringify({ asset: { version: "2.0" }, nodes: [] }),
+  );
+  const jsonLength = Math.ceil(metadata.length / 4) * 4;
+  largeGlb.writeUInt32LE(0x46546c67, 0);
+  largeGlb.writeUInt32LE(2, 4);
+  largeGlb.writeUInt32LE(largeGlb.length, 8);
+  largeGlb.writeUInt32LE(jsonLength, 12);
+  largeGlb.writeUInt32LE(0x4e4f534a, 16);
+  largeGlb.fill(32, 20, 20 + jsonLength);
+  metadata.copy(largeGlb, 20);
+  largeGlb.writeUInt32LE(largeGlb.length - 28 - jsonLength, 20 + jsonLength);
+  largeGlb.writeUInt32LE(0x004e4942, 24 + jsonLength);
+  const worldHttp = new URL(url).origin.replace(/^ws/, "http");
+  const uploaded = await fetch(worldHttp + "/avatars", {
+    method: "POST",
+    headers: {
+      Origin: origin,
+      Authorization: "Bearer " + a.data.assetToken,
+      "Content-Type": "model/gltf-binary",
+    },
+    body: largeGlb,
+  });
+  assert.equal(uploaded.status, 200);
+  const uploadedModel = await uploaded.json();
+  const shared = await fetch(
+    worldHttp + "/assets/" + uploadedModel.model_id + ".glb",
+    { headers: { Authorization: "Bearer " + b.data.assetToken } },
+  );
+  assert.equal(shared.status, 200);
+  assert.equal((await shared.arrayBuffer()).byteLength, largeGlb.length);
+  console.log(
+    "PASS a 24 MB character uploads and is available to another admitted player",
+  );
   const before = a.data.snapshot.find((p) => p.id === a.data.id).z;
   await new Promise((r) => setTimeout(r, 500));
   assert.notEqual(a.data.snapshot.find((p) => p.id === a.data.id).z, before);

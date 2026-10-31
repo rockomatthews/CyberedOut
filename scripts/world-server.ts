@@ -9,6 +9,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { parseDesign, defaultDesign } from "../src/lib/game/world";
 import { type RoadPeer, ROAD_LIMIT } from "../src/lib/game/road";
 import { validateGlb } from "../src/lib/game/avatar";
+import { MAX_GLB_BYTES, MAX_GLB_MB } from "../src/lib/game/asset-limits";
 import { authRoute, loadIdentities, takeTicket } from "./world-auth";
 import { dirname, join } from "node:path";
 import { Meshy } from "./meshy";
@@ -96,6 +97,7 @@ const server = createServer(async (req, res) => {
         ok: true,
         players: players.size,
         world: "CyberedOut / Road 001",
+        max_model_bytes: MAX_GLB_BYTES,
       }),
     );
     return;
@@ -145,9 +147,9 @@ const server = createServer(async (req, res) => {
       res.end();
       return;
     }
-    if (Number(req.headers["content-length"]) > 20 * 1024 * 1024) {
-      res.writeHead(413, headers);
-      res.end();
+    if (Number(req.headers["content-length"]) > MAX_GLB_BYTES) {
+      res.writeHead(413, { ...headers, "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: `Use a GLB up to ${MAX_GLB_MB} MB.` }));
       return;
     }
     try {
@@ -155,7 +157,8 @@ const server = createServer(async (req, res) => {
       let size = 0;
       for await (const part of req) {
         size += part.length;
-        if (size > 20 * 1024 * 1024) throw new Error("Model exceeds 20 MB.");
+        if (size > MAX_GLB_BYTES)
+          throw new Error(`Model exceeds ${MAX_GLB_MB} MB.`);
         chunks.push(Buffer.from(part));
       }
       const bytes = Buffer.concat(chunks);
@@ -167,12 +170,16 @@ const server = createServer(async (req, res) => {
         const previous = [...assets.entries()].filter(
           ([, a]) => a.owner === player.peer.id,
         );
+        const previousBytes = previous.reduce(
+          (total, [, asset]) => total + asset.data.length,
+          0,
+        );
+        if (assetBytes - previousBytes + bytes.length > 128 * 1024 * 1024)
+          throw new Error("Prototype asset memory is full.");
         for (const [key, a] of previous) {
           assets.delete(key);
           assetBytes -= a.data.length;
         }
-        if (assetBytes + bytes.length > 128 * 1024 * 1024)
-          throw new Error("Prototype asset memory is full.");
         assets.set(id, { data: bytes, owner: player.peer.id });
         assetBytes += bytes.length;
       }

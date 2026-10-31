@@ -1,4 +1,5 @@
 // Meshy credentials and provider URLs never leave the world service.
+import { MAX_GLB_BYTES, MAX_GLB_MB } from "../src/lib/game/asset-limits";
 export type MeshyTask = {
   status: string;
   progress?: number;
@@ -78,11 +79,11 @@ export class Meshy {
     });
     if (!response.ok || !response.body)
       throw new Error("Could not download the generated character.");
-    const max = 20 * 1024 * 1024;
+    const max = MAX_GLB_BYTES;
     if (Number(response.headers.get("content-length")) > max) {
       await response.body.cancel();
       throw new MeshyAssetError(
-        "Generated character exceeds 20 MB. Optimize it before import.",
+        `Generated character exceeds ${MAX_GLB_MB} MB. Optimize it before import.`,
       );
     }
     const reader = response.body.getReader(),
@@ -95,7 +96,7 @@ export class Meshy {
         length += value.length;
         if (length > max)
           throw new MeshyAssetError(
-            "Generated character exceeds 20 MB. Optimize it before import.",
+            `Generated character exceeds ${MAX_GLB_MB} MB. Optimize it before import.`,
           );
         chunks.push(value);
       }

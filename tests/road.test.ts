@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { parseDesign, defaultDesign } from "../src/lib/game/world";
 import { safePeer } from "../src/lib/game/road";
 import { makeAvatar, disposeObject, validateGlb } from "../src/lib/game/avatar";
+import { MAX_GLB_BYTES } from "../src/lib/game/asset-limits";
 test("character appearance is bounded and shares no arbitrary fields", () => {
   const design = parseDesign({
     name: "x".repeat(100),
@@ -73,4 +74,12 @@ test("GLB imports block external asset references and malformed files", () => {
   assert.doesNotThrow(() =>
     validateGlb(glb({ asset: { version: "2.0" }, nodes: [] })),
   );
+});
+test("GLB imports accept the 80 MB boundary and reject anything larger", () => {
+  const header = glb({ asset: { version: "2.0" }, nodes: [] });
+  const bytes = new ArrayBuffer(MAX_GLB_BYTES);
+  new Uint8Array(bytes).set(new Uint8Array(header));
+  new DataView(bytes).setUint32(8, MAX_GLB_BYTES, true);
+  assert.doesNotThrow(() => validateGlb(bytes));
+  assert.throws(() => validateGlb(new ArrayBuffer(MAX_GLB_BYTES + 1)), /80 MB/);
 });

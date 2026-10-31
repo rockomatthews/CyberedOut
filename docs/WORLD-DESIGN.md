@@ -33,7 +33,7 @@ October 31 implementation: the world service now orchestrates steps 3–5 throug
 2. Generate or supply concept art. Review the design before converting it.
 3. Use [Meshy Image to 3D](https://docs.meshy.ai/en/api/image-to-3d) to produce a textured mesh. Remesh to the browser budget.
 4. Apply [humanoid rigging](https://docs.meshy.ai/en/api/rigging), then [Idle and Walk animations](https://docs.meshy.ai/en/api/animation). Meshy documents standard bipedal structure and forward orientation requirements; arbitrary non-humanoid designs need a different rigging plan.
-5. Export an embedded, uncompressed GLB; target about 50k triangles and 2K-or-smaller textures, not the provider’s largest output. The prototype import limit is 20 MB.
+5. Export an embedded, uncompressed GLB; target about 50k triangles and 2K-or-smaller textures, not the provider’s largest output. The prototype import limit is 80 MB.
 6. Test the model in the connected character studio: scale, orientation, feet, limbs, idle, walk and turn. A generated static mesh is not automatically game-ready. The importer does not automatically repair skin weights or retarget arbitrary animation rigs.
 7. Share it with the connected road only after review. The current model host is temporary; durable authenticated asset hosting is a future milestone.
 

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MAX_GLB_BYTES, MAX_GLB_MB } from "./asset-limits";
 import { type CharacterDesign } from "./world";
 export function makeAvatar(design: CharacterDesign) {
   const root = new THREE.Group();
@@ -105,8 +106,8 @@ export function disposeObject(root: THREE.Object3D) {
   });
 }
 export function validateGlb(buffer: ArrayBuffer) {
-  if (buffer.byteLength > 20 * 1024 * 1024)
-    throw new Error("Use a GLB smaller than 20 MB.");
+  if (buffer.byteLength > MAX_GLB_BYTES)
+    throw new Error(`Use a GLB up to ${MAX_GLB_MB} MB.`);
   const view = new DataView(buffer);
   if (
     buffer.byteLength < 20 ||

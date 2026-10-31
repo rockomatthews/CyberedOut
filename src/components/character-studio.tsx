@@ -276,7 +276,7 @@ export function CharacterStudio() {
             </Button>
           ) : null}
           <div className="notice">
-            Manual import supports embedded, uncompressed GLB up to 20 MB. Check
+            Manual import supports embedded, uncompressed GLB up to 80 MB. Check
             the movement test before using it on the road.
           </div>
           <a

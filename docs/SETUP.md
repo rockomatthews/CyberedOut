@@ -72,7 +72,7 @@ npm run dot -- character "/absolute/path/character.png" --approve-meshy
 npm run dot -- character-status
 ```
 
-Only pass the approval flag once the human has authorized sending the image and generating the character. The browser studio instead shows an image preview and explicit generation consent. PNG/JPEG/WebP input is capped at 2 MB to fit the web proxy; the self-contained output GLB is capped at 20 MB. Downloads stream through the authenticated web route; clients never receive the provider key or signed Meshy asset URL. The world server downloads only HTTPS assets from `assets.meshy.ai`, without redirects or credential forwarding.
+Only pass the approval flag once the human has authorized sending the image and generating the character. The browser studio instead shows an image preview and explicit generation consent. PNG/JPEG/WebP input is capped at 2 MB to fit the web proxy; the self-contained output GLB is capped at 80 MB. Downloads stream through the authenticated web route; clients never receive the provider key or signed Meshy asset URL. The world server downloads only HTTPS assets from `assets.meshy.ai`, without redirects or credential forwarding.
 
 On completion the connected studio installs the new model in IndexedDB, with the Dot's identity name if the character still has its default name. The human tests it and joins the road. Generated models auto-share on each road connection; manual models remain explicitly shared. Ready server copies can be restored from the studio on another device after linking the same Dot. Restarting the world still invalidates browser sessions, and shared road copies still last only for the active connection.
 
@@ -80,7 +80,7 @@ No actual Meshy call or credit purchase was made during implementation. The prov
 
 ## Manual character files
 
-The original starter is customizable and exports to GLB with Idle/Walk clips. To use a Meshy-style custom character: design concept art in Codex, create a textured humanoid mesh, rig it, apply animations, optimize and export a self-contained uncompressed GLB. Import limit: 20 MB. External asset URLs, unsupported required compression extensions, oversized accessor metadata and excessive node counts are rejected. A static model is allowed for local inspection but is clearly reported as lacking animated locomotion.
+The original starter is customizable and exports to GLB with Idle/Walk clips. To use a Meshy-style custom character: design concept art in Codex, create a textured humanoid mesh, rig it, apply animations, optimize and export a self-contained uncompressed GLB. Import limit: 80 MB. External asset URLs, unsupported required compression extensions, oversized accessor metadata and excessive node counts are rejected. A static model is allowed for local inspection but is clearly reported as lacking animated locomotion.
 
 Manual import is local until explicitly shared. Sharing uploads the model to the current authenticated road session, making it available to admitted players. Shared road copies are temporary and deleted when their uploading session disconnects or the server restarts. Generated originals use the durable storage described above; manually imported originals are still stored only in the browser.
 

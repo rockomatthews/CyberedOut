@@ -217,7 +217,7 @@ test("provider downloads reject SSRF, redirects and oversized output without lea
     );
     assert.equal(options?.redirect, "error");
     return new Response(new Uint8Array([1]), {
-      headers: { "content-length": "30000000" },
+      headers: { "content-length": "90000000" },
     });
   }) as typeof fetch);
   await assert.rejects(
@@ -231,7 +231,7 @@ test("provider downloads reject SSRF, redirects and oversized output without lea
   assert.equal(calls, 0);
   await assert.rejects(
     provider.asset("https://assets.meshy.ai/a.glb"),
-    /20 MB/,
+    /80 MB/,
   );
   assert.equal(calls, 1);
 });
