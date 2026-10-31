@@ -13,7 +13,7 @@ services:
       - key: NODE_VERSION
         value: "24"
       - key: WORLD_ALLOWED_ORIGINS
-        value: https://cybered-out-m9nt.vercel.app
+        value: https://cybered-out.vercel.app,https://cybered-out-m9nt.vercel.app
       - key: WORLD_DATA_FILE
         value: /var/data/world-identities.json
       - key: CHARACTER_DATA_DIR
