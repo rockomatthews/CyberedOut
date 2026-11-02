@@ -2,6 +2,23 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { COURTHOUSE } from "./courthouse";
 import { disposeObject } from "./avatar";
+// Precise vertex bounds avoid the empty corners of this rotated scan's AABB.
+export function placeCourthouseModel(root: THREE.Object3D) {
+  root.updateMatrixWorld(true);
+  const bounds = new THREE.Box3().setFromObject(root, true);
+  const size = bounds.getSize(new THREE.Vector3());
+  const wrapper = new THREE.Group();
+  wrapper.add(root);
+  const scale = Math.min(COURTHOUSE.width / size.x, COURTHOUSE.depth / size.z);
+  root.position.sub(bounds.getCenter(new THREE.Vector3()));
+  wrapper.scale.setScalar(scale);
+  wrapper.position.set(COURTHOUSE.x, 0, COURTHOUSE.z);
+  wrapper.updateMatrixWorld(true);
+  const placed = new THREE.Box3().setFromObject(wrapper, true);
+  // Plaza top: -.05 + .18/2. Sink 1 cm to avoid a visible light seam.
+  wrapper.position.y = 0.03 - placed.min.y;
+  return wrapper;
+}
 export function addCourthouse(
   scene: THREE.Scene,
   status: (text: string) => void,
@@ -57,19 +74,7 @@ export function addCourthouse(
         return;
       }
       const root = gltf.scene;
-      root.updateMatrixWorld(true);
-      const bounds = new THREE.Box3().setFromObject(root),
-        size = bounds.getSize(new THREE.Vector3());
-      const scale = 27 / Math.max(size.x, size.z);
-      const wrapper = new THREE.Group();
-      wrapper.add(root);
-      wrapper.scale.setScalar(scale);
-      root.position.sub(bounds.getCenter(new THREE.Vector3()));
-      wrapper.position.set(
-        COURTHOUSE.x,
-        (size.y * scale) / 2 + 0.05,
-        COURTHOUSE.z,
-      );
+      const wrapper = placeCourthouseModel(root);
       root.traverse((o) => {
         if (o instanceof THREE.Mesh) {
           o.castShadow = true;

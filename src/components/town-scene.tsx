@@ -91,12 +91,16 @@ export default function TownScene({
     host.appendChild(renderer.domElement);
     const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 220);
     camera.position.set(
-      studio ? 3.8 : 12,
-      studio ? 2.8 : 18,
-      studio ? 5.5 : 32,
+      studio ? 3.8 : courtroom ? 7 : 8,
+      studio ? 2.8 : courtroom ? 6 : 28,
+      studio ? 5.5 : courtroom ? 11 : 60,
     );
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(studio || courtroom ? 0 : -10, studio ? 1 : 2, 0);
+    controls.target.set(
+      studio || courtroom ? 0 : -16,
+      studio || courtroom ? 1 : 3.5,
+      0,
+    );
     controls.enableDamping = true;
     controls.minDistance = studio ? 2 : 4;
     controls.maxDistance = studio ? 15 : 80;
@@ -105,12 +109,12 @@ export default function TownScene({
     const sun = new THREE.DirectionalLight("#e3ecff", 4);
     sun.position.set(-10, 24, 8);
     sun.castShadow = true;
-    sun.shadow.mapSize.set(1024, 1024);
+    sun.shadow.mapSize.set(2048, 2048);
     Object.assign(sun.shadow.camera, {
-      left: -15,
-      right: 15,
-      top: 15,
-      bottom: -15,
+      left: -55,
+      right: 35,
+      top: 70,
+      bottom: -70,
     });
     sun.shadow.normalBias = 0.04;
     scene.add(sun);
@@ -411,11 +415,15 @@ export default function TownScene({
       sync,
       reset: () => {
         camera.position.set(
-          studio ? 3.8 : 12,
-          studio ? 2.8 : 18,
-          studio ? 5.5 : 32,
+          studio ? 3.8 : courtroom ? 7 : 8,
+          studio ? 2.8 : courtroom ? 6 : 28,
+          studio ? 5.5 : courtroom ? 11 : 60,
         );
-        controls.target.set(studio || courtroom ? 0 : -10, studio ? 1 : 2, 0);
+        controls.target.set(
+          studio || courtroom ? 0 : -16,
+          studio || courtroom ? 1 : 3.5,
+          0,
+        );
         focused = false;
       },
     };

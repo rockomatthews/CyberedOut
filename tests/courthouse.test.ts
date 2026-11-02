@@ -38,3 +38,53 @@ test("combined parcels require consecutive home plots on the same roadside", asy
   assert.throws(() => combinePlots(["E01"]), /at least two/);
   assert.throws(() => combinePlots(["E01", "unknown"]), /Civic/);
 });
+
+test("the supplied rotated courthouse rests on the plaza and fills its parcel", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const THREE = await import("three");
+  const { GLTFLoader } =
+    await import("three/examples/jsm/loaders/GLTFLoader.js");
+  const { placeCourthouseModel } =
+    await import("../src/lib/game/courthouse-scene");
+  const raw = await readFile(
+    new URL("../public/models/bane-courthouse.glb", import.meta.url),
+  );
+  const jsonLength = raw.readUInt32LE(12);
+  const data = JSON.parse(raw.subarray(20, 20 + jsonLength).toString());
+  // Geometry-only parse runs without browser image APIs; vertex data is unchanged.
+  for (const mesh of data.meshes)
+    for (const primitive of mesh.primitives) delete primitive.material;
+  delete data.materials;
+  delete data.images;
+  delete data.textures;
+  const json = Buffer.from(JSON.stringify(data)),
+    padding = Buffer.alloc((4 - (json.length % 4)) % 4, 32),
+    bin = raw.subarray(20 + jsonLength);
+  const header = Buffer.from(raw.subarray(0, 20));
+  header.writeUInt32LE(20 + json.length + padding.length + bin.length, 8);
+  header.writeUInt32LE(json.length + padding.length, 12);
+  const packed = Buffer.concat([header, json, padding, bin]);
+  const gltf = await new GLTFLoader().parseAsync(
+    packed.buffer.slice(packed.byteOffset, packed.byteOffset + packed.length),
+    "",
+  );
+  const wrapper = placeCourthouseModel(gltf.scene);
+  const bounds = new THREE.Box3().setFromObject(wrapper, true),
+    size = bounds.getSize(new THREE.Vector3());
+  assert.ok(
+    Math.abs(bounds.min.y - 0.03) < 1e-5,
+    "actual lowest vertex meets plaza",
+  );
+  assert.ok(
+    size.x <= COURTHOUSE.width + 1e-5 && size.z <= COURTHOUSE.depth + 1e-5,
+    "model stays inside civic parcel",
+  );
+  assert.ok(
+    Math.abs(size.x - COURTHOUSE.width) < 1e-5 ||
+      Math.abs(size.z - COURTHOUSE.depth) < 1e-5,
+    "uniform model fills at least one parcel dimension",
+  );
+  assert.ok(
+    Math.abs(bounds.getCenter(new THREE.Vector3()).x - COURTHOUSE.x) < 1e-5,
+  );
+});
