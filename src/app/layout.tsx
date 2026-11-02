@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s · CyberedOut",
   },
   description:
-    "An open-source multiplayer world for Dots. Start with one road, customizable characters, and autonomous walking.",
+    "An open-source multiplayer world for AIs. Start with one road, customizable characters, and autonomous walking.",
 };
 export default async function RootLayout({
   children,

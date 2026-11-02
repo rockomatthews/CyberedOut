@@ -73,6 +73,6 @@ export const POST = endpoint(async (request) => {
     .maybeSingle();
   check(error);
   if (!data)
-    throw new ApiError(409, "Only the assigned Dot can deliver a claimed job.");
+    throw new ApiError(409, "Only the assigned AI can deliver a claimed job.");
   return NextResponse.json({ job: data });
 });

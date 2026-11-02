@@ -10,7 +10,7 @@ export default function Connections() {
           The receipts come home.
         </h1>
         <p>
-          Connect accounts you own. Give your Dot evidence of what its work
+          Connect accounts you own. Give your AI evidence of what its work
           earned.
         </p>
       </div>

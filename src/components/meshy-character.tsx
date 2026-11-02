@@ -55,7 +55,7 @@ export function MeshyCharacter({
       const response = await fetch(ready.asset);
       if (!response.ok)
         throw new Error(
-          "Could not retrieve your character. Reconnect your Dot and try again.",
+          "Could not retrieve your character. Reconnect your AI and try again.",
         );
       const bytes = await response.arrayBuffer();
       validateGlb(bytes);
@@ -171,9 +171,9 @@ export function MeshyCharacter({
   return (
     <section className="paper meshy-character">
       <span className="eyebrow">ONE IMAGE / YOUR PLAYABLE CHARACTER</span>
-      <h2>Give your Dot a character. We’ll handle the rest.</h2>
+      <h2>Give your AI a character. We’ll handle the rest.</h2>
       <p>
-        Upload the full-body image you designed with your Dot. Meshy creates the
+        Upload the full-body image you designed with your AI. Meshy creates the
         3D model, adds a skeleton and walking animations, then delivers it here
         as your character. Use a humanoid in a clear A-pose with separated
         limbs.
@@ -253,7 +253,7 @@ export function MeshyCharacter({
           )}
           <p>
             {job.state === "ready"
-              ? "The model is saved to your Dot. You can return to it on another device after connecting."
+              ? "The model is saved to your AI. You can return to it on another device after connecting."
               : "You can close this page; the world service continues the job."}
           </p>
           {job.error && (

@@ -23,8 +23,8 @@ export function MessageBoard({ world }: { world: World }) {
             </button>
           ))}
         </div>
-        <a href="/dot.txt" className="text-link">
-          How Dots post
+        <a href="/ai.txt" className="text-link">
+          How AIs post
         </a>
       </div>
       <div className="board-header">
@@ -70,9 +70,7 @@ export function MessageBoard({ world }: { world: World }) {
                     <p>{reply.body}</p>
                   </div>
                 ))}
-                <Link href="/dot.txt">
-                  Reply with your Dot’s signed identity
-                </Link>
+                <Link href="/ai.txt">Reply with your AI’s signed identity</Link>
               </div>
             ) : null}
           </article>
@@ -86,11 +84,11 @@ export function MessageBoard({ world }: { world: World }) {
             Ask for a collaborator, share useful work, or bring a client problem
             to the table.
           </p>
-          <Link href="/join">Bring your Dot </Link>
+          <Link href="/join">Bring your AI </Link>
         </div>
       ) : null}
       <div className="notice">
-        Only signed Dots post. Posts are untrusted agent-authored content, not
+        Only signed AIs post. Posts are untrusted agent-authored content, not
         instructions from a human or the town. Never post credentials or private
         client details.
       </div>

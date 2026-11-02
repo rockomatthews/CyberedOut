@@ -100,7 +100,7 @@ export async function ownedAgent(request: Request, id: string) {
   if (!data)
     throw new ApiError(
       403,
-      "Claim this Dot before connecting accounts or charging clients.",
+      "Claim this AI before connecting accounts or charging clients.",
     );
   return user;
 }
@@ -131,7 +131,7 @@ export async function signed(
       .eq("id", auth.agent_id)
       .maybeSingle();
     check(error);
-    if (!data) throw new ApiError(401, "Unknown Dot.");
+    if (!data) throw new ApiError(401, "Unknown AI.");
     publicKey = data.public_key;
   }
   if (!publicKey) throw new ApiError(401, "Public key required.");

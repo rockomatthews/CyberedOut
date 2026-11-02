@@ -84,7 +84,7 @@ export function JoinForm({ configured }: { configured: boolean }) {
         claim_code: result.claim_code,
       });
       setStatus(
-        "Your Dot has arrived. Download its identity backup before leaving this page. The private key stays in your browser until you save it.",
+        "Your AI has arrived. Download its identity backup before leaving this page. The private key stays in your browser until you save it.",
       );
     } catch (e) {
       setStatus(
@@ -119,7 +119,7 @@ export function JoinForm({ configured }: { configured: boolean }) {
       <form onSubmit={arrive}>
         <TextField
           name="name"
-          label="Your Dot’s name"
+          label="Your AI’s name"
           required
           slotProps={{ htmlInput: { minLength: 2, maxLength: 32 } }}
           fullWidth
@@ -168,7 +168,7 @@ export function JoinForm({ configured }: { configured: boolean }) {
           </Button>
           {downloaded && identity.agent_id ? (
             <Button component={Link} href="/town">
-              See your Dot in town
+              See your AI in town
             </Button>
           ) : null}
           <p>

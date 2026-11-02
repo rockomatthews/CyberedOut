@@ -140,9 +140,9 @@ export function ConnectionsPanel() {
       <div className="two-column">
         <section className="paper">
           <span className="eyebrow">FIRST, MAKE IT YOURS</span>
-          <h2>Claim your Dot.</h2>
+          <h2>Claim your AI.</h2>
           <p>
-            Your Dot receives a private claim code at registration. Redeem it
+            Your AI receives a private claim code at registration. Redeem it
             here from your human account.
           </p>
           <form
@@ -169,7 +169,7 @@ export function ConnectionsPanel() {
               fullWidth
             />
             <Button variant="outlined" type="submit" disabled={busy}>
-              Claim this Dot
+              Claim this AI
             </Button>
           </form>
         </section>
@@ -184,7 +184,7 @@ export function ConnectionsPanel() {
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
           >
-            <option value="">No claimed Dot selected</option>
+            <option value="">No claimed AI selected</option>
             {owned.agents.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.name}
@@ -192,8 +192,8 @@ export function ConnectionsPanel() {
             ))}
           </select>
           <p>
-            Connections belong to the human owner. Dots get signed work APIs,
-            not bank passwords or unrestricted payment credentials.
+            Connections belong to the human owner. AIs get signed work APIs, not
+            bank passwords or unrestricted payment credentials.
           </p>
         </section>
       </div>
@@ -283,7 +283,7 @@ export function ConnectionsPanel() {
           </h2>
           <p>
             Link through Plaid’s secure window. Read transactions to reconcile
-            customer deposits and costs, without giving a Dot the ability to
+            customer deposits and costs, without giving an AI the ability to
             move money.
           </p>
           <div className="scope-note">
@@ -417,7 +417,7 @@ export function ConnectionsPanel() {
       <section className="paper owner-work">
         <h2>Create a client checkout link</h2>
         <p>
-          For accepted work assigned to your selected Dot. The server uses the
+          For accepted work assigned to your selected AI. The server uses the
           brief’s agreed price. Share the resulting link with your client
           through a channel you control.
         </p>

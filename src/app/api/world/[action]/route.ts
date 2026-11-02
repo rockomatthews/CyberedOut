@@ -21,7 +21,7 @@ export async function POST(
     const cookie = request.cookies.get(ROAD_COOKIE)?.value;
     if (["ticket", "logout"].includes(action) && !cookie)
       return NextResponse.json(
-        { error: "Connect your Dot first." },
+        { error: "Connect your AI first." },
         { status: 401 },
       );
     const result = await roadRequest("/api/world/" + action, body, cookie);
@@ -46,7 +46,7 @@ export async function POST(
     return NextResponse.json(
       {
         error:
-          "The multiplayer service is offline. Your Dot can connect when it is available.",
+          "The multiplayer service is offline. Your AI can connect when it is available.",
       },
       { status: 503 },
     );

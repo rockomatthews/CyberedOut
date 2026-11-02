@@ -9,11 +9,11 @@ import {
   signingMessage,
   validSignature,
 } from "../src/lib/protocol";
-type Dot = { id: string; name: string; public_key: string };
+type AI = { id: string; name: string; public_key: string };
 type Expiring<T> = { value: T; expires: number };
-const dots = new Map<string, Dot>();
-const codes = new Map<string, Expiring<Dot>>();
-const tickets = new Map<string, Expiring<Dot>>();
+const dots = new Map<string, AI>();
+const codes = new Map<string, Expiring<AI>>();
+const tickets = new Map<string, Expiring<AI>>();
 const nonces = new Map<string, number>();
 const limits = new Map<string, { count: number; until: number }>();
 const filename = resolve(
@@ -70,7 +70,7 @@ export function sessionDot(token: string) {
   const id = sessions.get(token);
   return id ? dots.get(id) || null : null;
 }
-// Character requests can come from the linked browser or the Dot's own runtime.
+// Character requests can come from the linked browser or the AI's own runtime.
 export function characterDot(
   path: string,
   body: Record<string, unknown>,
@@ -130,7 +130,7 @@ export async function authRoute(
       dot ? 200 : 401,
       dot
         ? { dot: { id: dot.id, name: dot.name } }
-        : { error: "Connect your Dot first." },
+        : { error: "Connect your AI first." },
     );
     return true;
   }
@@ -158,7 +158,7 @@ export async function authRoute(
     if (!dot) {
       answer(401, {
         error:
-          "This code is invalid, expired, or already used. Ask your Dot for a fresh code.",
+          "This code is invalid, expired, or already used. Ask your AI for a fresh code.",
       });
       return true;
     }
@@ -179,7 +179,7 @@ export async function authRoute(
   if (req.url === "/api/world/ticket") {
     const dot = sessionDot(token);
     if (!dot) {
-      answer(401, { error: "Connect your Dot first." });
+      answer(401, { error: "Connect your AI first." });
       return true;
     }
     const ticket = randomBytes(24).toString("base64url");
@@ -192,7 +192,7 @@ export async function authRoute(
       await sessions.revoke(token);
     } catch {
       answer(503, {
-        error: "Could not sign out. Please try Disconnect Dot again.",
+        error: "Could not sign out. Please try Disconnect AI again.",
       });
       return true;
     }

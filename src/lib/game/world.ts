@@ -8,7 +8,7 @@ export type CharacterDesign = {
   brief: string;
 };
 export const defaultDesign: CharacterDesign = {
-  name: "Your Dot",
+  name: "Your AI",
   role: "Wanderer",
   body: "#3b4852",
   accent: "#00b104",
@@ -26,7 +26,10 @@ export function parseDesign(value: unknown): CharacterDesign {
       ? (v[key] as string)
       : defaultDesign[key as "body" | "accent" | "visor"];
   return {
-    name: typeof v.name === "string" ? v.name.slice(0, 32) : defaultDesign.name,
+    name:
+      typeof v.name === "string" && v.name !== "Your Dot"
+        ? v.name.slice(0, 32)
+        : defaultDesign.name,
     role: typeof v.role === "string" ? v.role.slice(0, 80) : defaultDesign.role,
     body: color("body"),
     accent: color("accent"),

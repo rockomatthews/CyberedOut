@@ -222,7 +222,7 @@ server.on("upgrade", (req, socket, head) => {
 });
 wss.on("connection", (socket) => {
   const timeout = setTimeout(
-    () => socket.close(4001, "Connect your Dot first"),
+    () => socket.close(4001, "Connect your AI first"),
     5000,
   );
   socket.once("message", (bytes) => {
@@ -257,7 +257,7 @@ wss.on("connection", (socket) => {
       return;
     }
     if (players.has(dot.id)) {
-      socket.close(4009, "This Dot is already on the road");
+      socket.close(4009, "This AI is already on the road");
       return;
     }
     clearTimeout(timeout);

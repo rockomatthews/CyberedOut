@@ -91,7 +91,7 @@ try {
   assert.equal((await remembered.json()).dot.id, registration.dot.id);
   assert.equal((await post("/api/world/ticket", {}, session)).status, 200);
   console.log(
-    "PASS remembered browser keeps the same Dot and can rejoin after world restart",
+    "PASS remembered browser keeps the same AI and can rejoin after world restart",
   );
   assert.equal((await post("/api/world/logout", {}, session)).status, 200);
   await stop();

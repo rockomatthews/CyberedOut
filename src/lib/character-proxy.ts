@@ -8,7 +8,7 @@ export async function characterProxy(
 ) {
   const token = request.cookies.get(ROAD_COOKIE)?.value;
   if (request.method === "GET" && !token)
-    return Response.json({ error: "Connect your Dot first." }, { status: 401 });
+    return Response.json({ error: "Connect your AI first." }, { status: 401 });
   const origin = request.headers.get("origin");
   if (
     token &&

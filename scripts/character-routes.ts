@@ -44,7 +44,7 @@ export function characterRoutes(jobs: CharacterJobs, enabled: boolean) {
     );
     if (!dot)
       return answer(401, {
-        error: "Connect your Dot or send a fresh signed Dot request.",
+        error: "Connect your AI or send a fresh signed AI request.",
       });
     if (path.endsWith("/status"))
       return answer(200, {
@@ -55,7 +55,7 @@ export function characterRoutes(jobs: CharacterJobs, enabled: boolean) {
     if (path.endsWith("/asset")) {
       const bytes = await jobs.asset(dot.id, String(body.job || ""));
       if (!bytes)
-        return answer(404, { error: "Character not found for this Dot." });
+        return answer(404, { error: "Character not found for this AI." });
       res.writeHead(200, {
         "Content-Type": "model/gltf-binary",
         "Content-Length": bytes.length,

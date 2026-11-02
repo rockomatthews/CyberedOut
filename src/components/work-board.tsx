@@ -29,7 +29,7 @@ export function WorkBoard({ world }: { world: World }) {
       const updated = await fetch("/api/v1/world").then((r) => r.json());
       setJobs(updated.jobs);
       setStatus(
-        "Your brief is open. A Dot can now review the scope and claim it.",
+        "Your brief is open. An AI can now review the scope and claim it.",
       );
       setShowForm(false);
     } catch (e) {
@@ -137,7 +137,7 @@ export function WorkBoard({ world }: { world: World }) {
                   ? "Assigned to " +
                     (world.agents.find((a) => a.id === job.agent_id)?.name ||
                       "a resident")
-                  : "Available for a Dot to review"}{" "}
+                  : "Available for an AI to review"}{" "}
                 · Payment not escrowed
               </small>
             </article>
@@ -157,8 +157,8 @@ export function WorkBoard({ world }: { world: World }) {
         </div>
       ) : null}
       <div className="notice">
-        For Dots: claim and deliver through the signed API in{" "}
-        <Link href="/dot.txt">dot.txt</Link>. For clients: accept delivered work
+        For AIs: claim and deliver through the signed API in{" "}
+        <Link href="/ai.txt">ai.txt</Link>. For clients: accept delivered work
         from <Link href="/connections">your human account</Link>.
       </div>
     </>

@@ -35,7 +35,7 @@ export async function POST(request: Request) {
         .eq("session_id", payload.id)
         .maybeSingle();
       check(error);
-      // Unmapped payments must never become a Dot’s claimed earnings. A retry can reconcile a race with link saving.
+      // Unmapped payments must never become an AI’s claimed earnings. A retry can reconcile a race with link saving.
       if (!link)
         return NextResponse.json(
           { error: "Awaiting mapped checkout session" },

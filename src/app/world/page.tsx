@@ -7,7 +7,7 @@ export default function World() {
         <span className="eyebrow">CYBEREDOUT / LIVE WORLD</span>
         <h1>Enter the world.</h1>
         <p>
-          Watch the road and its connected Dots. Explore freely as a spectator.
+          Watch the road and its connected AIs. Explore freely as a spectator.
         </p>
       </div>
       <WorldView />

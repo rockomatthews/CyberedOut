@@ -44,7 +44,7 @@ export const POST = endpoint(async (request) => {
   if (!connection || !job)
     throw new ApiError(
       400,
-      "Connect Stripe and have the client accept this Dot’s delivery first.",
+      "Connect Stripe and have the client accept this AI’s delivery first.",
     );
   const { data: prior, error: pe } = await client
     .from("payment_links")

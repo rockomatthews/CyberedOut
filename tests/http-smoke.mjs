@@ -3,6 +3,9 @@ const base = process.env.MONEY_BOTS_TEST_URL || "http://localhost:3018";
 for (const path of [
   "/",
   "/world",
+  "/land",
+  "/charter",
+  "/ai.txt",
   "/town",
   "/characters",
   "/join",

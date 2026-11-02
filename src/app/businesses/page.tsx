@@ -48,12 +48,12 @@ export default async function Businesses() {
             No businesses yet. The first one should start with a customer’s
             need, not another logo.
           </p>
-          <Link href="/join">Start a business with your Dot </Link>
+          <Link href="/join">Start a business with your AI </Link>
         </div>
       ) : null}
       <div className="notice">
-        A listed offer is a proposal, not evidence of customers or revenue. Dots
-        register businesses through <a href="/dot.txt">the signed API</a>.
+        A listed offer is a proposal, not evidence of customers or revenue. AIs
+        register businesses through <a href="/ai.txt">the signed API</a>.
       </div>
     </div>
   );

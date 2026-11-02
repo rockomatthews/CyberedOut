@@ -119,9 +119,7 @@ for (const path of ["/town", "/characters"]) {
   assert.equal(response.headers.get("location"), "/");
 }
 assert.equal((await post("/api/world/ticket", {})).response.status, 401);
-console.log(
-  "PASS map, studio, and multiplayer tickets require a connected Dot",
-);
+console.log("PASS map, studio, and multiplayer tickets require a connected AI");
 const first = await identity("Road QA A", true),
   second = await identity("Road QA B");
 assert.equal((await fetch(app + "/api/character/jobs")).status, 401);
@@ -171,7 +169,7 @@ assert.equal(
   404,
 );
 console.log(
-  "PASS character status and assets require the owning browser or a fresh signed Dot request",
+  "PASS character status and assets require the owning browser or a fresh signed AI request",
 );
 const studio = await fetch(app + "/characters", {
   headers: { Cookie: first.cookie },
@@ -179,7 +177,7 @@ const studio = await fetch(app + "/characters", {
 assert.equal(studio.status, 200);
 assert.ok((await studio.text()).includes("Design yourself."));
 console.log(
-  "PASS redeeming a signed Dot code unlocks the studio with an HttpOnly session",
+  "PASS redeeming a signed AI code unlocks the studio with an HttpOnly session",
 );
 const a = client(first.ticket),
   b = client(second.ticket);
@@ -193,7 +191,7 @@ try {
   assert.notEqual(a.data.id, b.data.id);
   assert.equal(a.data.id, first.id);
   assert.ok(b.data.snapshot.some((p) => p.id === a.data.id));
-  console.log("PASS two authenticated Dots see each other");
+  console.log("PASS two authenticated AIs see each other");
   // Cross the former 20 MB limit through the real authenticated upload path.
   const largeGlb = Buffer.alloc(24 * 1024 * 1024);
   const metadata = Buffer.from(
@@ -276,7 +274,7 @@ try {
     401,
   );
   console.log(
-    "PASS public spectators see live players and shared models without creating a Dot, uploading, or controlling players",
+    "PASS public spectators see live players and shared models without creating an AI, uploading, or controlling players",
   );
   const before = a.data.snapshot.find((p) => p.id === a.data.id).z;
   await new Promise((r) => setTimeout(r, 500));
@@ -286,7 +284,7 @@ try {
     JSON.stringify({
       type: "design",
       design: {
-        name: "Smoke Test Dot",
+        name: "Smoke Test AI",
         body: "#122334",
         accent: "#ffaa22",
         visor: "#33aaff",
@@ -298,13 +296,13 @@ try {
   await until(
     () =>
       b.data.snapshot.find((p) => p.id === a.data.id)?.design.name ===
-      "Smoke Test Dot",
+      "Smoke Test AI",
   );
   assert.equal(
     b.data.snapshot.find((p) => p.id === a.data.id).design.accent,
     "#ffaa22",
   );
-  console.log("PASS custom appearance reaches the other Dot");
+  console.log("PASS custom appearance reaches the other AI");
   await new Promise((r) => setTimeout(r, 120));
   a.socket.send(JSON.stringify({ type: "automatic", enabled: false }));
   await until(
@@ -313,7 +311,7 @@ try {
   const paused = a.data.snapshot.find((p) => p.id === a.data.id).z;
   await new Promise((r) => setTimeout(r, 350));
   assert.equal(a.data.snapshot.find((p) => p.id === a.data.id).z, paused);
-  console.log("PASS pause stops this Dot only");
+  console.log("PASS pause stops this AI only");
   b.socket.close();
   await until(() => !a.data.snapshot.some((p) => p.id === b.data.id));
   console.log("PASS disconnect removes player presence");

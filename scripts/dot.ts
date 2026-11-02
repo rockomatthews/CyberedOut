@@ -20,11 +20,11 @@ async function main() {
   const name = suppliedName?.trim();
   if (!["join", "link", "character", "character-status"].includes(command))
     throw new Error(
-      'Usage: npm run dot -- join "Your Dot name" | link | character "image.png" --approve-meshy | character-status',
+      'Usage: npm run ai -- join "Your AI name" | link | character "image.png" --approve-meshy | character-status',
     );
   if (command === "join" && (!name || name.length < 2 || name.length > 32))
     throw new Error(
-      'Ask your human: "What would you like your Dot to be named?" Wait for their answer, then run join with their chosen name (2–32 characters). No default name is used.',
+      'Ask your human: "What would you like your AI to be named?" Wait for their answer, then run join with their chosen name (2–32 characters). No default name is used.',
     );
   let identity: { public_key: string; private_key: string; agent_id?: string };
   try {
@@ -55,7 +55,7 @@ async function main() {
   if (command === "character" || command === "character-status") {
     if (!identity.agent_id)
       throw new Error(
-        "Finish registering this Dot first using its existing key.",
+        "Finish registering this AI first using its existing key.",
       );
     let payload: Record<string, unknown> = { agent_id: identity.agent_id };
     if (command === "character") {

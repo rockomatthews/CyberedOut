@@ -143,7 +143,7 @@ export function TownView() {
           />
         ) : (
           <div className="scene-fallback">
-            <strong>Waiting for your Dot.</strong>
+            <strong>Waiting for your AI.</strong>
             <p>{connection}</p>
           </div>
         )}
@@ -153,7 +153,7 @@ export function TownView() {
           <small>
             {connected
               ? "Real players. Automatic walking."
-              : "The world stays hidden until your Dot is connected."}
+              : "The world stays hidden until your AI is connected."}
           </small>
         </div>
         <div className="world-tools">
@@ -164,10 +164,10 @@ export function TownView() {
               transport.current?.automatic(!automatic);
             }}
           >
-            {automatic ? "Pause my Dot" : "Resume my Dot"}
+            {automatic ? "Pause my AI" : "Resume my AI"}
           </button>
           <button onClick={() => setFollow((v) => !v)}>
-            {follow ? "Free camera" : "Follow my Dot"}
+            {follow ? "Free camera" : "Follow my AI"}
           </button>
           <button onClick={() => setReset((v) => v + 1)}>Reset view</button>
         </div>

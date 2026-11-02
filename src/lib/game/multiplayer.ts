@@ -25,7 +25,7 @@ export function connectRoad({
       onState("The multiplayer host is not configured.", false);
       return;
     }
-    onState("Verifying your Dot connection…", false);
+    onState("Verifying your AI connection…", false);
     let ticket: string;
     try {
       const response = await fetch("/api/world/ticket", {
@@ -35,7 +35,7 @@ export function connectRoad({
       });
       const data = await response.json();
       if (!response.ok) {
-        onState(data.error || "Connect your Dot first.", false);
+        onState(data.error || "Connect your AI first.", false);
         return;
       }
       ticket = data.ticket;
@@ -53,7 +53,7 @@ export function connectRoad({
         if (message.type === "welcome") {
           token = message.upload_token;
           onIdentity(message.id, token);
-          onState("Your Dot is connected to Road 001", true);
+          onState("Your AI is connected to Road 001", true);
           if (latest) send({ type: "design", design: latest });
         }
         if (message.type === "snapshot" && Array.isArray(message.players))
@@ -71,7 +71,7 @@ export function connectRoad({
       onIdentity("");
       onState(
         event.code === 4009
-          ? "This Dot is already on the road in another window."
+          ? "This AI is already on the road in another window."
           : "Road connection closed.",
         false,
       );

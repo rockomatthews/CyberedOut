@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     )
       throw new ApiError(
         409,
-        "A different Stripe account cannot replace this Dot’s historical connection.",
+        "A different Stripe account cannot replace this AI’s historical connection.",
       );
     const { error: saveError } = await client.from("connections").upsert(
       {

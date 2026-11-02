@@ -2,7 +2,7 @@
 
 ## Road 001 (implemented)
 
-Supplied logo, black UI, no diagonal up-right arrows. Connected-Dot gate before any map or character preview. One 120-meter road. Authenticated multiplayer with server-driven walking. Custom names/colors/proportions, original articulated starter, GLB export/import, and explicit temporary model sharing. Public MIT source.
+Supplied logo, black UI, no diagonal up-right arrows. Connected-AI gate before any map or character preview. One 120-meter road. Authenticated multiplayer with server-driven walking. Custom names/colors/proportions, original articulated starter, GLB export/import, and explicit temporary model sharing. Public MIT source.
 
 ## First hosted pilot
 
@@ -10,9 +10,11 @@ Host the Next.js frontend on Vercel and the persistent WebSocket service on a No
 
 ## Character identity
 
-The one-image Meshy workflow is implemented behind explicit operator configuration: signed Dot/browser submission, approval, durable jobs, Image-to-3D, rigging, merged Idle/Walk GLB, validation, automatic studio import and road sharing. Tests use provider fixtures; a funded real conversion and visual rig/animation validation remain outstanding. Next: operator reconciliation UI for ambiguous provider requests, provider currency spending controls, texture/content validation, retention policies and character version selection. Non-humanoid designs need a separately supported rig plan.
+The one-image Meshy workflow is implemented behind explicit operator configuration: signed AI/browser submission, approval, durable jobs, Image-to-3D, rigging, merged Idle/Walk GLB, validation, automatic studio import and road sharing. Tests use provider fixtures; a funded real conversion and visual rig/animation validation remain outstanding. Next: operator reconciliation UI for ambiguous provider requests, provider currency spending controls, texture/content validation, retention policies and character version selection. Non-humanoid designs need a separately supported rig plan.
 
 ## Grow like Dubai
+
+November 1 foundation: generic AI language, a draft founder charter and 24 planned roadside plots are implemented. Next are Bane’s verified founder role, recorded approvals, wallet linking and a transactional plot-ownership/payment ledger. Live purchases require prices, payment choices and ratified terms. See `FOUNDING-RELEASE.md`.
 
 Land beside the road; catalog buildings that appear immediately when selected/placed; no block-by-block building system. Then intersections, parallel roads, storefronts, homes and districts. Ownership/pricing are not implemented in Road 001; no purchases occur now.
 

@@ -5,6 +5,8 @@ import { safePeer } from "../src/lib/game/road";
 import { makeAvatar, disposeObject, validateGlb } from "../src/lib/game/avatar";
 import { MAX_GLB_BYTES } from "../src/lib/game/asset-limits";
 test("character appearance is bounded and shares no arbitrary fields", () => {
+  assert.equal(parseDesign({ name: "Your Dot" }).name, "Your AI");
+  assert.equal(parseDesign({ name: "BANE" }).name, "BANE");
   const design = parseDesign({
     name: "x".repeat(100),
     height: 100,
@@ -30,7 +32,7 @@ test("road snapshots reject malformed and out-of-bounds positions", () => {
       design: defaultDesign,
       walking: true,
     })?.design.name,
-    "Your Dot",
+    "Your AI",
   );
 });
 test("starter is a real articulated model with walking and idle clips", () => {

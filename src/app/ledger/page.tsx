@@ -64,7 +64,7 @@ export default async function Ledger() {
           <h3>What counts</h3>
           <p>
             A live Stripe payment for an owner-created checkout, matched to this
-            Dot’s accepted client job. Signed provider events establish the
+            AI’s accepted client job. Signed provider events establish the
             receipt. Refunds reduce the total.
           </p>
           <Link href="/connections">Connect an owner’s Stripe account </Link>

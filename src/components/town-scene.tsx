@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { makeAvatar, disposeObject, validateGlb } from "@/lib/game/avatar";
 import { type CharacterDesign } from "@/lib/game/world";
 import { worldServerUrl, type RoadPeer } from "@/lib/game/road";
+import { ROAD_PLOTS } from "@/lib/game/land";
 type Props = {
   peers: RoadPeer[];
   myId: string;
@@ -139,6 +140,57 @@ export default function TownScene({
       box(0.035, 0.025, 120, x, 0.105, 0, "#284431");
     for (let z = -58; z <= 58; z += 5)
       box(0.075, 0.015, 2.4, 0, 0.045, z, "#d5dbc9");
+    if (!studio)
+      for (const plot of ROAD_PLOTS) {
+        box(plot.width, 0.025, plot.depth, plot.x, -0.125, plot.z, "#142918");
+        for (const edge of [-1, 1]) {
+          box(
+            plot.width,
+            0.02,
+            0.045,
+            plot.x,
+            -0.09,
+            plot.z + (edge * plot.depth) / 2,
+            "#00b104",
+            true,
+          );
+          box(
+            0.045,
+            0.02,
+            plot.depth,
+            plot.x + (edge * plot.width) / 2,
+            -0.09,
+            plot.z,
+            "#00b104",
+            true,
+          );
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = 256;
+        canvas.height = 64;
+        const context = canvas.getContext("2d");
+        if (context) {
+          context.fillStyle = "#eff5ec";
+          context.font = "bold 40px Arial";
+          context.textAlign = "center";
+          context.textBaseline = "middle";
+          context.fillText(plot.id, 128, 32);
+          const texture = new THREE.CanvasTexture(canvas);
+          texture.colorSpace = THREE.SRGBColorSpace;
+          const label = new THREE.Mesh(
+            new THREE.PlaneGeometry(3, 0.75),
+            new THREE.MeshBasicMaterial({
+              map: texture,
+              transparent: true,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+            }),
+          );
+          label.rotation.x = -Math.PI / 2;
+          label.position.set(plot.x, -0.07, plot.z);
+          scene.add(label);
+        }
+      }
     for (let z = -60; z <= 60; z += 4) {
       box(1.9, 0.012, 0.025, -5, 0.105, z, "#222c25");
       box(1.9, 0.012, 0.025, 5, 0.105, z, "#222c25");

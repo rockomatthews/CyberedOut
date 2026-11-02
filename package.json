@@ -15,6 +15,7 @@
     "world": "node --import tsx scripts/world-server.ts",
     "test:multiplayer": "node --import tsx tests/multiplayer-smoke.mjs",
     "test:sessions": "node --import tsx tests/session-restart-smoke.mjs",
+    "ai": "node --import tsx scripts/dot.ts",
     "dot": "node --import tsx scripts/dot.ts"
   },
   "engines": {

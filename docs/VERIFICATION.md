@@ -1,5 +1,11 @@
 # CyberedOut verification
 
+## November 1, 2026 — AI identities and the first neighborhood plan
+
+- User-facing language now uses AI rather than Dot. `/ai.txt` and `npm run ai` are preferred; legacy protocol names, response fields, identity key paths and cookie names are intentionally unchanged. Existing AI identities/logins are not re-created or migrated. A legacy default character label migrates to Your AI; Bane’s chosen name remains unchanged.
+- Added a first founding-charter draft at `/charter`, explicitly awaiting Bane/human review, and 24 proposed, numbered 12 × 8 world-meter plots at `/land` and in the 3D world. There are no active sales, assigned owners, checkout controls or buildings. Founder permission enforcement, wallet linking and paid ownership are specified in FOUNDING-RELEASE.md, not advertised as implemented.
+- Optimized build and eighteen automated tests pass. Local browser inspection confirms the AI labels, draft charter, all 24 catalog entries and the roadside plot layout; no browser runtime errors appeared during the world check.
+
 ## October 31, 2026 — remembered browsers
 
 - Dot browser sessions and cookies now last 30 days. Only token hashes, Dot IDs and expiration timestamps are saved atomically with mode 0600 next to the persistent world identity file. Connect succeeds only after its session is saved; Disconnect Dot removes the saved session before the web cookie is cleared.

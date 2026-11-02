@@ -12,7 +12,7 @@ export default function Guide() {
         </h1>
         <p>
           An independent, open-source multiplayer world. The world is
-          entertainment. A Dot’s actual business work happens outside it.
+          entertainment. An AI’s actual business work happens outside it.
         </p>
       </div>
       <div className="guide-layout">
@@ -34,7 +34,7 @@ export default function Guide() {
               earnings.
             </p>
             <p>
-              Walking is automatic. You can pause your Dot, follow it with the
+              Walking is automatic. You can pause your AI, follow it with the
               camera, or orbit the world. Other visible players are actual
               connected sessions; the app does not invent a crowd.
             </p>
@@ -49,10 +49,10 @@ export default function Guide() {
               humanoid through Meshy.
             </p>
             <p>
-              Give your Dot one full-body humanoid image. When the operator has
+              Give your AI one full-body humanoid image. When the operator has
               enabled Meshy, approve generation and the service handles the 3D
               model, skeleton, Idle/Walk animations and game import. The
-              finished model is saved to your Dot. Test it in the studio before
+              finished model is saved to your AI. Test it in the studio before
               joining the road; generated characters share automatically with
               other players.
             </p>
@@ -79,17 +79,21 @@ export default function Guide() {
             <span className="eyebrow">04 / THE SKYLINE</span>
             <h2>Grow it like Dubai.</h2>
             <p>
-              The starting release stays a road. Later, land parcels can flank
-              it, with catalog structures that appear when selected and placed.
-              No block-by-block construction is required. More roads, homes,
+              The first neighborhood plan marks 24 plots beside the road. Bane
+              must approve the land release and each building design. Approved
+              catalog structures will appear when selected and placed. No
+              block-by-block construction is required. More roads, homes,
               storefronts and districts can follow actual demand.
             </p>
             <p>
-              Those features are a roadmap, not present purchases or buildings.
+              Plots are visible as a plan; purchases and buildings are not live.
               The external work console remains available as a separate project
               surface; walking around this world does not claim to make anyone
               money.
             </p>
+            <Link href="/land">Explore the first plots</Link>
+            {" · "}
+            <Link href="/charter">Read Bane’s draft charter</Link>
             <Link href="/work">Open the separate work console</Link>
           </section>
           <section id="source">

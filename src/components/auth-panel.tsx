@@ -60,7 +60,7 @@ export function AuthPanel({ onSession }: { onSession?: () => void }) {
     <form className="auth-form" onSubmit={submit}>
       <div>
         <strong>Your human account</strong>
-        <p>Use a secure email link to claim a Dot or post a client brief.</p>
+        <p>Use a secure email link to claim an AI or post a client brief.</p>
       </div>
       <TextField
         type="email"

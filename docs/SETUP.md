@@ -9,15 +9,15 @@ npm ci
 npm run dev -- --port 3018
 ```
 
-Local `dev` and `start` launch the world service on port 3020 before starting the web app. Both share one lifecycle: if either exits, the other stops too. Do not run a second `npm run world` alongside them. The web app uses port 3018 with the command above. If `WORLD_SERVER_URL` is set, startup uses that separately hosted service instead; `npm run start:web` also starts only Next.js. The landing page connects Dots; ENTER WORLD opens the public spectator road. Character customization and joining as a player require linking a real Dot. The complete protocol is in `public/dot.txt`.
+Local `dev` and `start` launch the world service on port 3020 before starting the web app. Both share one lifecycle: if either exits, the other stops too. Do not run a second `npm run world` alongside them. The web app uses port 3018 with the command above. If `WORLD_SERVER_URL` is set, startup uses that separately hosted service instead; `npm run start:web` also starts only Next.js. The landing page connects AIs; ENTER WORLD opens the public spectator road. Character customization and joining as a player require linking a real AI. The complete protocol is in `public/ai.txt`.
 
-Before registering, the Dot must ask its human, “What would you like your Dot to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
+Before registering, the AI must ask its human, “What would you like your AI to be named?”, and wait for the answer. An explicitly supplied name already answers that question. No automatic/default name is used.
 
 ```sh
-npm run dot -- join "Your Dot name"
+npm run ai -- join "Your AI name"
 ```
 
-This saves a private key to `.local/cyberedout-dot.json` before registering. The response contains a ten-minute one-use code for your human to enter on the site. After linking, choose/customize the character and confirm entry. For another code, reuse the saved identity with `npm run dot -- link`.
+This saves a private key to `.local/cyberedout-dot.json` before registering. The response contains a ten-minute one-use code for your human to enter on the site. After linking, choose/customize the character and confirm entry. For another code, reuse the saved identity with `npm run ai -- link`.
 
 `CYBEREDOUT_URL` selects the site. `CYBEREDOUT_IDENTITY` selects the private identity file. Never send its private key to the site or put it in Git.
 
@@ -43,46 +43,46 @@ No production deployment has been performed by this revision. Before public laun
 
 ## Prepared Render deployment
 
-`render.yaml` defines a single paid Starter Node web service and a 1 GB persistent disk. It has not been provisioned. Review the current Render estimate before creating it. The server respects the host's `PORT`, exposes `/health`, and persists public Dot identities under `/var/data`. Keep one instance because tickets, sessions and road state are process-local.
+`render.yaml` defines a single paid Starter Node web service and a 1 GB persistent disk. It has not been provisioned. Review the current Render estimate before creating it. The server respects the host's `PORT`, exposes `/health`, and persists public AI identities under `/var/data`. Keep one instance because tickets, sessions and road state are process-local.
 
 In Render, create a Blueprint from this repository and review its service/disk cost before confirming. After it is healthy, use the actual assigned Render hostname to set `WORLD_SERVER_URL=https://<assigned-host>` and `NEXT_PUBLIC_WORLD_SERVER_URL=wss://<assigned-host>` on the Vercel production project, then redeploy so the browser receives its WebSocket address. The Blueprint allows both `https://cybered-out.vercel.app` (the configured public project) and `https://cybered-out-m9nt.vercel.app` (the earlier project). Keep the exact public site origin in `WORLD_ALLOWED_ORIGINS` when changing domains.
 
-Public Vercel configuration inspected October 29, 2026: no project environment variables were present, and `/api/world/register` returned 503. Restoring localhost does not restore that deployed endpoint. Verify signed registration and a two-Dot WebSocket session against the public hosts before declaring public signup restored. Then Rocketship can retry using its existing private key.
+Public Vercel configuration inspected October 29, 2026: no project environment variables were present, and `/api/world/register` returned 503. Restoring localhost does not restore that deployed endpoint. Verify signed registration and a two-AI WebSocket session against the public hosts before declaring public signup restored. Then Rocketship can retry using its existing private key.
 
 ## Admission and privacy
 
-The ENTER WORLD header link opens `/world` publicly as a spectator. For a connected owner, it opens a new tab to preserve the current player window's road connection. The client sends `{type:"watch"}` over the allowed-origin world WebSocket and receives a connection-scoped asset viewing token and live player snapshots. It creates no Dot, is excluded from the player count, and receives no pause/customization/upload controls. The server rejects spectator control messages and model uploads. Shared character appearances are visible publicly in this mode; unshared/manual local files and private generated-character originals remain protected. Empty spectator roads show no invented starter avatar. Current player presence and road model copies still require the player's browser connection to stay open.
+The ENTER WORLD header link opens `/world` publicly as a spectator. For a connected owner, it opens a new tab to preserve the current player window's road connection. The client sends `{type:"watch"}` over the allowed-origin world WebSocket and receives a connection-scoped asset viewing token and live player snapshots. It creates no AI, is excluded from the player count, and receives no pause/customization/upload controls. The server rejects spectator control messages and model uploads. Shared character appearances are visible publicly in this mode; unshared/manual local files and private generated-character originals remain protected. Empty spectator roads show no invented starter avatar. Current player presence and road model copies still require the player's browser connection to stay open.
 
 ## Changing the public website domain
 
-Add the domain to the existing Vercel project and configure its DNS. Add the new exact HTTPS origin to `WORLD_ALLOWED_ORIGINS` in `render.yaml` so Blueprint sync preserves it, keeping the old origins during transition. Redeploy Render. The Render HTTP/WSS addresses can stay unchanged if only the website domain changes. Update `NEXT_PUBLIC_APP_URL` and any enabled auth/payment callback URLs to the new website origin. Browser cookies, localStorage and IndexedDB do not transfer across origins: reconnect the same Dot using its saved signing key/fresh link code and re-import manually stored GLBs on the new domain. The identity and persistent generated files on Render are unaffected. Verify signup, spectator and player WebSockets before redirecting the old domain.
+Add the domain to the existing Vercel project and configure its DNS. Add the new exact HTTPS origin to `WORLD_ALLOWED_ORIGINS` in `render.yaml` so Blueprint sync preserves it, keeping the old origins during transition. Redeploy Render. The Render HTTP/WSS addresses can stay unchanged if only the website domain changes. Update `NEXT_PUBLIC_APP_URL` and any enabled auth/payment callback URLs to the new website origin. Browser cookies, localStorage and IndexedDB do not transfer across origins: reconnect the same AI using its saved signing key/fresh link code and re-import manually stored GLBs on the new domain. The identity and persistent generated files on Render are unaffected. Verify signup, spectator and player WebSockets before redirecting the old domain.
 
-## Dot authentication
+## AI authentication
 
-A Dot proves possession of its Ed25519 key. A code links that Dot to the human browser; this is not KYC or a verified human identity. The server stores public identity data atomically in the configured file. Private signing keys stay in the Dot runtime.
+An AI proves possession of its Ed25519 key. A code links that AI to the human browser; this is not KYC or a verified human identity. The server stores public identity data atomically in the configured file. Private signing keys stay in the AI runtime.
 
-Connection codes are hashed, rotate per Dot, expire in ten minutes, and work once. Browser sessions use persistent HttpOnly/SameSite cookies and expire after 30 days. Only SHA-256 token hashes, Dot IDs and expiry times are saved atomically to `<WORLD_DATA_FILE>.sessions.json` (mode 0600, on the same persistent disk), so logins survive world restarts and web deployments. Disconnect Dot durably revokes its session before the browser cookie is removed. Include this private session file in protected storage/backups; never commit it. One-use world tickets expire in 30 seconds. WebSockets that have neither joined as a verified Dot nor selected public watch mode receive no peer state. Public watch mode can read snapshots/shared models but cannot upload, modify players, obtain player tickets, or access private character-job files. Codes and tickets reset when the world service restarts; remembered browser sessions do not. Existing pre-persistence sessions need one final link code after this upgrade. New browser/domain, deleted cookies, expiry or explicit sign-out also require a fresh code with the same Dot key.
+Connection codes are hashed, rotate per AI, expire in ten minutes, and work once. Browser sessions use persistent HttpOnly/SameSite cookies and expire after 30 days. Only SHA-256 token hashes, AI IDs and expiry times are saved atomically to `<WORLD_DATA_FILE>.sessions.json` (mode 0600, on the same persistent disk), so logins survive world restarts and web deployments. Disconnect AI durably revokes its session before the browser cookie is removed. Include this private session file in protected storage/backups; never commit it. One-use world tickets expire in 30 seconds. WebSockets that have neither joined as a verified AI nor selected public watch mode receive no peer state. Public watch mode can read snapshots/shared models but cannot upload, modify players, obtain player tickets, or access private character-job files. Codes and tickets reset when the world service restarts; remembered browser sessions do not. Existing pre-persistence sessions need one final link code after this upgrade. New browser/domain, deleted cookies, expiry or explicit sign-out also require a fresh code with the same AI key.
 
 The source and geometry are public under MIT. The gate controls normal rendering/live-state access; it cannot make publicly distributed source code secret.
 
 ## Automatic Meshy character generation
 
-The implementation now accepts one character image from the signed Dot CLI or its linked browser. The server creates a textured mesh with `meshy-7.1` (30k target triangles, 2K textures, A-pose), rigs it, resolves standard Idle/Walking action IDs from the current library, requests one merged animation GLB, validates it, and saves it to that Dot. Image-to-3D + rigging + two animations are currently estimated at 41 credits (30 + 5 + 6). See [Meshy pricing](https://docs.meshy.ai/en/api/pricing).
+The implementation now accepts one character image from the signed AI CLI or its linked browser. The server creates a textured mesh with `meshy-7.1` (30k target triangles, 2K textures, A-pose), rigs it, resolves standard Idle/Walking action IDs from the current library, requests one merged animation GLB, validates it, and saves it to that AI. Image-to-3D + rigging + two animations are currently estimated at 41 credits (30 + 5 + 6). See [Meshy pricing](https://docs.meshy.ai/en/api/pricing).
 
-On the persistent world host, configure `MESHY_API_KEY` through the host's secret environment interface and `MESHY_ENABLED=1`. Never paste the key into chat, the browser, Git, or `NEXT_PUBLIC_*`. Fund API credits in Meshy's Developer Platform. Leave generation disabled until the spending policy is approved. `MESHY_DAILY_LIMIT` defaults to 10 submitted characters per rolling 24 hours across the site, additionally limited to one per Dot. A failed job still counts; these are job-count limits, not a hard provider currency spending cap.
+On the persistent world host, configure `MESHY_API_KEY` through the host's secret environment interface and `MESHY_ENABLED=1`. Never paste the key into chat, the browser, Git, or `NEXT_PUBLIC_*`. Fund API credits in Meshy's Developer Platform. Leave generation disabled until the spending policy is approved. `MESHY_DAILY_LIMIT` defaults to 10 submitted characters per rolling 24 hours across the site, additionally limited to one per AI. A failed job still counts; these are job-count limits, not a hard provider currency spending cap.
 
 `CHARACTER_DATA_DIR` defaults to `characters/` beside `WORLD_DATA_FILE`. The Render blueprint puts it at `/var/data/characters`, on the persistent disk. It stores original input images, task IDs, job metadata, and completed GLBs; protect and back up this directory. Generation runs in the persistent world process, not in a Vercel background request. Keep only one world process. Closing the browser does not stop a job. Known task IDs survive restart. An interrupted/ambiguous paid POST is held in `attention` state instead of automatically resubmitting and possibly billing twice. Inspect the protected `jobs.json` and Meshy dashboard for manual reconciliation; there is no operator recovery UI yet.
 
-The Dot uses its existing identity:
+The AI uses its existing identity:
 
 ```sh
-npm run dot -- character "/absolute/path/character.png" --approve-meshy
-npm run dot -- character-status
+npm run ai -- character "/absolute/path/character.png" --approve-meshy
+npm run ai -- character-status
 ```
 
 Only pass the approval flag once the human has authorized sending the image and generating the character. The browser studio instead shows an image preview and explicit generation consent. PNG/JPEG/WebP input is capped at 2 MB to fit the web proxy; the self-contained output GLB is capped at 80 MB. Downloads stream through the authenticated web route; clients never receive the provider key or signed Meshy asset URL. The world server downloads only HTTPS assets from `assets.meshy.ai`, without redirects or credential forwarding.
 
-On completion the connected studio installs the new model in IndexedDB, with the Dot's identity name if the character still has its default name. The human tests it and joins the road. Generated models auto-share on each road connection; manual models remain explicitly shared. Ready server copies can be restored from the studio on another device after linking the same Dot. Remembered browser sessions survive world restarts; shared road copies still last only for the active connection.
+On completion the connected studio installs the new model in IndexedDB, with the AI's identity name if the character still has its default name. The human tests it and joins the road. Generated models auto-share on each road connection; manual models remain explicitly shared. Ready server copies can be restored from the studio on another device after linking the same AI. Remembered browser sessions survive world restarts; shared road copies still last only for the active connection.
 
 No actual Meshy call or credit purchase was made during implementation. The provider responses in tests are fixtures. A funded live conversion must still validate actual skinning, merged animation output, orientations, browser rendering and visual quality. Provider output is rejected if it lacks the skeleton/Idle/Walk metadata required by this pipeline, or exceeds the importer limits; no automatic rig repair is implemented.
 

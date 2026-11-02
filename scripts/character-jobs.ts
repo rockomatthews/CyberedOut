@@ -158,7 +158,7 @@ export class CharacterJobs {
         )
       )
         throw new Error(
-          "Your Dot already has a pending character. Check its progress first.",
+          "Your AI already has a pending character. Check its progress first.",
         );
       const today = this.jobs.filter((j) => j.created > Date.now() - 86400000);
       if (

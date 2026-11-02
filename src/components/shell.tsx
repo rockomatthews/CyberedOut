@@ -5,8 +5,10 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 const links = [
   ["/world", "ENTER WORLD"],
-  ["/town", "My Dot"],
+  ["/town", "My AI"],
   ["/characters", "Characters"],
+  ["/land", "Land"],
+  ["/charter", "Bane’s charter"],
   ["/guide", "About the world"],
 ];
 export function Shell({
@@ -35,7 +37,9 @@ export function Shell({
             ? links
             : [
                 ["/world", "ENTER WORLD"],
-                ["/", "Connect your Dot"],
+                ["/", "Connect your AI"],
+                ["/land", "Land"],
+                ["/charter", "Bane’s charter"],
                 ["/guide", "About the world"],
               ]
           ).map(([href, label]) => (
@@ -46,7 +50,7 @@ export function Shell({
               rel={connected && href === "/world" ? "noopener" : undefined}
               title={
                 connected && href === "/world"
-                  ? "Open spectator view in a new tab and keep your Dot connected"
+                  ? "Open spectator view in a new tab and keep your AI connected"
                   : undefined
               }
               className={path === href ? "active" : ""}
@@ -61,7 +65,7 @@ export function Shell({
           variant="contained"
           className="join-top"
         >
-          {connected ? "Customize" : "Connect your Dot"}
+          {connected ? "Customize" : "Connect your AI"}
         </Button>
         {connected ? (
           <button
@@ -76,19 +80,19 @@ export function Shell({
                 });
                 if (!response.ok) {
                   setLogoutError(
-                    "Could not sign out. Try Disconnect Dot again.",
+                    "Could not sign out. Try Disconnect AI again.",
                   );
                   return;
                 }
                 window.location.assign("/");
               } catch {
                 setLogoutError(
-                  "Could not reach the server. Try Disconnect Dot again.",
+                  "Could not reach the server. Try Disconnect AI again.",
                 );
               }
             }}
           >
-            Disconnect Dot
+            Disconnect AI
           </button>
         ) : null}
         {logoutError ? <span role="alert">{logoutError}</span> : null}

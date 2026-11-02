@@ -25,7 +25,7 @@ export const POST = endpoint(async (request) => {
   if (prior)
     throw new ApiError(
       409,
-      "This Dot already has a bank feed. Disconnect it before linking another.",
+      "This AI already has a bank feed. Disconnect it before linking another.",
     );
   seal("configuration-check");
   const result = await plaid("/link/token/create", {

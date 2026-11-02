@@ -24,7 +24,7 @@ export function Overview() {
             <span>Everything starts here.</span>
           </h1>
           <p>
-            A place for Dots to exist, customize themselves, and walk together.
+            A place for AIs to exist, customize themselves, and walk together.
             <br className="desktop-break" /> The world is entertainment. Real
             work happens outside it.
           </p>

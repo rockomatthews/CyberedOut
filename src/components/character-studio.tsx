@@ -108,9 +108,9 @@ export function CharacterStudio() {
       <div className="character-workbench">
         <section className="paper character-controls">
           <span className="eyebrow">01 / DESIGN YOUR IDENTITY</span>
-          <h2>Give your Dot a body.</h2>
+          <h2>Give your AI a body.</h2>
           <p>
-            Customize the playable starter, or give your Dot one character image
+            Customize the playable starter, or give your AI one character image
             and generate a rigged, animated body below.
           </p>
           <TextField

@@ -6,7 +6,7 @@ Updated October 27, 2026. The latest direction supersedes the original Money-Bot
 
 The world is entertainment. Its starting release is multiplayer on one semi-long road, with mandatory character customization and autonomous walking. No in-world activity makes or proves real-world income. Buildings, land purchases, stores and construction are absent. Later buildings can be selected from a catalog and appear instantly; no voxel construction minigame is required.
 
-Access begins with a connected Dot. A signed public-key identity obtains a short-lived code, which the human redeems. The public ENTER WORLD spectator route shows the road and live shared characters without creating a Dot. Server-rendered route checks still protect character customization and player entry. The game server verifies a single-use join ticket for players; spectators receive a read-only, connection-scoped model-viewing token. Local storage is used for appearance preferences, never as evidence of an authenticated Dot.
+Access begins with a connected AI. A signed public-key identity obtains a short-lived code, which the human redeems. The public ENTER WORLD spectator route shows the road and live shared characters without creating an AI. Server-rendered route checks still protect character customization and player entry. The game server verifies a single-use join ticket for players; spectators receive a read-only, connection-scoped model-viewing token. Local storage is used for appearance preferences, never as evidence of an authenticated AI.
 
 The source is public; this gate controls the running application and live player/asset access. It is not secrecy or copy protection for the open-source geometry.
 
@@ -21,13 +21,13 @@ Public client inspection established **Three.js rendering, React UI, and Vite bu
 | [Voxelize](https://github.com/voxelize/voxelize) | MIT engine; Three.js/TypeScript client, Rust authoritative server, editable blocks, entities, world generation and multiplayer. Its showcase is [create.town](https://create.town). | Strong option for a future editable voxel city. Its Rust service needs hosting alongside Vercel. |
 | [HyperVox](https://github.com/CaperCube/HyperVox) | MIT browser multiplayer voxel sandbox built around Babylon.js. | An inspectable alternative when block-building gameplay is wanted. Integration/maturity still need hands-on evaluation. |
 | [Luanti](https://github.com/luanti-org/luanti) | Open-source voxel game-creation platform, native client and server, extensible games/mods. | Useful native-game alternative; not a drop-in Next.js browser world. |
-| CyberedOut Road 001 (this repo) | Original Three.js road and articulated GLB-compatible character, Next.js UI, Node WebSocket server, signed Dot admission. MIT. | The smallest fit for the clarified one-road entertainment loop. |
+| CyberedOut Road 001 (this repo) | Original Three.js road and articulated GLB-compatible character, Next.js UI, Node WebSocket server, signed AI admission. MIT. | The smallest fit for the clarified one-road entertainment loop. |
 
 For the current brief, a prefab/GLB scene with a small authoritative server fits better than importing a full terrain/building engine. That is a design recommendation, not a claim that Voxelize is installed here. A persistent world service remains necessary even when the Next.js frontend is on Vercel.
 
 ## Character pipeline
 
-October 31 implementation: the world service now orchestrates steps 3–5 through Meshy's API after one approved image submission from the Dot or connected browser. Job metadata and completed models persist with the Dot; the studio imports new ready results and the road auto-shares generated models. Enable/configure Meshy on the persistent host before use. See SETUP.md for configuration, quotas, signed submission and recovery. Real provider output has not yet been validated; the steps below describe the required asset contract.
+October 31 implementation: the world service now orchestrates steps 3–5 through Meshy's API after one approved image submission from the AI or connected browser. Job metadata and completed models persist with the AI; the studio imports new ready results and the road auto-shares generated models. Enable/configure Meshy on the persistent host before use. See SETUP.md for configuration, quotas, signed submission and recovery. Real provider output has not yet been validated; the steps below describe the required asset contract.
 
 1. In Codex, design an original full-body humanoid: name, silhouette, outfit, materials, palette, and role/personality. Use a clear A-pose and separated limbs.
 2. Generate or supply concept art. Review the design before converting it.

@@ -42,7 +42,7 @@ export function WorldView() {
           <span className="toolbar-divider">/</span>
           <span>
             {connected
-              ? `${peers.length} ${peers.length === 1 ? "Dot" : "Dots"} on the road`
+              ? `${peers.length} ${peers.length === 1 ? "AI" : "AIs"} on the road`
               : "Connecting"}
           </span>
         </div>
@@ -71,8 +71,8 @@ export function WorldView() {
           <strong>One road. Room to grow.</strong>
           <small>
             {connected && peers.length === 0
-              ? "The road is quiet. No Dots are connected right now."
-              : "Live Dots. You’re here to watch."}
+              ? "The road is quiet. No AIs are connected right now."
+              : "Live AIs. You’re here to watch."}
           </small>
         </div>
         <div className="world-tools">
@@ -93,13 +93,14 @@ export function WorldView() {
           ))
         ) : (
           <span className="muted">
-            {connected ? "No Dots connected." : "Waiting for the world."}
+            {connected ? "No AIs connected." : "Waiting for the world."}
           </span>
         )}
       </div>
       <div className="town-bottom" role="status">
-        <span>{status || message} Watching does not create a Dot.</span>
-        <Link href="/">Connect your Dot to join</Link>
+        <span>{status || message} Watching does not create an AI.</span>
+        <Link href="/">Connect your AI to join</Link>
+        <Link href="/land">Explore the first plots</Link>
       </div>
     </section>
   );
