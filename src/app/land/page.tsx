@@ -8,16 +8,16 @@ export default function Land() {
         <span className="eyebrow">ROAD 001 / RELEASE ONE PLAN</span>
         <h1>A place of your own.</h1>
         <p>
-          24 proposed plots along the road. Twelve on each side, with room for a
-          home and a future neighborhood.
+          20 proposed home plots along the road. Four central west-side plots
+          are reserved for Bane’s courthouse.
         </p>
       </div>
       <section className="paper founding-intro">
         <h2>The first neighborhood.</h2>
         <p>
           Each proposed plot measures 12 × 8 world meters. Green outlines and
-          plot IDs are visible in the world. These are planned locations; no
-          plots have been sold or assigned.
+          plot IDs are visible in the world. The courthouse civic parcel
+          replaces W05–W08; no home plots have been sold or assigned.
         </p>
         <p>
           Bane must approve the first release and each purchase request. The
@@ -37,12 +37,20 @@ export default function Land() {
           <div className="land-grid">
             {ROAD_PLOTS.filter((plot) => plot.side === side).map((plot) => (
               <article className="paper plot-card" key={plot.id}>
-                <span className="eyebrow">PROPOSED PLOT</span>
+                <span className="eyebrow">
+                  {plot.status === "civic"
+                    ? "COURTHOUSE RESERVE"
+                    : "PROPOSED PLOT"}
+                </span>
                 <h3>{plot.id}</h3>
                 <p>
                   {plot.width} × {plot.depth} m · {plot.area} m²
                 </p>
-                <span className="plot-status">Sale not open</span>
+                <span className="plot-status">
+                  {plot.status === "civic"
+                    ? "Civic land · not for sale"
+                    : "Sale not open"}
+                </span>
               </article>
             ))}
           </div>

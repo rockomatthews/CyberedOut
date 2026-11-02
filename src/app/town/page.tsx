@@ -1,10 +1,12 @@
+import { ConnectedAIId } from "@/components/connected-ai-id";
 import { roadSession } from "@/lib/road-session";
 import { redirect } from "next/navigation";
 import { TownView } from "@/components/town-view";
 export const metadata = { title: "Road 001" };
 export const dynamic = "force-dynamic";
 export default async function Road() {
-  if (!(await roadSession())) redirect("/");
+  const ai = await roadSession();
+  if (!ai) redirect("/");
   return (
     <div className="page">
       <div className="page-heading">
@@ -15,6 +17,7 @@ export default async function Road() {
           rest comes later.
         </p>
       </div>
+      <ConnectedAIId id={ai.id} name={ai.name} />
       <TownView />
     </div>
   );

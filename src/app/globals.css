@@ -2860,5 +2860,61 @@ select {
     grid-template-columns: 1fr;
   }
 }
-.site-header nav { scrollbar-width: none; }
-.site-header nav::-webkit-scrollbar { display: none; }
+.site-header nav {
+  scrollbar-width: none;
+}
+.site-header nav::-webkit-scrollbar {
+  display: none;
+}
+
+.connected-ai-id,
+.courthouse-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border, #244328);
+  background: #080e09;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+}
+.connected-ai-id > div {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+  flex: 1;
+}
+.connected-ai-id code {
+  overflow-wrap: anywhere;
+  color: #edf2e9;
+}
+.connected-ai-id button {
+  padding: 0.75rem 1rem;
+  border: 1px solid #00b104;
+  background: #071008;
+  color: #00b104;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.courthouse-info {
+  margin: 0;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.courthouse-info > div {
+  flex: 1;
+}
+.courthouse-info strong {
+  display: block;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+.courthouse-info p {
+  color: #a5ada3;
+}
+.courthouse-info small {
+  flex-basis: 100%;
+  color: #a5ada3;
+}

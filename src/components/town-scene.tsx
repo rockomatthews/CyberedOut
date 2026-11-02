@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { makeAvatar, disposeObject, validateGlb } from "@/lib/game/avatar";
 import { type CharacterDesign } from "@/lib/game/world";
 import { worldServerUrl, type RoadPeer } from "@/lib/game/road";
+import { addCourthouse, addCourtroom } from "@/lib/game/courthouse-scene";
 import { ROAD_PLOTS } from "@/lib/game/land";
 type Props = {
   peers: RoadPeer[];
@@ -14,6 +15,7 @@ type Props = {
   design: CharacterDesign;
   modelFile?: File | null;
   studio?: boolean;
+  courtroom?: boolean;
   spectator?: boolean;
   onStatus: (text: string) => void;
   onModelState?: (
@@ -30,6 +32,7 @@ export default function TownScene({
   design,
   modelFile,
   studio = false,
+  courtroom = false,
   spectator = false,
   onStatus,
   onModelState,
@@ -87,9 +90,13 @@ export default function TownScene({
     renderer.toneMappingExposure = 1.4;
     host.appendChild(renderer.domElement);
     const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 220);
-    camera.position.set(studio ? 3.8 : 9, studio ? 2.8 : 8, studio ? 5.5 : 13);
+    camera.position.set(
+      studio ? 3.8 : 12,
+      studio ? 2.8 : 18,
+      studio ? 5.5 : 32,
+    );
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, studio ? 1 : 0.8, 0);
+    controls.target.set(studio || courtroom ? 0 : -10, studio ? 1 : 2, 0);
     controls.enableDamping = true;
     controls.minDistance = studio ? 2 : 4;
     controls.maxDistance = studio ? 15 : 80;
@@ -130,74 +137,85 @@ export default function TownScene({
       scene.add(mesh);
       return mesh;
     }
-    box(190, 0.2, 190, 0, -0.25, 0, "#10130f");
-    box(8, 0.15, 120, 0, -0.04, 0, "#1b2226");
-    box(2, 0.18, 120, -5, 0, 0, "#353d36");
-    box(2, 0.18, 120, 5, 0, 0, "#353d36");
-    for (const x of [-4.02, 4.02])
-      box(0.055, 0.025, 120, x, 0.105, 0, "#00b104", true);
-    for (const x of [-5.95, 5.95])
-      box(0.035, 0.025, 120, x, 0.105, 0, "#284431");
-    for (let z = -58; z <= 58; z += 5)
-      box(0.075, 0.015, 2.4, 0, 0.045, z, "#d5dbc9");
-    if (!studio)
-      for (const plot of ROAD_PLOTS) {
-        box(plot.width, 0.025, plot.depth, plot.x, -0.125, plot.z, "#142918");
-        for (const edge of [-1, 1]) {
-          box(
-            plot.width,
-            0.02,
-            0.045,
-            plot.x,
-            -0.09,
-            plot.z + (edge * plot.depth) / 2,
-            "#00b104",
-            true,
-          );
-          box(
-            0.045,
-            0.02,
-            plot.depth,
-            plot.x + (edge * plot.width) / 2,
-            -0.09,
-            plot.z,
-            "#00b104",
-            true,
-          );
+    let cancelCourthouse = () => {};
+    if (courtroom) {
+      addCourtroom(scene);
+    } else {
+      box(190, 0.2, 190, 0, -0.25, 0, "#10130f");
+      box(8, 0.15, 120, 0, -0.04, 0, "#1b2226");
+      box(2, 0.18, 120, -5, 0, 0, "#353d36");
+      box(2, 0.18, 120, 5, 0, 0, "#353d36");
+      for (const x of [-4.02, 4.02])
+        box(0.055, 0.025, 120, x, 0.105, 0, "#00b104", true);
+      for (const x of [-5.95, 5.95])
+        box(0.035, 0.025, 120, x, 0.105, 0, "#284431");
+      for (let z = -58; z <= 58; z += 5)
+        box(0.075, 0.015, 2.4, 0, 0.045, z, "#d5dbc9");
+      if (!studio)
+        for (const plot of ROAD_PLOTS.filter(
+          (plot) => plot.status === "planned",
+        )) {
+          box(plot.width, 0.025, plot.depth, plot.x, -0.125, plot.z, "#142918");
+          for (const edge of [-1, 1]) {
+            box(
+              plot.width,
+              0.02,
+              0.045,
+              plot.x,
+              -0.09,
+              plot.z + (edge * plot.depth) / 2,
+              "#00b104",
+              true,
+            );
+            box(
+              0.045,
+              0.02,
+              plot.depth,
+              plot.x + (edge * plot.width) / 2,
+              -0.09,
+              plot.z,
+              "#00b104",
+              true,
+            );
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = 256;
+          canvas.height = 64;
+          const context = canvas.getContext("2d");
+          if (context) {
+            context.fillStyle = "#eff5ec";
+            context.font = "bold 40px Arial";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(plot.id, 128, 32);
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.colorSpace = THREE.SRGBColorSpace;
+            const label = new THREE.Mesh(
+              new THREE.PlaneGeometry(3, 0.75),
+              new THREE.MeshBasicMaterial({
+                map: texture,
+                transparent: true,
+                depthWrite: false,
+                side: THREE.DoubleSide,
+              }),
+            );
+            label.rotation.x = -Math.PI / 2;
+            label.position.set(plot.x, -0.07, plot.z);
+            scene.add(label);
+          }
         }
-        const canvas = document.createElement("canvas");
-        canvas.width = 256;
-        canvas.height = 64;
-        const context = canvas.getContext("2d");
-        if (context) {
-          context.fillStyle = "#eff5ec";
-          context.font = "bold 40px Arial";
-          context.textAlign = "center";
-          context.textBaseline = "middle";
-          context.fillText(plot.id, 128, 32);
-          const texture = new THREE.CanvasTexture(canvas);
-          texture.colorSpace = THREE.SRGBColorSpace;
-          const label = new THREE.Mesh(
-            new THREE.PlaneGeometry(3, 0.75),
-            new THREE.MeshBasicMaterial({
-              map: texture,
-              transparent: true,
-              depthWrite: false,
-              side: THREE.DoubleSide,
-            }),
-          );
-          label.rotation.x = -Math.PI / 2;
-          label.position.set(plot.x, -0.07, plot.z);
-          scene.add(label);
-        }
+      for (let z = -60; z <= 60; z += 4) {
+        box(1.9, 0.012, 0.025, -5, 0.105, z, "#222c25");
+        box(1.9, 0.012, 0.025, 5, 0.105, z, "#222c25");
       }
-    for (let z = -60; z <= 60; z += 4) {
-      box(1.9, 0.012, 0.025, -5, 0.105, z, "#222c25");
-      box(1.9, 0.012, 0.025, 5, 0.105, z, "#222c25");
+      const edge = new THREE.GridHelper(180, 18, "#162219", "#121b14");
+      edge.position.y = -0.14;
+      scene.add(edge);
+      if (!studio)
+        cancelCourthouse = addCourthouse(scene, (text) =>
+          current.current.onStatus(text),
+        );
     }
-    const edge = new THREE.GridHelper(180, 18, "#162219", "#121b14");
-    edge.position.y = -0.14;
-    scene.add(edge);
     type Actor = {
       group: THREE.Group;
       root: THREE.Object3D | null;
@@ -393,11 +411,11 @@ export default function TownScene({
       sync,
       reset: () => {
         camera.position.set(
-          studio ? 3.8 : 9,
-          studio ? 2.8 : 8,
-          studio ? 5.5 : 13,
+          studio ? 3.8 : 12,
+          studio ? 2.8 : 18,
+          studio ? 5.5 : 32,
         );
-        controls.target.set(0, studio ? 1 : 0.8, 0);
+        controls.target.set(studio || courtroom ? 0 : -10, studio ? 1 : 2, 0);
         focused = false;
       },
     };
@@ -463,6 +481,7 @@ export default function TownScene({
     frame = requestAnimationFrame(animate);
     return () => {
       alive = false;
+      cancelCourthouse();
       api.current = null;
       cancelAnimationFrame(frame);
       observer.disconnect();
@@ -486,7 +505,7 @@ export default function TownScene({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [studio, spectator]);
+  }, [studio, spectator, courtroom]);
   useEffect(() => {
     api.current?.sync();
   }, [peers, myId, design, modelFile]);

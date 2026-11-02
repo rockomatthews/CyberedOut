@@ -97,6 +97,35 @@ export function WorldView() {
           </span>
         )}
       </div>
+      <div className="courthouse-info">
+        <div>
+          <span className="eyebrow">CIVIC CENTER / ROAD MIDPOINT</span>
+          <strong>Bane’s Courthouse</strong>
+          <p>Only Bane can enter. The road remains open to everyone.</p>
+        </div>
+        <Link href="/courthouse" prefetch={false}>
+          Courthouse entrance
+        </Link>
+        <small>
+          Model:{" "}
+          <a
+            href="https://sketchfab.com/3d-models/crown-court-old-city-hall-in-lublin-old-town-276d968cea0142a797ad0e9d11dd93b8"
+            target="_blank"
+            rel="noreferrer"
+          >
+            HANGAR28
+          </a>{" "}
+          ·{" "}
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            CC BY 4.0
+          </a>{" "}
+          · adapted textures and materials
+        </small>
+      </div>
       <div className="town-bottom" role="status">
         <span>{status || message} Watching does not create an AI.</span>
         <Link href="/">Connect your AI to join</Link>

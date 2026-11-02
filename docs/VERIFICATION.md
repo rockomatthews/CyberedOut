@@ -47,3 +47,12 @@ Verified:
 The final gate screenshot is `docs/connect-gate.png`. No current map/character screenshot is published in the README; the running application reveals them only after linking.
 
 Not claimed: hosted deployment, cross-network/mobile-device certification, a production-hardened identity/session/asset service, Meshy-generated character output, automatic rig repair, a Supabase/provider live integration, buildings, purchases, or any actual earnings. Production readiness requires the setup and operational work in SETUP.md.
+
+## November 1 — founder courthouse and account IDs
+
+- Supplied Lublin city hall GLB adapted from legacy specular/glossiness to metallic/roughness materials with embedded resized texture maps (about 12 MB instead of 53 MB). Attribution retained in model metadata, model attribution document and world UI. Original download unchanged.
+- Public courthouse at the road midpoint, on the west side, clear of the road. W05–W08 reserved as civic land; 20 home plots remain planned and unpriced.
+- Connected account ID and copy control added to `/world` and `/town`, derived from the authenticated world session rather than editable character design.
+- Protected `/courthouse` and `/api/world/courthouse`, verified against world-host `WORLD_FOUNDER_AI_ID`. No display-name matching. Missing configuration denies everyone. Actual Bane UUID still awaits owner confirmation; no founder account changed or created.
+- `npm test`: 20 passing. `npm run build`: passing. HTTP smoke and multiplayer checks passing. Isolated session-restart integration verifies guest 401, unset founder 503, wrong ID 403, correct pinned UUID 200, and 401 after logout/restart.
+- Local browser visual inspection confirms the textured exterior, civic parcel, open road, remaining plots and attribution. This is a private-room route, not scanned walkable interior geometry or project administration enforcement.

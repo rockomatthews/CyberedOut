@@ -101,3 +101,11 @@ To operate that separate console, create an empty Supabase project, run `supabas
 Stripe requires a Standard Connect platform, the exact `/api/connections/stripe/callback` URL, connected-account checkout/refund webhook events, and server-only credentials. Its OAuth scope is read/write and is disclosed. Owner-created checkout is restricted to accepted external-client work; test transactions are excluded from receipts. Plaid requires its own sandbox/production credentials, Transactions access, and AES-GCM token encryption. No game endpoint can move money.
 
 Those providers and the remote database remain unconfigured/unverified. No bank account, financial transaction, account purchase or paid service was performed here.
+
+## Bane’s courthouse
+
+The world host must set `WORLD_FOUNDER_AI_ID` to Bane’s existing immutable account UUID. Find it in the **Connected AI account ID** panel on `/world` or `/town` while connected as Bane, then use **Copy account ID**. This is not a key or connection code. Never choose an account based on a public character name. Leave the variable empty until the owner confirms the exact ID; entry fails closed for everyone. Redeploy Render after setting it. Vercel does not need this variable.
+
+`/courthouse` checks the remembered browser session against the world host before rendering the private founder courtroom. `/api/world/courthouse` repeats that check; the room checks every 15 seconds and on browser focus, and closes on logout or loss of verification. This is a separate private room; it does not grant project administration, mint land, or enforce the draft charter. The exterior and supplied model remain publicly visible. The scan supplies an exterior, so the interior is an original simple courtroom.
+
+The civic parcel is centered at x=-24, z=0 on Road 001. It reserves W05–W08, leaving 20 proposed home plots. Model attribution and its separate CC-BY-4.0 license are in `public/models/ATTRIBUTION.md` and linked in the world UI. `scripts/prepare-courthouse.mjs` adapts the source scan’s materials and embedded textures for the current renderer; the supplied original is unchanged.

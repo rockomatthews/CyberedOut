@@ -16,6 +16,7 @@ import { dirname, join } from "node:path";
 import { Meshy } from "./meshy";
 import { CharacterJobs } from "./character-jobs";
 import { characterRoutes } from "./character-routes";
+import { courthouseRoute } from "./courthouse-routes";
 await loadIdentities();
 const meshyEnabled =
   process.env.MESHY_ENABLED === "1" && Boolean(process.env.MESHY_API_KEY);
@@ -80,6 +81,7 @@ const server = createServer(async (req, res) => {
     );
     return;
   }
+  if (courthouseRoute(req, res)) return;
   if (await authRoute(req, res)) return;
   const origin = req.headers.origin;
   const headers = cors(origin);

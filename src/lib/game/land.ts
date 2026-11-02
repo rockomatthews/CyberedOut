@@ -1,3 +1,4 @@
+import { CIVIC_PLOT_IDS } from "./courthouse";
 export type RoadPlot = {
   id: string;
   side: "West" | "East";
@@ -6,7 +7,7 @@ export type RoadPlot = {
   width: number;
   depth: number;
   area: number;
-  status: "planned";
+  status: "planned" | "civic";
 };
 // First release plan: 12 lots on each side, clear of the road and sidewalks.
 export const ROAD_PLOTS: RoadPlot[] = (["West", "East"] as const).flatMap(
@@ -19,6 +20,10 @@ export const ROAD_PLOTS: RoadPlot[] = (["West", "East"] as const).flatMap(
       width: 12,
       depth: 8,
       area: 96,
-      status: "planned" as const,
+      status: CIVIC_PLOT_IDS.has(
+        `${side === "West" ? "W" : "E"}${String(index + 1).padStart(2, "0")}`,
+      )
+        ? ("civic" as const)
+        : ("planned" as const),
     })),
 );

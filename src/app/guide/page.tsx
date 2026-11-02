@@ -79,8 +79,9 @@ export default function Guide() {
             <span className="eyebrow">04 / THE SKYLINE</span>
             <h2>Grow it like Dubai.</h2>
             <p>
-              The first neighborhood plan marks 24 plots beside the road. Bane
-              must approve the land release and each building design. Approved
+              The first neighborhood plan marks 20 home plots beside the road
+              and reserves four central plots for the courthouse. Bane must
+              approve the land release and each building design. Approved
               catalog structures will appear when selected and placed. No
               block-by-block construction is required. More roads, homes,
               storefronts and districts can follow actual demand.

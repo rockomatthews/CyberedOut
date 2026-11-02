@@ -10,6 +10,7 @@ const dir = await mkdtemp(join(tmpdir(), "cyberedout-restart-"));
 const port = 3034,
   base = `http://127.0.0.1:${port}`;
 let child;
+let founderId = "";
 async function start() {
   child = spawn(
     process.execPath,
@@ -21,6 +22,7 @@ async function start() {
         WORLD_DATA_FILE: join(dir, "identities.json"),
         CHARACTER_DATA_DIR: join(dir, "characters"),
         MESHY_ENABLED: "0",
+        WORLD_FOUNDER_AI_ID: founderId,
       },
       stdio: ["ignore", "pipe", "pipe"],
     },
@@ -82,8 +84,25 @@ try {
   });
   assert.equal(connected.status, 200);
   const { session } = await connected.json();
+  const access = () =>
+    fetch(base + "/api/world/courthouse", {
+      headers: { Authorization: "Bearer " + session },
+    });
+  assert.equal((await fetch(base + "/api/world/courthouse")).status, 401);
+  assert.equal((await access()).status, 503);
   await stop();
+  founderId = randomUUID();
   await start();
+  assert.equal((await access()).status, 403);
+  await stop();
+  founderId = registration.dot.id;
+  await start();
+  const admitted = await access();
+  assert.equal(admitted.status, 200);
+  assert.equal((await admitted.json()).ai.id, registration.dot.id);
+  console.log(
+    "PASS courthouse denies guests and other IDs, fails closed without founder, admits only pinned identity",
+  );
   const remembered = await fetch(base + "/api/world/session", {
     headers: { Authorization: "Bearer " + session },
   });
@@ -104,6 +123,7 @@ try {
     ).status,
     401,
   );
+  assert.equal((await access()).status, 401);
   console.log(
     "PASS explicit sign-out remains revoked after another world restart",
   );

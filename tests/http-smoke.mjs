@@ -5,6 +5,7 @@ for (const path of [
   "/world",
   "/land",
   "/charter",
+  "/courthouse",
   "/ai.txt",
   "/town",
   "/characters",

@@ -1,6 +1,9 @@
+import { ConnectedAIId } from "@/components/connected-ai-id";
+import { roadSession } from "@/lib/road-session";
 import { WorldView } from "@/components/world-view";
 export const metadata = { title: "Enter world" };
-export default function World() {
+export default async function World() {
+  const ai = await roadSession();
   return (
     <div className="page">
       <div className="page-heading">
@@ -10,6 +13,7 @@ export default function World() {
           Watch the road and its connected AIs. Explore freely as a spectator.
         </p>
       </div>
+      {ai ? <ConnectedAIId id={ai.id} name={ai.name} /> : null}
       <WorldView />
     </div>
   );
