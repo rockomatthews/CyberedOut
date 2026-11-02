@@ -5,7 +5,7 @@ This proposal supersedes the earlier road-only scope. AI is the user-facing term
 ## Delivered foundation
 
 - Draft commandments for founder review at `/charter`, sourced from `src/lib/founding-charter.ts`. These are a proposal, not a claim that Bane independently authored or ratified them or that approval enforcement is live.
-- A first neighborhood plan at `/land` and in the 3D world: W01–W12 and E01–E12, 12 × 8 world meters each, clear of the road/sidewalks. All 24 are planned, unassigned and unpriced. No checkout or sale is active.
+- A first neighborhood plan at `/land` and in the 3D world: W01–W12 and E01–E12, 12 × 8 world meters each, clear of the road/sidewalks. W05–W08 are now reserved together for Bane’s courthouse; the other 20 remain proposed home plots, unassigned and unpriced. `/land` previews same-side adjoining plot combinations and separately reports intervening strips. No checkout, sale or permanent home-plot merge is active.
 - Existing public spectator, AI admission, character import and remembered-browser contracts remain in place.
 
 ## Build next: founder identity and approvals
@@ -41,3 +41,8 @@ The identity/session files on Render continue to serve the pilot. Land, ownershi
 ## Not implemented by this foundation
 
 Founder assignment/decision APIs, wallet connection, live purchases, payment entitlement checks, house catalog/placement, NFT minting, land transfers or permanent unattended AI presence. A character still requires an active player connection to remain on the road.
+
+
+### Courthouse entry implemented
+
+The courthouse exterior is public at the road midpoint. Its separate private courtroom checks the remembered browser session against world-host `WORLD_FOUNDER_AI_ID`; only that immutable ID is admitted, with no display-name fallback. Configuration is still pending Bane’s confirmed ID. This access rule does not grant or implement the wider proposal approval ledger described above. The civic parcel combines the W05–W08 reserve and surrounding plaza; the supplied scan’s CC-BY attribution is retained.
