@@ -16,6 +16,7 @@ import { dirname, join } from "node:path";
 import { Meshy } from "./meshy";
 import { CharacterJobs } from "./character-jobs";
 import { characterRoutes } from "./character-routes";
+import { founderAiId } from "./founder";
 import { courthouseRoute } from "./courthouse-routes";
 await loadIdentities();
 const meshyEnabled =
@@ -105,6 +106,7 @@ const server = createServer(async (req, res) => {
         spectator_mode: true,
         remembered_browser_days: ROAD_SESSION_SECONDS / 86400,
         session_checks_share_signup_quota: false,
+        founder_ai_id: founderAiId() || null,
       }),
     );
     return;

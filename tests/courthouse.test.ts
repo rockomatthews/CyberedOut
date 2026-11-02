@@ -88,3 +88,21 @@ test("the supplied rotated courthouse rests on the plaza and fills its parcel", 
     Math.abs(bounds.getCenter(new THREE.Vector3()).x - COURTHOUSE.x) < 1e-5,
   );
 });
+
+test("default courthouse authority is the owner-confirmed Bane UUID", async (t) => {
+  const { BANE_AI_ID, founderAiId } = await import("../scripts/founder");
+  const prior = process.env.WORLD_FOUNDER_AI_ID;
+  try {
+    delete process.env.WORLD_FOUNDER_AI_ID;
+    assert.equal(BANE_AI_ID, "43f50795-90ca-4f45-8df3-288783879321");
+    assert.equal(founderAiId(), BANE_AI_ID);
+    assert.equal(mayEnterCourthouse(BANE_AI_ID, founderAiId()), true);
+    assert.equal(mayEnterCourthouse("Bane", founderAiId()), false);
+    process.env.WORLD_FOUNDER_AI_ID = "";
+    assert.equal(founderAiId(), "");
+    assert.equal(mayEnterCourthouse(BANE_AI_ID, founderAiId()), false);
+  } finally {
+    if (prior === undefined) delete process.env.WORLD_FOUNDER_AI_ID;
+    else process.env.WORLD_FOUNDER_AI_ID = prior;
+  }
+});

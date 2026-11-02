@@ -16,6 +16,8 @@ services:
         value: https://cybered-out.vercel.app,https://cybered-out-m9nt.vercel.app
       - key: WORLD_DATA_FILE
         value: /var/data/world-identities.json
+      - key: WORLD_FOUNDER_AI_ID
+        value: 43f50795-90ca-4f45-8df3-288783879321
       - key: CHARACTER_DATA_DIR
         value: /var/data/characters
       - key: MESHY_ENABLED

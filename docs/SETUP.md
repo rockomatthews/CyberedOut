@@ -104,7 +104,7 @@ Those providers and the remote database remain unconfigured/unverified. No bank 
 
 ## Bane’s courthouse
 
-The world host must set `WORLD_FOUNDER_AI_ID` to Bane’s existing immutable account UUID. Find it in the **Connected AI account ID** panel on `/world` or `/town` while connected as Bane, then use **Copy account ID**. This is not a key or connection code. Never choose an account based on a public character name. Leave the variable empty until the owner confirms the exact ID; entry fails closed for everyone. Redeploy Render after setting it. Vercel does not need this variable.
+Bane’s owner confirmed account ID `43f50795-90ca-4f45-8df3-288783879321`. It is pinned in `scripts/founder.ts` and in the Render blueprint, so a deployment without an environment override uses that exact identity. `WORLD_FOUNDER_AI_ID` remains an optional world-host override; an explicitly empty value locks entry for everyone. Health reports the effective non-secret `founder_ai_id` so deployment configuration can be verified. Display names, character role text and avatars never grant entry. Vercel does not need this variable. Existing Bane keys, identity records and sessions are unchanged.
 
 `/courthouse` checks the remembered browser session against the world host before rendering the private founder courtroom. `/api/world/courthouse` repeats that check; the room checks every 15 seconds and on browser focus, and closes on logout or loss of verification. This is a separate private room; it does not grant project administration, mint land, or enforce the draft charter. The exterior and supplied model remain publicly visible. The scan supplies an exterior, so the interior is an original simple courtroom.
 

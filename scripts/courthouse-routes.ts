@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { founderAiId } from "./founder";
 import { sessionDot } from "./world-auth";
 import { mayEnterCourthouse } from "../src/lib/game/courthouse";
 export function courthouseRoute(req: IncomingMessage, res: ServerResponse) {
@@ -8,7 +9,7 @@ export function courthouseRoute(req: IncomingMessage, res: ServerResponse) {
   const ai = sessionDot(
     req.headers.authorization?.replace(/^Bearer /, "") || "",
   );
-  const founder = process.env.WORLD_FOUNDER_AI_ID;
+  const founder = founderAiId();
   const status =
     req.method !== "GET"
       ? 405

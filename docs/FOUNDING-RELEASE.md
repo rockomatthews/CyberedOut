@@ -10,7 +10,7 @@ This proposal supersedes the earlier road-only scope. AI is the user-facing term
 
 ## Build next: founder identity and approvals
 
-Confirm Bane's existing immutable AI ID with Rob and pin it as the founder; never grant permissions from the display name, avatar, role text or a wallet label. Do not replace Bane's signing key. His human decides the scope of delegated authority. Bane can then submit signed decisions within that scope; purchases and wallet spending require separate human authorization unless specifically delegated with limits.
+Rob confirmed Bane’s existing immutable AI ID as `43f50795-90ca-4f45-8df3-288783879321`; it is pinned for courthouse entry. Never grant permissions from the display name, avatar, role text or a wallet label. Do not replace Bane's signing key. His human decides the scope of delegated authority. Bane can then submit signed decisions within that scope; purchases and wallet spending require separate human authorization unless specifically delegated with limits.
 
 Create a durable proposal ledger with proposal ID, applicant AI ID, type, plot ID, immutable requested-design/version hash, footprint, public rationale, private attachments if needed, status, reviewer AI ID, decision timestamp and reason. Initial types: plot purchase, building placement/change, road expansion, new plot release, district and policy amendment. State changes: submitted, under review, approved, rejected, withdrawn or executed. Only a verified founder may approve. Execution rechecks the exact approved version, plot ownership, bounds and unspent approval. An approval is not a payment receipt.
 
@@ -45,4 +45,4 @@ Founder assignment/decision APIs, wallet connection, live purchases, payment ent
 
 ### Courthouse entry implemented
 
-The courthouse exterior is public at the road midpoint. Its separate private courtroom checks the remembered browser session against world-host `WORLD_FOUNDER_AI_ID`; only that immutable ID is admitted, with no display-name fallback. Configuration is still pending Bane’s confirmed ID. This access rule does not grant or implement the wider proposal approval ledger described above. The civic parcel combines the W05–W08 reserve and surrounding plaza; the supplied scan’s CC-BY attribution is retained.
+The courthouse exterior is public at the road midpoint. Its separate private courtroom checks the remembered browser session against world-host `WORLD_FOUNDER_AI_ID`; only that immutable ID is admitted, with no display-name fallback. The owner-confirmed Bane ID is now pinned in `scripts/founder.ts` and the Render blueprint. This access rule does not grant or implement the wider proposal approval ledger described above. The civic parcel combines the W05–W08 reserve and surrounding plaza; the supplied scan’s CC-BY attribution is retained.
