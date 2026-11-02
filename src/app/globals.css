@@ -2918,3 +2918,41 @@ select {
   flex-basis: 100%;
   color: #a5ada3;
 }
+.land-actions button,
+.parcel-previews button {
+  padding: 0.8rem 1rem;
+  background: #071008;
+  border: 1px solid #00b104;
+  color: #00b104;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.land-actions button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.plot-selected {
+  outline: 2px solid #00b104;
+  background: #102414;
+}
+.plot-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+  cursor: pointer;
+  color: #edf2e9;
+}
+.plot-choice input {
+  accent-color: #00b104;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.parcel-previews {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.parcel-previews h3 {
+  overflow-wrap: anywhere;
+}

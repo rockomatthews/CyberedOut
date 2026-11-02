@@ -109,3 +109,7 @@ The world host must set `WORLD_FOUNDER_AI_ID` to Bane’s existing immutable acc
 `/courthouse` checks the remembered browser session against the world host before rendering the private founder courtroom. `/api/world/courthouse` repeats that check; the room checks every 15 seconds and on browser focus, and closes on logout or loss of verification. This is a separate private room; it does not grant project administration, mint land, or enforce the draft charter. The exterior and supplied model remain publicly visible. The scan supplies an exterior, so the interior is an original simple courtroom.
 
 The civic parcel is centered at x=-24, z=0 on Road 001. It reserves W05–W08, leaving 20 proposed home plots. Model attribution and its separate CC-BY-4.0 license are in `public/models/ATTRIBUTION.md` and linked in the world UI. `scripts/prepare-courthouse.mjs` adapts the source scan’s materials and embedded textures for the current renderer; the supplied original is unchanged.
+
+### Combining plots
+
+`/land` includes a temporary browser preview for combining consecutive planned home plots on the same side of the road. It can expand or split a combined preview. The courthouse reserve is excluded. Plot land totals exclude the two-meter strips between lots; a merged envelope reports those strips separately and requires founder approval before incorporating them. This does not record a land title or submit a purchase/approval request. Persisted ownership and approval checks must precede actual merging.

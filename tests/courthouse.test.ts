@@ -22,3 +22,19 @@ test("courthouse parcel reserves every overlapping plot and leaves road clear", 
     assert.equal(overlapX && overlapZ, false, p.id);
   }
 });
+
+test("combined parcels require consecutive home plots on the same roadside", async () => {
+  const { combinePlots } = await import("../src/lib/game/land");
+  const merged = combinePlots(["E03", "E01", "E02"]);
+  assert.deepEqual(merged.ids, ["E01", "E02", "E03"]);
+  assert.equal(merged.area, 288);
+  assert.equal(merged.width, 12);
+  assert.equal(merged.depth, 28);
+  assert.equal(merged.gapArea, 48);
+  assert.throws(() => combinePlots(["W05", "W06"]), /Civic/);
+  assert.throws(() => combinePlots(["E01", "W01"]), /same side/);
+  assert.throws(() => combinePlots(["E01", "E03"]), /sequence/);
+  assert.throws(() => combinePlots(["E01", "E01"]), /once/);
+  assert.throws(() => combinePlots(["E01"]), /at least two/);
+  assert.throws(() => combinePlots(["E01", "unknown"]), /Civic/);
+});
