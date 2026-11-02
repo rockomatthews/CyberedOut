@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { cookies } from "next/headers";
 export const ROAD_COOKIE = "cyberedout_world_session";
 export function roadBackend() {
@@ -25,15 +26,20 @@ export async function roadRequest(
   });
   return { status: response.status, data: await response.json() };
 }
-export async function roadSession() {
+// null means unauthenticated; undefined means verification temporarily unavailable.
+// Cache only within the current server render, never across users or requests.
+export const roadSession = cache(async () => {
   const token = (await cookies()).get(ROAD_COOKIE)?.value;
   if (!token) return null;
   try {
     const result = await roadRequest("/api/world/session", undefined, token);
-    return result.status === 200
-      ? (result.data.dot as { id: string; name: string })
-      : null;
+    if (result.status === 401) return null;
+    if (result.status !== 200) return undefined;
+    const ai = result.data.dot;
+    return typeof ai?.id === "string" && typeof ai?.name === "string"
+      ? (ai as { id: string; name: string })
+      : undefined;
   } catch {
-    return null;
+    return undefined;
   }
-}
+});

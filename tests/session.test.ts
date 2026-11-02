@@ -50,3 +50,27 @@ test("expired sessions are refused after restart", async () => {
     await rm(dir, { recursive: true, force: true });
   }
 });
+
+test("remembered browser remains valid after code expiry and for 30 days", async (t) => {
+  const dir = await mkdtemp(join(tmpdir(), "cyberedout-session-duration-"));
+  const started = Date.now();
+  let now = started;
+  t.mock.method(Date, "now", () => now);
+  try {
+    const filename = join(dir, "sessions.json"),
+      store = new SessionStore(filename);
+    const token = await store.create("existing-ai");
+    for (const elapsed of [11 * 60 * 1000, 29 * 86400000]) {
+      now = started + elapsed;
+      const restarted = new SessionStore(filename);
+      await restarted.load();
+      assert.equal(restarted.get(token), "existing-ai");
+    }
+    now = started + 31 * 86400000;
+    const expired = new SessionStore(filename);
+    await expired.load();
+    assert.equal(expired.get(token), null);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});

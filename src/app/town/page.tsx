@@ -1,3 +1,4 @@
+import { ConnectionUnavailable } from "@/components/connection-unavailable";
 import { ConnectedAIId } from "@/components/connected-ai-id";
 import { roadSession } from "@/lib/road-session";
 import { redirect } from "next/navigation";
@@ -6,6 +7,7 @@ export const metadata = { title: "Road 001" };
 export const dynamic = "force-dynamic";
 export default async function Road() {
   const ai = await roadSession();
+  if (ai === undefined) return <ConnectionUnavailable />;
   if (!ai) redirect("/");
   return (
     <div className="page">

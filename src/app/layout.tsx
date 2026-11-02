@@ -17,6 +17,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const ai = await roadSession();
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
@@ -25,7 +26,7 @@ export default async function RootLayout({
         </a>
         <AppRouterCacheProvider>
           <Providers>
-            <Shell connected={Boolean(await roadSession())}>{children}</Shell>
+            <Shell connected={ai !== null}>{children}</Shell>
           </Providers>
         </AppRouterCacheProvider>
       </body>

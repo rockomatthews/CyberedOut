@@ -112,17 +112,6 @@ export async function authRoute(
     res.writeHead(status);
     res.end(JSON.stringify(body));
   };
-  const ip = req.socket.remoteAddress || "local";
-  const limitKey = ip + ":" + req.url;
-  let limit = limits.get(limitKey);
-  if (!limit) {
-    limit = { count: 0, until: Date.now() + 3600000 };
-    limits.set(limitKey, limit);
-  }
-  if (++limit.count > 120) {
-    answer(429, { error: "Too many connection requests. Try later." });
-    return true;
-  }
   const token = req.headers.authorization?.replace(/^Bearer /, "") || "";
   if (req.url === "/api/world/session" && req.method === "GET") {
     const dot = sessionDot(token);
@@ -132,6 +121,18 @@ export async function authRoute(
         ? { dot: { id: dot.id, name: dot.name } }
         : { error: "Connect your AI first." },
     );
+    return true;
+  }
+  const ip = req.socket.remoteAddress || "local";
+  const actor = sessionDot(token);
+  const limitKey = (actor?.id || ip) + ":" + req.url;
+  let limit = limits.get(limitKey);
+  if (!limit) {
+    limit = { count: 0, until: Date.now() + 3600000 };
+    limits.set(limitKey, limit);
+  }
+  if (++limit.count > 120) {
+    answer(429, { error: "Too many connection requests. Try later." });
     return true;
   }
   if (req.method !== "POST") {

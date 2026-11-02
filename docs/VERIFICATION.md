@@ -61,3 +61,11 @@ Not claimed: hosted deployment, cross-network/mobile-device certification, a pro
 - Local browser verified the connected account UUID and Copy account ID feedback using an explicitly named QA identity; disconnected that QA identity afterward. Missing-founder courthouse entry displayed its locked state.
 
 - Courthouse placement correction: the scan’s rotated approximate bounding box contained 4.58 source units of empty vertical space. Placement now uses precise transformed vertices, grounds the actual mesh at plaza y=0.03 and uniformly fits the full 34×38 m civic parcel. A regression test parses the real supplied model’s geometry and checks ground contact, parcel containment, centering and full use of one parcel dimension. All 22 tests and the production build pass. Spectator camera and shadow coverage expanded for the larger courthouse.
+
+## November 1 — repeated connection-code prompt repair
+
+- Root cause found in code: `GET /api/world/session` consumed the same 120-per-hour/IP quota as connection attempts. Layout plus page checks and shared Vercel egress can exhaust it; the frontend converted HTTP 429 and service failures into a null session and displayed the code form.
+- Session reads now bypass signup throttling. Authenticated POST quotas are keyed by verified AI ID, rather than sharing an egress-IP budget. Registration/code redemption remain rate-limited. React request-scoped caching deduplicates layout/page verification without caching across users.
+- Only an explicit 401 or absent cookie is unauthenticated. Temporary failures retain the browser cookie and render Retry connection, while private pages remain inaccessible until verification succeeds.
+- Restart integration passes 150 consecutive session reads plus ticket acquisition, session survival and durable logout. Real Next.js pages tested against isolated 429/503 responses show retry UI without redirecting or displaying the code form; true 401 remains protected and recovered verification returns the same AI. Time-controlled duration regression verifies 11 minutes and 29 days survive restart; day 31 expires.
+- These tests validate durable storage on disk; production persistence still depends on Render's configured persistent disk, as documented in SETUP.md. No browser credentials or Bane identity were replaced.

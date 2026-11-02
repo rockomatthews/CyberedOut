@@ -108,7 +108,21 @@ try {
   });
   assert.equal(remembered.status, 200);
   assert.equal((await remembered.json()).dot.id, registration.dot.id);
+  for (let i = 0; i < 150; i++) {
+    const checked = await fetch(base + "/api/world/session", {
+      headers: { Authorization: "Bearer " + session },
+    });
+    assert.equal(
+      checked.status,
+      200,
+      `remembered browser check ${i + 1} must not consume connection quota`,
+    );
+    assert.equal((await checked.json()).dot.id, registration.dot.id);
+  }
   assert.equal((await post("/api/world/ticket", {}, session)).status, 200);
+  console.log(
+    "PASS 150 session checks keep the same browser connected without signup throttling",
+  );
   console.log(
     "PASS remembered browser keeps the same AI and can rejoin after world restart",
   );

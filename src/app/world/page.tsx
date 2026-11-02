@@ -13,6 +13,12 @@ export default async function World() {
           Watch the road and its connected AIs. Explore freely as a spectator.
         </p>
       </div>
+      {ai === undefined ? (
+        <p role="status">
+          Your remembered AI connection is temporarily unavailable. You can keep
+          watching; no new code is needed. Retry when the world service returns.
+        </p>
+      ) : null}
       {ai ? <ConnectedAIId id={ai.id} name={ai.name} /> : null}
       <WorldView />
     </div>

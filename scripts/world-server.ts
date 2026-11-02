@@ -104,6 +104,7 @@ const server = createServer(async (req, res) => {
         max_model_bytes: MAX_GLB_BYTES,
         spectator_mode: true,
         remembered_browser_days: ROAD_SESSION_SECONDS / 86400,
+        session_checks_share_signup_quota: false,
       }),
     );
     return;
